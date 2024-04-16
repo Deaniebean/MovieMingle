@@ -1,22 +1,26 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
+import cors from "cors";
+import corsMiddleware from "./middleware/cors";
+import authRoutes from "./routes/authRoutes";
 import connectDB from "./config/db";
-import authenticateRoutes  from "./routes/authRoutes";
-import bodyParser from 'body-parser';
-
-
-const app: Express = express();
 dotenv.config();
-connectDB();
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 const port = process.env.PORT  || 8082;
 
+connectDB();
+const app: Express = express();
+app.use(express.json());
+app.use(corsMiddleware);
+app.options('*', cors()); // handle preflight requests
 
-app.use('/authenticate', authenticateRoutes);
+
+
+app.use('/authenticate', authRoutes);
+app.get("/", (req, res) => {
+  res.send("Express + TypeScript Server");
+});
+
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
-
