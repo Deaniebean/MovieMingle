@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { dot } from 'node:test/reporters';
 dotenv.config();
 
 const db: string = process.env.DB_CONNECTION_STRING
