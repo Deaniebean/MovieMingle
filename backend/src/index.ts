@@ -11,7 +11,6 @@ connectDB();
 const app: Express = express();
 app.use(express.json());
 app.use(corsMiddleware);
-app.options('*', cors()); // handle preflight requests
 
 
 
