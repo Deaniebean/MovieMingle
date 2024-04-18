@@ -26,7 +26,7 @@ if (!API_KEY) {
 }
 
 
-// extra function for params to avoid duplication
+// function for api request with params to avoid duplication
 function createOptions(page: number) {
   return {
     method: 'GET',
@@ -46,40 +46,4 @@ function createOptions(page: number) {
     }
   };
 }
-
-// this functions main purpose is to get the total number of pages for the input params and then call the discoverRandomMovies() function
-async function discoverMovies() {
-  const options = createOptions(1);
-
-  try {
-    const response = await axios.request(options);
-    console.log('Total pages:', response.data.total_pages);
-    await discoverRandomMovies(response.data.total_pages);
-    return response.data.results;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
-
-
-// This function is necessary to randomize the page number for the discoverMovies() function, otherwise the movie results will always be the same
-async function discoverRandomMovies(totalPages: number) {
-  const randomPage = Math.floor(Math.random() * Math.min(totalPages, 500)) + 1;
-  const options = createOptions(randomPage);
-
-  try {
-    const response = await axios.request(options);
-    console.log('Random page:', randomPage);
-    return response.data.results;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
-
-
-
-export { createOptions, discoverMovies, discoverRandomMovies };
+export { createOptions };
