@@ -13,12 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const tmdb_1 = require("../services/tmdb");
-const axios_1 = __importDefault(require("axios"));
+const movieController_1 = require("../controllers/movieController");
 const router = express_1.default.Router();
 router.get('/discover/movies', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const movies = yield (0, tmdb_1.discoverMovies)();
+        const movies = yield (0, movieController_1.discoverMovies)();
         res.json(movies);
     }
     catch (error) {
@@ -28,12 +27,7 @@ router.get('/discover/movies', (req, res, next) => __awaiter(void 0, void 0, voi
 }));
 router.get('/discover/movies/random', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // discoverRandomMovies requires totalPages as an argument, so we need to get it first.
-        // Here, we're assuming that the first page of results always exists and has the total_pages property.
-        const firstPageOptions = (0, tmdb_1.createOptions)(1);
-        const firstPageResponse = yield axios_1.default.request(firstPageOptions);
-        const totalPages = firstPageResponse.data.total_pages;
-        const movies = yield (0, tmdb_1.discoverRandomMovies)(totalPages);
+        const movies = yield (0, movieController_1.discoverMovies)();
         res.json(movies);
     }
     catch (error) {
