@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createOptionsPerson = exports.createOptionsDiscover = void 0;
+exports.createOptionsDiscover = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 // This is for the POST from frontend filter page to the tmdb-api discover endpoint => params are added to GET request in the createOptions() function
@@ -24,7 +24,7 @@ if (!API_KEY) {
     throw new Error('Missing environment variables');
 }
 // function for api request with params to avoid duplication
-function createOptionsDiscover(page, genre, people, years, rounds) {
+function createOptionsDiscover(page, genre, years, rounds) {
     return {
         method: 'GET',
         url: `https://api.themoviedb.org/3/discover/movie`,
@@ -32,7 +32,6 @@ function createOptionsDiscover(page, genre, people, years, rounds) {
             include_adult: false,
             include_video: true,
             with_genres: genre ? genre.join(',') : undefined,
-            with_people: people ? people.join(',') : undefined,
             language: 'en-US',
             page,
             sort_by: 'popularity.desc',
@@ -46,22 +45,5 @@ function createOptionsDiscover(page, genre, people, years, rounds) {
     };
 }
 exports.createOptionsDiscover = createOptionsDiscover;
-function createOptionsPerson(person) {
-    return {
-        method: 'GET',
-        url: `https://api.themoviedb.org/3/search/person`,
-        params: {
-            include_adult: false,
-            genre: '',
-            query: person,
-            language: 'en-US',
-            page: 1,
-            api_key: API_KEY,
-        },
-        headers: {
-            accept: 'application/json',
-        }
-    };
-}
-exports.createOptionsPerson = createOptionsPerson;
+// TODO: original_language filter
 //# sourceMappingURL=tmdb.js.map

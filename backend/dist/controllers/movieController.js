@@ -12,22 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPerson = exports.discoverRandomMovies = exports.discoverMovies = exports.createOptionsDiscover = void 0;
+exports.discoverRandomMovies = exports.discoverMovies = exports.createOptionsDiscover = void 0;
 const axios_1 = __importDefault(require("axios"));
 const tmdb_1 = require("../services/tmdb");
 Object.defineProperty(exports, "createOptionsDiscover", { enumerable: true, get: function () { return tmdb_1.createOptionsDiscover; } });
 // this functions main purpose is to get the total number of pages for the input params and then call the discoverRandomMovies() function
-function discoverMovies(genre, people, years, rounds) {
+function discoverMovies(genre, years, rounds) {
     return __awaiter(this, void 0, void 0, function* () {
-        const options = (0, tmdb_1.createOptionsDiscover)(1, genre, people, years, rounds);
+        const options = (0, tmdb_1.createOptionsDiscover)(1, genre, years, rounds);
         try {
             const response = yield axios_1.default.request(options);
             console.log('Total pages:', response.data.total_pages);
             console.log('Genre:', genre);
-            console.log('People:', people);
             console.log('Years:', years);
             console.log('Rounds:', rounds);
-            const movies = yield discoverRandomMovies(response.data.total_pages, genre, people, years, rounds);
+            const movies = yield discoverRandomMovies(response.data.total_pages, genre, years, rounds);
             console.log('Movies:', movies);
             return movies;
         }
@@ -40,13 +39,13 @@ function discoverMovies(genre, people, years, rounds) {
 exports.discoverMovies = discoverMovies;
 // This function is necessary to randomize the page number for the discoverMovies() function, otherwise the movie results will always be the same
 // since default sorting is by popularity we don't want it to be too far down the list -> max totalPages value = 1000
-function discoverRandomMovies(totalPages, genre, people, years, rounds) {
+function discoverRandomMovies(totalPages, genre, years, rounds) {
     return __awaiter(this, void 0, void 0, function* () {
-        //    if (totalPages<1000) {
-        //      totalPages = 1000
-        //    }
+        if (totalPages < 1000) {
+            totalPages = 1000;
+        }
         const randomPage = Math.floor(Math.random() * Math.min(totalPages, 500)) + 1;
-        const options = (0, tmdb_1.createOptionsDiscover)(randomPage, genre, people, years, rounds);
+        const options = (0, tmdb_1.createOptionsDiscover)(randomPage, genre, years, rounds);
         try {
             const response = yield axios_1.default.request(options);
             console.log('Random page:', randomPage);
@@ -59,18 +58,4 @@ function discoverRandomMovies(totalPages, genre, people, years, rounds) {
     });
 }
 exports.discoverRandomMovies = discoverRandomMovies;
-function getPerson(person) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const options = (0, tmdb_1.createOptionsPerson)("Johnny Depp");
-        try {
-            const response = yield axios_1.default.request(options);
-            return response.data.results;
-        }
-        catch (error) {
-            console.error(error);
-            return [];
-        }
-    });
-}
-exports.getPerson = getPerson;
 //# sourceMappingURL=movieController.js.map

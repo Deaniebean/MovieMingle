@@ -17,20 +17,6 @@ router.post('/discover/movies', async (req, res) => {
 
 
 
-router.get('/discover/movies', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const genre = req.query.genre as string[];
-        const years = req.query.years as string[];
-        const rounds = Number(req.query.rounds);
-
-        const movies = await discoverMovies(genre, years, rounds);
-        res.json(movies);
-    } catch (error) {
-        console.error(error);
-        next(error);
-    }
-});
-
 router.get('/discover/movies/random', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const genre = req.query.genre as string[];

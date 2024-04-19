@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {createOptionsDiscover} from '../services/tmdb';
 
-// this functions main purpose is to get the total number of pages for the input params and then call the discoverRandomMovies() function
+// this functions main purpose is to call tmdb with query params and get the total number of pages  and then call the discoverRandomMovies() function
 async function discoverMovies(genre: string[], years: string[], rounds: number) {
 
   const options = createOptionsDiscover(1, genre, years, rounds);
@@ -11,7 +11,7 @@ async function discoverMovies(genre: string[], years: string[], rounds: number) 
     console.log('Genre:', genre);
     console.log('Years:', years);
     console.log('Rounds:', rounds);
-    
+
     const movies = await discoverRandomMovies(response.data.total_pages, genre, years, rounds);
     console.log('Movies:', movies);
     return movies;
