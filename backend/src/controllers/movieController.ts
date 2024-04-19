@@ -1,27 +1,34 @@
 import axios from 'axios';
-import {createOptions} from '../services/tmdb';
+import {createOptionsDiscover} from '../services/tmdb';
 
 // this functions main purpose is to get the total number of pages for the input params and then call the discoverRandomMovies() function
-async function discoverMovies() {
-    const options = createOptions(1);
+async function discoverMovies(genre: string[], years: string[], rounds: number) {
 
-    try {
-      const response = await axios.request(options);
-      console.log('Total pages:', response.data.total_pages);
-      const movies = await discoverRandomMovies(response.data.total_pages);
-      return movies;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+  const options = createOptionsDiscover(1, genre, years, rounds);
+  try {
+    const response = await axios.request(options);
+    console.log('Total pages:', response.data.total_pages);
+    console.log('Genre:', genre);
+    console.log('Years:', years);
+    console.log('Rounds:', rounds);
+    
+    const movies = await discoverRandomMovies(response.data.total_pages, genre, years, rounds);
+    console.log('Movies:', movies);
+    return movies;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
-
-
   // This function is necessary to randomize the page number for the discoverMovies() function, otherwise the movie results will always be the same
-  async function discoverRandomMovies(totalPages: number) {
+  // since default sorting is by popularity we don't want it to be too far down the list -> max totalPages value = 1000
+  async function discoverRandomMovies(totalPages: number, genre: string[], years: string[], rounds: number) {
+    if (totalPages<1000) {
+      totalPages = 1000
+    }
     const randomPage = Math.floor(Math.random() * Math.min(totalPages, 500)) + 1;
-    const options = createOptions(randomPage);
+    const options = createOptionsDiscover(randomPage, genre, years, rounds);
 
     try {
       const response = await axios.request(options);
@@ -31,9 +38,7 @@ async function discoverMovies() {
       console.error(error);
       return [];
     }
-  }
+}
 
 
-
-
-  export { createOptions, discoverMovies, discoverRandomMovies };
+  export { createOptionsDiscover, discoverMovies, discoverRandomMovies };

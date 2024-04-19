@@ -15,9 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const movieController_1 = require("../controllers/movieController");
 const router = express_1.default.Router();
+router.post('/discover/movies', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { genre, people, years, rounds } = req.body;
+    console.log('genre:', genre);
+    console.log('people:', people);
+    console.log('years:', years);
+    console.log('rounds:', rounds);
+    const movies = yield (0, movieController_1.discoverMovies)(genre, people, years, rounds);
+    res.json(movies);
+}));
 router.get('/discover/movies', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const movies = yield (0, movieController_1.discoverMovies)();
+        const genre = req.query.genre;
+        const people = req.query.people;
+        const years = req.query.years;
+        const rounds = Number(req.query.rounds);
+        const movies = yield (0, movieController_1.discoverMovies)(genre, people, years, rounds);
         res.json(movies);
     }
     catch (error) {
@@ -27,8 +40,23 @@ router.get('/discover/movies', (req, res, next) => __awaiter(void 0, void 0, voi
 }));
 router.get('/discover/movies/random', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const movies = yield (0, movieController_1.discoverMovies)();
+        const genre = req.query.genre;
+        const people = req.query.people;
+        const years = req.query.years;
+        const rounds = Number(req.query.rounds);
+        const movies = yield (0, movieController_1.discoverMovies)(genre, people, years, rounds);
         res.json(movies);
+    }
+    catch (error) {
+        console.error(error);
+        next(error);
+    }
+}));
+router.get('/person', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const personName = req.params.name; // get the person's name from the route parameters
+        const results = yield (0, movieController_1.getPerson)(personName);
+        res.json(results);
     }
     catch (error) {
         console.error(error);
