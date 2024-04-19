@@ -24,15 +24,15 @@ if (!API_KEY) {
     throw new Error('Missing environment variables');
 }
 // function for api request with params to avoid duplication
-function createOptionsDiscover(page, genre, years, rounds) {
-    return {
+function createOptionsDiscover(page, genre, years, rounds, language) {
+    const options = {
         method: 'GET',
         url: `https://api.themoviedb.org/3/discover/movie`,
         params: {
             include_adult: false,
             include_video: true,
             with_genres: genre ? genre.join(',') : undefined,
-            language: 'en-US',
+            with_original_language: language ? language.toLowerCase() : undefined,
             page,
             sort_by: 'popularity.desc',
             'primary_release_date.gte': years && years.length > 0 ? years[0] : undefined,
@@ -43,7 +43,10 @@ function createOptionsDiscover(page, genre, years, rounds) {
             accept: 'application/json',
         }
     };
+    console.log('Options:', options);
+    return options;
 }
 exports.createOptionsDiscover = createOptionsDiscover;
-// TODO: original_language filter
+// TODO: add original_language to filter
+// EN = en|de|fr|es
 //# sourceMappingURL=tmdb.js.map

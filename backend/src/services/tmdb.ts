@@ -25,15 +25,15 @@ if (!API_KEY) {
 
 
 // function for api request with params to avoid duplication
-function createOptionsDiscover(page: number, genre: string[], years: string[], rounds: number) {
-  return {
+function createOptionsDiscover(page: number, genre: string[], years: string[], rounds: number, language: string) {
+  const options = {
     method: 'GET',
     url: `https://api.themoviedb.org/3/discover/movie`,
     params: {
       include_adult: false,
       include_video: true,
       with_genres: genre ? genre.join(','):undefined,
-      language: 'en-US',
+      with_original_language: language ? language.toLowerCase() : undefined,
       page,
       sort_by: 'popularity.desc',
       'primary_release_date.gte':  years && years.length > 0 ? years[0] : undefined,
@@ -43,11 +43,17 @@ function createOptionsDiscover(page: number, genre: string[], years: string[], r
     headers: {
       accept: 'application/json',
     }
-  };
+  }
+  console.log('Options:', options);
+  return options;
 }
 
 
 
 export { createOptionsDiscover };
 
-// TODO: original_language filter
+
+
+// TODO: add original_language to filter
+
+// EN = en|de|fr|es

@@ -15,33 +15,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const movieController_1 = require("../controllers/movieController");
 const router = express_1.default.Router();
-router.post('/discover/movies', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { genre, years, rounds } = req.body;
+router.get('/discover/movies', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { genre, years, rounds, language } = req.body;
     console.log('genre:', genre);
     console.log('years:', years);
     console.log('rounds:', rounds);
-    const movies = yield (0, movieController_1.discoverMovies)(genre, years, rounds);
+    console.log('language:', language);
+    const movies = yield (0, movieController_1.discoverMovies)(genre, years, rounds, language);
     res.json(movies);
 }));
-router.get('/discover/movies', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const genre = req.query.genre;
-        const years = req.query.years;
-        const rounds = Number(req.query.rounds);
-        const movies = yield (0, movieController_1.discoverMovies)(genre, years, rounds);
-        res.json(movies);
-    }
-    catch (error) {
-        console.error(error);
-        next(error);
-    }
+router.post('/discover/movies', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { genre, years, rounds, language } = req.body;
+    console.log('genre:', genre);
+    console.log('years:', years);
+    console.log('rounds:', rounds);
+    console.log('language:', language);
+    const movies = yield (0, movieController_1.discoverMovies)(genre, years, rounds, language);
+    res.json(movies);
 }));
 router.get('/discover/movies/random', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const genre = req.query.genre;
         const years = req.query.years;
         const rounds = Number(req.query.rounds);
-        const movies = yield (0, movieController_1.discoverMovies)(genre, years, rounds);
+        const language = req.query.language;
+        const movies = yield (0, movieController_1.discoverMovies)(genre, years, rounds, language);
         res.json(movies);
     }
     catch (error) {
