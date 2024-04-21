@@ -12,23 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.discoverRandomMovies = exports.discoverMovies = exports.createOptionsDiscover = void 0;
+exports.getMovies = exports.discoverRandomMovies = exports.discoverMovies = exports.createOptionsDiscover = void 0;
 const axios_1 = __importDefault(require("axios"));
 const tmdb_1 = require("../services/tmdb");
 Object.defineProperty(exports, "createOptionsDiscover", { enumerable: true, get: function () { return tmdb_1.createOptionsDiscover; } });
+const movies = {};
 // this functions main purpose is to call tmdb with query params and get the total number of pages  and then call the discoverRandomMovies() function
 function discoverMovies(genre, years, rounds, language) {
     return __awaiter(this, void 0, void 0, function* () {
         const options = (0, tmdb_1.createOptionsDiscover)(1, genre, years, rounds, language);
         try {
             const response = yield axios_1.default.request(options);
-            console.log('Total pages:', response.data.total_pages);
-            console.log('Genre:', genre);
-            console.log('Years:', years);
-            console.log('Rounds:', rounds);
-            console.log('Language:', language);
+            console.log("Total pages:", response.data.total_pages);
+            console.log("Genre:", genre);
+            console.log("Years:", years);
+            console.log("Rounds:", rounds);
+            console.log("Language:", language);
             const movies = yield discoverRandomMovies(response.data.total_pages, genre, years, rounds, language);
-            console.log('Movies:', movies);
+            console.log("Movies:", movies);
+            movies.data = movies;
             return movies;
         }
         catch (error) {
@@ -52,8 +54,8 @@ function discoverRandomMovies(totalPages, genre, years, rounds, language) {
         options = (0, tmdb_1.createOptionsDiscover)(randomPage, genre, years, rounds, language);
         try {
             const response = yield axios_1.default.request(options);
-            console.log('Random page:', randomPage);
-            return response.data.results;
+            console.log("Random page:", randomPage);
+            return response.data.results.slice(0, rounds);
         }
         catch (error) {
             console.error(error);
@@ -62,4 +64,8 @@ function discoverRandomMovies(totalPages, genre, years, rounds, language) {
     });
 }
 exports.discoverRandomMovies = discoverRandomMovies;
+function getMovies() {
+    return movies || [];
+}
+exports.getMovies = getMovies;
 //# sourceMappingURL=movieController.js.map

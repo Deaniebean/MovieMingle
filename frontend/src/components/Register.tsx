@@ -2,7 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+
 const cookies = new Cookies();
 
 const Register = () => {
@@ -23,8 +24,8 @@ const Register = () => {
       },
     };
     axios(configuration)
-      .then((result) => {
-        console.log(result);
+      .then((result: AxiosResponse) => {
+        console.log(result.data);
         cookies.set('TOKEN', result.data.token, {
           path: '/',
         });

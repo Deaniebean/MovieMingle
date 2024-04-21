@@ -47,6 +47,4 @@ function createOptionsDiscover(page, genre, years, rounds, language) {
     return options;
 }
 exports.createOptionsDiscover = createOptionsDiscover;
-// TODO: add original_language to filter
-// EN = en|de|fr|es
 //# sourceMappingURL=tmdb.js.map

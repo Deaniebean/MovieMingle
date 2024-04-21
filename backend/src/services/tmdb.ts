@@ -52,8 +52,3 @@ function createOptionsDiscover(page: number, genre: string[], years: string[], r
 
 export { createOptionsDiscover };
 
-
-
-// TODO: add original_language to filter
-
-// EN = en|de|fr|es
