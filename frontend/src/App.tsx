@@ -6,14 +6,14 @@ import ProtectedRoutes from './ProtectedRoutes';
 import Auth from './components/Auth';
 import InputFieldsMovie from './pratice_fetches/InputFieldsMovie';
 
-
-//      <Route path="/" element={<Register />} />
+//        <Route path="/" element={< InputFieldsMovie/>} />
+//      
 function App() {
   return (
     <Router>
       <Routes>
 
-        <Route path="/" element={< InputFieldsMovie/>} />
+<Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
         <Route path="/home" element={<Auth/>}/>

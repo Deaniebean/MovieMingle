@@ -7,9 +7,21 @@ const cookies = new Cookies();
 
 
 const Login = () => {
-const[login, setLogin] = useState(false);   
-const [username, setUsername] = useState(''); 
-const [password, setPassword] = useState('');   
+
+  function getCookie(name: string) {
+    const value = `; ${document.cookie}`;
+    const parts: string[] = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift() as string;
+  }
+
+  // Usage:
+  const userId = getCookie('USER_ID');
+  console.log(userId);
+
+
+  const[login, setLogin] = useState(false);   
+  const [username, setUsername] = useState(''); 
+  const [password, setPassword] = useState('');   
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -26,8 +38,13 @@ const [password, setPassword] = useState('');
             cookies.set("TOKEN", result.data.token, {
                 path: "/",
             });
+        // Set another cookie with the user's MongoDB ID
+        cookies.set("USER_ID", result.data.userId, {
+          path: "/",
+      });
             window.location.href = "/home";
             setLogin(true);
+            getCookie('User_Id');
         })
         .catch((error: Error) => {
             console.log(error);
