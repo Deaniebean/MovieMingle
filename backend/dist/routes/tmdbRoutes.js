@@ -15,15 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const movieController_1 = require("../controllers/movieController");
 const router = express_1.default.Router();
-router.get('/discover/movies', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { genre, years, rounds, language } = req.body;
-    console.log('genre:', genre);
-    console.log('years:', years);
-    console.log('rounds:', rounds);
-    console.log('language:', language);
-    const movies = yield (0, movieController_1.discoverMovies)(genre, years, rounds, language);
-    res.json(movies);
-}));
 router.post('/discover/movies', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { genre, years, rounds, language } = req.body;
     console.log('genre:', genre);

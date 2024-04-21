@@ -33,11 +33,15 @@ const register = (request, response) => __awaiter(void 0, void 0, void 0, functi
             username: request.body.username,
             password: hashedPassword,
         });
+        console.log(user);
         // save the new user
-        const result = yield user.save();
-        response.status(201).send({
-            message: "User Created Successfully",
-            result,
+        yield user.save();
+        const token = jsonwebtoken_1.default.sign({ userId: user._id, username: user.username }, "RANDOM-TOKEN");
+        console.log(token);
+        response.status(200).send({
+            message: "Sign Up Successful",
+            token,
+            userId: user._id,
         });
     }
     catch (error) {
@@ -54,7 +58,7 @@ const login = (request, response) => __awaiter(void 0, void 0, void 0, function*
         const user = yield Users_1.default.findOne({ username: request.body.username });
         if (!user) {
             response.status(404).send({
-                message: "Email not found",
+                message: "user not found",
             });
             return;
         }
@@ -65,10 +69,11 @@ const login = (request, response) => __awaiter(void 0, void 0, void 0, function*
             });
             return;
         }
-        const token = jsonwebtoken_1.default.sign({ userId: user._id, username: user.username }, "RANDOM-TOKEN", { expiresIn: "24hours" });
+        const token = jsonwebtoken_1.default.sign({ userId: user._id, username: user.username }, "RANDOM-TOKEN");
         response.status(200).send({
             message: "Login Successful",
             token,
+            userId: user._id,
         });
     }
     catch (error) {
