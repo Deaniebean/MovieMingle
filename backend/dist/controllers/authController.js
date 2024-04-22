@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.register = void 0;
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Users_1 = __importDefault(require("../models/Users"));
 const register = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,7 +27,7 @@ const register = (request, response) => __awaiter(void 0, void 0, void 0, functi
     }
     try {
         // hash the password
-        const hashedPassword = yield bcrypt_1.default.hash(request.body.password, 10);
+        const hashedPassword = yield bcryptjs_1.default.hash(request.body.password, 10);
         // create a new user instance and collect the data
         const user = new Users_1.default({
             username: request.body.username,
@@ -58,7 +58,7 @@ const login = (request, response) => __awaiter(void 0, void 0, void 0, function*
             });
             return;
         }
-        const passwordCheck = yield bcrypt_1.default.compare(request.body.password, user.password);
+        const passwordCheck = yield bcryptjs_1.default.compare(request.body.password, user.password);
         if (!passwordCheck) {
             response.status(400).send({
                 message: "Password is incorrect",
