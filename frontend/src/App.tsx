@@ -6,15 +6,20 @@ import ProtectedRoutes from './ProtectedRoutes';
 import Auth from './components/Auth';
 import InputFieldsMovie from './pratice_fetches/InputFieldsMovie';
 import ThisOrThat from './pratice_fetches/ThisOrThat';
+import { MovieType } from './pratice_fetches/MovieType';
+import { useState } from 'react';
 
 //        <Route path="/" element={< InputFieldsMovie/>} />
 //        <Route path="/login" element={<Login />} />
+
+
 function App() {
+  const [movies, setMovies] = useState<MovieType[]>([]);  
   return (
     <Router>
       <Routes>
-        <Route path="/this-or-that" element={<ThisOrThat />} />
-        <Route path="/" element={<InputFieldsMovie />} />
+        <Route path="/this-or-that" element={<ThisOrThat movies={movies} setMovies={setMovies} />} />
+        <Route path="/" element={<InputFieldsMovie setMovies={setMovies}/>} />
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Auth />} />

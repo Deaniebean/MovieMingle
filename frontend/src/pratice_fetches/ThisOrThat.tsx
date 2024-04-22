@@ -1,36 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { MovieType } from './MovieType';
 
-interface Movie {
-  id: number;
-  original_title: string;
-  overview: string;
+
+interface Props {
+  movies: MovieType[];
+  setMovies: React.Dispatch<React.SetStateAction<MovieType[]>>;
 }
 
-function ThisOrThat() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+
+const ThisOrThat: React.FC<Props> = ({ movies }): React.ReactNode => {
+
 
   useEffect(() => {
-    // Fetch movies data from the server
-    axios
-      .get('/movies')
-      .then((response) => {
-        console.log('Success:', response.data);
-        setMovies(response.data);
-        setIsLoading(false);
-      })
-
-      .catch((error) => {
-        console.error('Error fetching movies:', error);
-        setIsLoading(false);
-      });
-  }, []);
     console.log('Movies:', movies);
+}, [movies])
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+
+  console.log('Movies:', movies);
+
+
 
   return (
     <div>

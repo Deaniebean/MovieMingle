@@ -2,7 +2,13 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const InputFieldsMovie = () => {
+import { MovieType } from './MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
+
+interface Props {
+  setMovies: React.Dispatch<React.SetStateAction<MovieType[]>>;
+}
+
+const InputFieldsMovie : React.FC<Props> = ({ setMovies }) => {
   const [genre, setGenre] = useState<number[]>([]);
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
@@ -41,6 +47,7 @@ const InputFieldsMovie = () => {
       );
 
       console.log('Success:', response.data);
+      setMovies(response.data);
       navigate('/this-or-that');
     } catch (error) {
       console.error('Error:', error);
