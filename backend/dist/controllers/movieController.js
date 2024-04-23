@@ -12,26 +12,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMovies = exports.discoverRandomMovies = exports.discoverMovies = exports.createOptionsDiscover = void 0;
+exports.discoverRandomMovies = exports.discoverMovies = exports.createOptionsDiscover = void 0;
 const axios_1 = __importDefault(require("axios"));
 const tmdb_1 = require("../services/tmdb");
 Object.defineProperty(exports, "createOptionsDiscover", { enumerable: true, get: function () { return tmdb_1.createOptionsDiscover; } });
-const movies = {};
-// this functions main purpose is to call tmdb with query params and get the total number of pages  and then call the discoverRandomMovies() function
+// Log the search parameters
+function logSearchParams(genre, years, rounds, language, totalPages) {
+    console.log("Total pages:", totalPages);
+    console.log("Genre:", genre);
+    console.log("Years:", years);
+    console.log("Rounds:", rounds);
+    console.log("Language:", language);
+}
+// Fetch movies based on the search parameters and include trailers
+// need to fetch movies with parameter page 1 to get total_pages which are then used in discoverRandomMovies to select random page
 function discoverMovies(genre, years, rounds, language) {
     return __awaiter(this, void 0, void 0, function* () {
         const options = (0, tmdb_1.createOptionsDiscover)(1, genre, years, rounds, language);
         try {
             const response = yield axios_1.default.request(options);
-            console.log("Total pages:", response.data.total_pages);
-            console.log("Genre:", genre);
-            console.log("Years:", years);
-            console.log("Rounds:", rounds);
-            console.log("Language:", language);
+            logSearchParams(genre, years, rounds, language, response.data.total_pages);
             const movies = yield discoverRandomMovies(response.data.total_pages, genre, years, rounds, language);
-            console.log("Movies:", movies);
-            movies.data = movies;
-            return movies;
+            // Fetch trailers for each movie
+            const movieTrailers = movies.map((movie) => __awaiter(this, void 0, void 0, function* () {
+                const options = (0, tmdb_1.createOptionsTrailer)(movie.id);
+                const response = yield axios_1.default.request(options);
+                movie.videos = response.data.results;
+                return movie;
+            }));
+            const moviesWithVideos = yield Promise.all(movieTrailers);
+            console.log("Movies:", moviesWithVideos);
+            return moviesWithVideos;
         }
         catch (error) {
             console.error(error);
@@ -40,18 +51,12 @@ function discoverMovies(genre, years, rounds, language) {
     });
 }
 exports.discoverMovies = discoverMovies;
-// This function is necessary to randomize the page number for the discoverMovies() function, otherwise the movie results will always be the same
-// since default sorting is by popularity we don't want it to be too far down the list -> max totalPages value = 1000
+// function for fetching a random page of result movies
 function discoverRandomMovies(totalPages, genre, years, rounds, language) {
     return __awaiter(this, void 0, void 0, function* () {
-        let randomPage;
-        let options;
-        if (totalPages > 1000) {
-            totalPages = 1000;
-        }
-        const maxPage = Math.min(totalPages, 500);
-        randomPage = Math.floor(Math.random() * maxPage) + 1;
-        options = (0, tmdb_1.createOptionsDiscover)(randomPage, genre, years, rounds, language);
+        const maxPage = Math.min(totalPages > 1000 ? 1000 : totalPages, 500);
+        const randomPage = Math.floor(Math.random() * maxPage) + 1;
+        const options = (0, tmdb_1.createOptionsDiscover)(randomPage, genre, years, rounds, language);
         try {
             const response = yield axios_1.default.request(options);
             console.log("Random page:", randomPage);
@@ -64,8 +69,4 @@ function discoverRandomMovies(totalPages, genre, years, rounds, language) {
     });
 }
 exports.discoverRandomMovies = discoverRandomMovies;
-function getMovies() {
-    return movies || [];
-}
-exports.getMovies = getMovies;
 //# sourceMappingURL=movieController.js.map

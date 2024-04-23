@@ -1,61 +1,49 @@
 import axios from "axios";
-import { createOptionsDiscover } from "../services/tmdb";
+import { createOptionsDiscover, createOptionsTrailer } from "../services/tmdb";
+import { Movie } from "../types/Movie";
 
+// Log the search parameters
+function logSearchParams(genre: string[], years: string[], rounds: number, language: string, totalPages: number) {
+  console.log("Total pages:", totalPages);
+  console.log("Genre:", genre);
+  console.log("Years:", years);
+  console.log("Rounds:", rounds);
+  console.log("Language:", language);
+}
 
-const movies = {}
-
-
-// this functions main purpose is to call tmdb with query params and get the total number of pages  and then call the discoverRandomMovies() function
-async function discoverMovies(
-  genre: string[],
-  years: string[],
-  rounds: number,
-  language: string
-) {
+// Fetch movies based on the search parameters and include trailers
+// need to fetch movies with parameter page 1 to get total_pages which are then used in discoverRandomMovies to select random page
+async function discoverMovies(genre: string[], years: string[], rounds: number, language: string) {
   const options = createOptionsDiscover(1, genre, years, rounds, language);
   try {
     const response = await axios.request(options);
-    console.log("Total pages:", response.data.total_pages);
-    console.log("Genre:", genre);
-    console.log("Years:", years);
-    console.log("Rounds:", rounds);
-    console.log("Language:", language);
+    logSearchParams(genre, years, rounds, language, response.data.total_pages);
 
-    const movies = await discoverRandomMovies(
-      response.data.total_pages,
-      genre,
-      years,
-      rounds,
-      language
-    );
-    console.log("Movies:", movies);
-    movies.data = movies;
-    return movies;
+    const movies = await discoverRandomMovies(response.data.total_pages, genre, years, rounds, language);
+
+    // Fetch trailers for each movie
+    const movieTrailers = movies.map(async (movie: Movie) => {
+      const options = createOptionsTrailer(movie.id);
+      const response = await axios.request(options);
+      movie.videos = response.data.results;
+      return movie;
+    });
+
+    const moviesWithVideos = await Promise.all(movieTrailers);
+
+    console.log("Movies:", moviesWithVideos);
+    return moviesWithVideos;
   } catch (error) {
     console.error(error);
     return [];
   }
 }
 
-// This function is necessary to randomize the page number for the discoverMovies() function, otherwise the movie results will always be the same
-// since default sorting is by popularity we don't want it to be too far down the list -> max totalPages value = 1000
-async function discoverRandomMovies(
-  totalPages: number,
-  genre: string[],
-  years: string[],
-  rounds: number,
-  language: string
-) {
-  let randomPage;
-  let options;
-
-  if (totalPages > 1000) {
-    totalPages = 1000;
-  }
-
-  const maxPage = Math.min(totalPages, 500);
-  randomPage = Math.floor(Math.random() * maxPage) + 1;
-  options = createOptionsDiscover(randomPage, genre, years, rounds, language);
+// function for fetching a random page of result movies
+async function discoverRandomMovies(totalPages: number, genre: string[], years: string[], rounds: number, language: string) {
+  const maxPage = Math.min(totalPages > 1000 ? 1000 : totalPages, 500);
+  const randomPage = Math.floor(Math.random() * maxPage) + 1;
+  const options = createOptionsDiscover(randomPage, genre, years, rounds, language);
 
   try {
     const response = await axios.request(options);
@@ -67,11 +55,4 @@ async function discoverRandomMovies(
   }
 }
 
-
-function getMovies () {
-  return movies || [];
-}
-
-
-
-export { createOptionsDiscover, discoverMovies, discoverRandomMovies, getMovies };
+export { createOptionsDiscover, discoverMovies, discoverRandomMovies };

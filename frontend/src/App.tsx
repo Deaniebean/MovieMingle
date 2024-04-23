@@ -6,7 +6,7 @@ import ProtectedRoutes from './ProtectedRoutes';
 import Auth from './components/Auth';
 import InputFieldsMovie from './pratice_fetches/InputFieldsMovie';
 import ThisOrThat from './pratice_fetches/ThisOrThat';
-import { MovieType } from './pratice_fetches/MovieType';
+import { Movie } from './pratice_fetches/MovieType';
 import { useState } from 'react';
 
 //        <Route path="/" element={< InputFieldsMovie/>} />
@@ -14,7 +14,7 @@ import { useState } from 'react';
 
 
 function App() {
-  const [movies, setMovies] = useState<MovieType[]>([]);  
+  const [movies, setMovies] = useState<Movie[]>([]);  
   return (
     <Router>
       <Routes>

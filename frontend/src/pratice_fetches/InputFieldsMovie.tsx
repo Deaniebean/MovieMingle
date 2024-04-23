@@ -2,10 +2,10 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { MovieType } from './MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
+import { Movie } from './MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
 
 interface Props {
-  setMovies: React.Dispatch<React.SetStateAction<MovieType[]>>;
+  setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
 }
 
 const InputFieldsMovie : React.FC<Props> = ({ setMovies }) => {

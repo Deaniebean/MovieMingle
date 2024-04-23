@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { MovieType } from './MovieType';
+import { Movie } from './MovieType';
 
 
 interface Props {
-  movies: MovieType[];
-  setMovies: React.Dispatch<React.SetStateAction<MovieType[]>>;
+  movies: Movie[];
+  setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
 }
 
 
