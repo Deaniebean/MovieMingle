@@ -1,0 +1,30 @@
+/* Theme Colors */
+:root {
+    --primary: #171A2C; 
+    --secondary: #8091BE; 
+    --tertiary: #563D4F;
+    
+    --text: #ffffff;
+    --text-dark: #dddddd;
+    --text-darker: #bbbbbb;
+    --text-inv: #000000;
+    --text-inv-light: #1a1a1a;
+
+    --font: montserrat;
+    --title-font: kumar one, sans-serif;
+  }
+
+  h1 {
+    color: var(--secondary);
+    font-family: var(--title-font);
+  }
+
+  h2 {
+    color: var(--primary);
+    font-family: var(--font);
+  }
+
+  p {
+    color: var(--text);
+    font-family: var(--font);
+  }
