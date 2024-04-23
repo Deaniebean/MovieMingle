@@ -1,0 +1,46 @@
+/* Theme Colors */
+@font-face {
+  font-family: 'Kumar One';
+  src: url('../assets/font/KumarOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/font/Montserrat-VariableFont_wght.ttf') format('truetype');
+}
+
+:root {
+  --primary: #171a2c;
+  --secondary: #8091be;
+  --tertiary: #563d4f;
+
+  --text: #ffffff;
+  --text-dark: #dddddd;
+  --text-darker: #bbbbbb;
+  --text-inv: #000000;
+  --text-inv-light: #1a1a1a;
+
+  --success: #2bb32b;
+  --success-light: #a5f3a5;
+
+  --error: #e2665b;
+  --error-light: #db7d74;
+
+  --font: Montserrat;
+  --title-font: Kumar One, sans-serif;
+}
+
+h1 {
+  color: var(--secondary);
+  font-family: var(--title-font);
+}
+
+h2 {
+  color: var(--primary);
+  font-family: var(--font);
+}
+
+p {
+  color: var(--text);
+  font-family: var(--font);
+}
