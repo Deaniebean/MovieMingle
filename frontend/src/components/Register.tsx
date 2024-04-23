@@ -3,6 +3,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosError } from 'axios';
+import '../styles/globals.css';
+import '../styles/tailwind.css';
+import './Register.css';
+
+
+
 const cookies = new Cookies();
 
 interface RegisterProps {}
@@ -12,10 +18,22 @@ const Register = (props: RegisterProps) => {
   const [lightOrDark, setLightOrDark] = useState('on');
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [verifyPassword, setVerifyPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [register, setRegister] = React.useState(false);
+  const [registerClicked, setRegisterClicked] = useState(false);
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Überprüfen, ob Passwörter übereinstimmen
+    if (password !== verifyPassword) {
+      setErrorMessage('Passwords do not match');
+      return;
+    }
+
+    // Formulardaten senden
     const configuration = {
       method: 'post',
       url: 'http://localhost:8082/authenticate/register',
@@ -39,64 +57,78 @@ const Register = (props: RegisterProps) => {
           console.log('Error response data:', error.response.data);
           console.log('Error response status:', error.response.status);
           console.log('Error response headers:', error.response.headers);
+          setErrorMessage('Registration failed');
         } else if (error.request) {
           // The request was made but no response was received
           console.log('Error request:', error.request);
+          setErrorMessage('Registration failed');
         } else {
           // Something happened in setting up the request that triggered an Error
           console.log('Error message:', error.message);
+          setErrorMessage('Registration failed');
         }
         console.log('Error config:', error.config);
+      })
+      .finally(() => {
+        setRegisterClicked(true);
       });
   };
 
+  //toggle light mode
   const clickLight = () => {
-    ///toggle light mode
     setLightMode(!lightMode);
-    if (lightMode === true) {
-      setLightOrDark('off');
-    } else {
-      setLightOrDark('on');
-    }
+    setLightOrDark(lightMode ? 'on' : 'off');
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <label>
-          Username:
-          <input
-            type="text"
-            placeholder="Enter username"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <button type="submit">Sign Up</button>
-        <p>
-          Already have an Account?<Link to="/login"> Login here</Link>
-        </p>
-        <p>
-          {' '}
-          Turn the lights <strong onClick={clickLight}>{lightOrDark}</strong>
-        </p>
-      </form>
-      {register ? (
-        <p className="text-success">You Are Registered Successfully</p>
-      ) : (
-        <p className="text-danger">You Are Not Registered</p>
-      )}
+    <div className='wrapper'>
+      <div className='titlebar'>
+        <h1>MovieMingle</h1>
+      </div>
+      <div className='container'>
+        <h2>Register</h2>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div className='dataInputWrapper'>
+            <input
+              className='dataInput'
+              type="text"
+              placeholder="E-Mail or Username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              className='dataInput'
+              type="password"
+              placeholder='Password'
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <input
+              className='dataInput'
+              type="password"
+              placeholder='Verify Password'
+              name="verifyPassword"
+              value={verifyPassword}
+              onChange={(e) => setVerifyPassword(e.target.value)}
+            />
+            <div className='errorMessageContainer'>
+              {(errorMessage && !register) || (registerClicked && !register) ? (
+                <p className='error'>{errorMessage || 'You Are Not Registered'}</p>
+              ) : null}
+            </div>
+          </div>
+          <button className='button' type="submit">Register</button>
+          <p>
+            Already have an account?&nbsp; 
+            <Link className='link' to="/login">Log In now</Link>
+          </p>
+          <p>
+            Turn the lights&nbsp;<strong onClick={clickLight}>{lightOrDark}</strong>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };
