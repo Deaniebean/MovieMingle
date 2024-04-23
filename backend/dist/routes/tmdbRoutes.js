@@ -13,18 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const tmdb_1 = require("../services/tmdb");
+const movieController_1 = require("../controllers/movieController");
 const router = express_1.default.Router();
-router.get('/trending', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const movies = yield (0, tmdb_1.getMovies)();
-        console.log(movies);
-        res.json(movies);
-    }
-    catch (error) {
-        console.error(error);
-        next(error);
-    }
+let movies = [];
+router.post("/discover/movies", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { genre, years, rounds, language } = req.body;
+    console.log("genre:", genre);
+    console.log("years:", years);
+    console.log("rounds:", rounds);
+    console.log("language:", language);
+    movies = yield (0, movieController_1.discoverMovies)(genre, years, rounds, language);
+    res.json(movies);
 }));
 exports.default = router;
 //# sourceMappingURL=tmdbRoutes.js.map

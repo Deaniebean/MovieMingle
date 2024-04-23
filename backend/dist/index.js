@@ -15,10 +15,11 @@ const port = process.env.PORT || 8082;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(cors_1.default);
-app.use('/authenticate', authRoutes_1.default);
+app.use("/authenticate", authRoutes_1.default);
 app.use(tmdbRoutes_1.default);
-app.get("/", (req, res) => {
-    res.send("Express + TypeScript Server");
+app.use((req, res) => {
+    res.status(404);
+    res.json({ message: "Route not found" });
 });
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
