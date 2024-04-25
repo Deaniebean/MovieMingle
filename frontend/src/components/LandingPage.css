@@ -111,6 +111,11 @@ body {
     }
 }
 
+.font-semibold {
+    font-weight: bold;
+    color: var(--secondary)
+}
+
 .buttonStart {
     margin-top: 50px;
     display: flex;
