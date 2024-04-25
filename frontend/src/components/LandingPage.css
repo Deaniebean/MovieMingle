@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary);
+    color: var(--text);
+    padding: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.landing-page p {
+    color: var(--text);
+    margin: 15px auto;
+    max-width: 900px;
+    text-align: center;
+    display: block;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-family: var(--font);
+}
+
+.landing-page h1 {
+    color: var(--secondary);
+    font-size: 2rem;
+    margin: 0 auto 20px;
+    max-width: 800px;
+    text-align: center;
+    font-family: var(--title-font);
+}
+
+.header-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: var(--primary);
+    padding: 20px;
+    z-index: 999;
+}
+
+.logo {
+    font-size: 2rem;
+    color: var(--text);
+    margin-right: 20px;
+}
+
+.app-logo {
+    display: flex;
+    align-items: center;
+}
+
+.burger-menu {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+    .features {
+        display: none;
+    }
+
+    .feature {
+        display: none;
+    }
+
+    .mobile-image {
+        display: block;
+        margin-top: 20px;
+        max-width: 100%;
+    }
+
+    .landing-page p {
+        font-size: 13px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .features {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        font-weight: bold;
+        font-family: var(--font);
+    }
+
+    .feature {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-text {
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .mobile-image {
+        display: none;
+    }
+}
+
+.buttonStart {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+    height: 3rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    background-color: var(--secondary);
+    color: var(--primary);
+    font-family: var(--font);
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.buttonStart:hover {
+    background-color: var(--text);
+    transform: scale(1.05);
+}
+
+
+
