@@ -5,7 +5,7 @@ import Login from './components/Login';
 import ProtectedRoutes from './ProtectedRoutes';
 import Auth from './components/Auth';
 import InputFieldsMovie from './pratice_fetches/InputFieldsMovie';
-import ThisOrThat from './pratice_fetches/ThisOrThat';
+import ThisOrThat from './components/ThisOrThat';
 import { Movie } from './pratice_fetches/MovieType';
 import { useState } from 'react';
 
