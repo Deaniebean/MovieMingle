@@ -27,13 +27,13 @@ const Register = (props: RegisterProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Überprüfen, ob Passwörter übereinstimmen
+    // Check whether passwords match
     if (password !== verifyPassword) {
       setErrorMessage('Passwords do not match');
       return;
     }
 
-    // Formulardaten senden
+    // Send form data
     const configuration = {
       method: 'post',
       url: 'http://localhost:8082/authenticate/register',
@@ -57,7 +57,7 @@ const Register = (props: RegisterProps) => {
           console.log('Error response data:', error.response.data);
           console.log('Error response status:', error.response.status);
           console.log('Error response headers:', error.response.headers);
-          setErrorMessage('Registration failed');
+          setErrorMessage('This username already exists');
         } else if (error.request) {
           // The request was made but no response was received
           console.log('Error request:', error.request);
@@ -74,7 +74,7 @@ const Register = (props: RegisterProps) => {
       });
   };
 
-  //toggle light mode
+  // Toggle light mode
   const clickLight = () => {
     setLightMode(!lightMode);
     setLightOrDark(lightMode ? 'on' : 'off');
@@ -84,6 +84,10 @@ const Register = (props: RegisterProps) => {
     <div className='wrapper'>
       <div className='titlebar'>
         <h1>MovieMingle</h1>
+      </div>
+      <div className='textContainer'>
+        <p className='text'>Discover, decide, rate</p>
+        <p className='text'> - your ultimate movie compass!</p>
       </div>
       <div className='container'>
         <h2>Register</h2>
