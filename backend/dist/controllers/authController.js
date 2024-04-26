@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.register = void 0;
+exports.resetPassword = exports.login = exports.register = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Users_1 = __importDefault(require("../models/Users"));
@@ -85,4 +85,15 @@ const login = (request, response) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.login = login;
+const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield Users_1.default.findOne({ username: req.body.username });
+    if (!user) {
+        res.status(404).send({ message: 'User not found' });
+        return;
+    }
+    user.password = yield bcryptjs_1.default.hash(req.body.newPassword, 10);
+    yield user.save();
+    res.status(200).send({ message: 'Password reset successful' });
+});
+exports.resetPassword = resetPassword;
 //# sourceMappingURL=authController.js.map
