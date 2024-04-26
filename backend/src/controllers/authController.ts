@@ -91,3 +91,16 @@ export const login = async (
     });
   }
 };
+
+export const resetPassword = async (req: express.Request, res: express.Response) => {
+
+  const user = await User.findOne({username: req.body.username});
+  if (!user) {
+    res.status(404).send({message: 'User not found'});
+    return;
+  }
+  user.password = await bcrypt.hash(req.body.newPassword, 10);
+  await user.save();
+
+ res.status(200).send({message: 'Password reset successful'});
+};
