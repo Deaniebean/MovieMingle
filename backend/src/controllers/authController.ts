@@ -1,11 +1,15 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/Users";
+import User from "../models/mongooseUsers";
 import express from "express";
+import UserModel from "../models/userModel";
+import { v4 as uuidv4 } from 'uuid';
+import { saveUserInDb } from "./saveUserInDb";
 
 export const register = async (
   request: express.Request,
   response: express.Response
+
 ): Promise<void> => {
   if (!request.body) {
     response.status(400).send({ message: "Request body is missing" });
@@ -21,25 +25,22 @@ export const register = async (
     // hash the password
     const hashedPassword = await bcrypt.hash(request.body.password, 10);
 
-    // create a new user instance and collect the data
-    const user = new User({
-      username: request.body.username,
-      password: hashedPassword,
-    });
-    console.log(user);
+  const userModel: UserModel = {
+    uuid: await uuidv4(),
+    username: request.body.username,
+    password: hashedPassword,
+  };
 
-    // save the new user
-    await user.save();
+  await saveUserInDb(userModel);
 
     const token = jwt.sign(
-      { userId: user._id, username: user.username },
+      userModel,
       "RANDOM-TOKEN"
     );
-    console.log(token);
     response.status(200).send({
       message: "Sign Up Successful",
       token,
-      userId: user._id,
+      userId: userModel.uuid,
     });
   } catch (error) {
     console.log(error);

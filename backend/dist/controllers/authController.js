@@ -15,7 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resetPassword = exports.login = exports.register = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const Users_1 = __importDefault(require("../models/Users"));
+const mongooseUsers_1 = __importDefault(require("../models/mongooseUsers"));
+const uuid_1 = require("uuid");
+const db_1 = require("./db");
 const register = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     if (!request.body) {
         response.status(400).send({ message: "Request body is missing" });
@@ -28,20 +30,17 @@ const register = (request, response) => __awaiter(void 0, void 0, void 0, functi
     try {
         // hash the password
         const hashedPassword = yield bcryptjs_1.default.hash(request.body.password, 10);
-        // create a new user instance and collect the data
-        const user = new Users_1.default({
+        const userModel = {
+            uuid: yield (0, uuid_1.v4)(),
             username: request.body.username,
             password: hashedPassword,
-        });
-        console.log(user);
-        // save the new user
-        yield user.save();
-        const token = jsonwebtoken_1.default.sign({ userId: user._id, username: user.username }, "RANDOM-TOKEN");
-        console.log(token);
+        };
+        yield (0, db_1.saveUserInDb)(userModel);
+        const token = jsonwebtoken_1.default.sign(userModel, "RANDOM-TOKEN");
         response.status(200).send({
             message: "Sign Up Successful",
             token,
-            userId: user._id,
+            userId: userModel.uuid,
         });
     }
     catch (error) {
@@ -55,7 +54,7 @@ const register = (request, response) => __awaiter(void 0, void 0, void 0, functi
 exports.register = register;
 const login = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield Users_1.default.findOne({ username: request.body.username });
+        const user = yield mongooseUsers_1.default.findOne({ username: request.body.username });
         if (!user) {
             response.status(404).send({
                 message: "user not found",
@@ -86,7 +85,7 @@ const login = (request, response) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.login = login;
 const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield Users_1.default.findOne({ username: req.body.username });
+    const user = yield mongooseUsers_1.default.findOne({ username: req.body.username });
     if (!user) {
         res.status(404).send({ message: 'User not found' });
         return;
