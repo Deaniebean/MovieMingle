@@ -1,7 +1,10 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/Users";
+import User from "../models/mongooseUsers";
 import express from "express";
+import UserModel from "../models/userModel";
+import { v4 as uuidv4 } from "uuid";
+import { saveUserInDb } from "./saveUserInDb";
 
 export const register = async (
   request: express.Request,
@@ -21,25 +24,19 @@ export const register = async (
     // hash the password
     const hashedPassword = await bcrypt.hash(request.body.password, 10);
 
-    // create a new user instance and collect the data
-    const user = new User({
+    const userModel: UserModel = {
+      uuid: await uuidv4(),
       username: request.body.username,
       password: hashedPassword,
-    });
-    console.log(user);
+    };
 
-    // save the new user
-    await user.save();
+    await saveUserInDb(userModel);
 
-    const token = jwt.sign(
-      { userId: user._id, username: user.username },
-      "RANDOM-TOKEN"
-    );
-    console.log(token);
+    const token = jwt.sign(userModel, "RANDOM-TOKEN");
     response.status(200).send({
       message: "Sign Up Successful",
       token,
-      userId: user._id,
+      userId: userModel.uuid,
     });
   } catch (error) {
     console.log(error);
@@ -75,13 +72,13 @@ export const login = async (
     }
 
     const token = jwt.sign(
-      { userId: user._id, username: user.username },
+      { userId: user.uuid, username: user.username },
       "RANDOM-TOKEN"
     );
     response.status(200).send({
       message: "Login Successful",
       token,
-      userId: user._id,
+      user: user.uuid,
     });
   } catch (error) {
     console.log(error);
@@ -92,15 +89,17 @@ export const login = async (
   }
 };
 
-export const resetPassword = async (req: express.Request, res: express.Response) => {
-
-  const user = await User.findOne({username: req.body.username});
+export const resetPassword = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  const user = await User.findOne({ username: req.body.username });
   if (!user) {
-    res.status(404).send({message: 'User not found'});
+    res.status(404).send({ message: "User not found" });
     return;
   }
   user.password = await bcrypt.hash(req.body.newPassword, 10);
   await user.save();
 
- res.status(200).send({message: 'Password reset successful'});
+  res.status(200).send({ message: "Password reset successful" });
 };
