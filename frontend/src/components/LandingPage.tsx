@@ -1,5 +1,6 @@
 import React from "react";
 import "./LandingPage.css";
+import '../styles/globals.css';
 import hamburgerMenuIcon from "../assets/solar_hamburger-menu-linear.png";
 import refineYourChoiceIcon from "../assets/RefineYourChoice.png";
 import makeYourChoiceIcon from "../assets/MakeYourChoice.png";
