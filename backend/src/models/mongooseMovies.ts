@@ -1,21 +1,31 @@
 import mongoose from 'mongoose';
 
 const MovieSchema = new mongoose.Schema({
-  original_title: {
-    type: String,
-    required: true,
-  },
-  overview: {
-    type: String,
-    required: true,
-  },
-  genre: {
-    type: [String],
-  },
-  release_date: {
-    type: String,
-    required: true,
-  },
+
+    id: {
+        type: Number,
+        required: true,
+        },
+
+    original_title: {
+        type: String,
+        required: true,
+    },
+    original_language: {
+        type: String,
+        required: false,
+    },
+    overview: {
+        type: String,
+        required: false,
+    },
+    genre: {
+        type: [String],
+    },
+    release_date: {
+        type: String,
+        required: true,
+    },
     poster_path: {
         type: String,
         required: false,
