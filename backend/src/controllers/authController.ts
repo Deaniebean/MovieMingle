@@ -36,7 +36,7 @@ export const register = async (
     response.status(200).send({
       message: "Sign Up Successful",
       token,
-      userId: userModel.uuid,
+      uuid: userModel.uuid,
     });
   } catch (error) {
     console.log(error);
@@ -72,13 +72,15 @@ export const login = async (
     }
 
     const token = jwt.sign(
-      { userId: user.uuid, username: user.username },
+      { uuid: user.uuid, username: user.username },
       "RANDOM-TOKEN"
     );
+    console.log("user", user)
+    console.log("uuid", user.uuid)
     response.status(200).send({
       message: "Login Successful",
       token,
-      user: user.uuid,
+      uuid: user.uuid,
     });
   } catch (error) {
     console.log(error);

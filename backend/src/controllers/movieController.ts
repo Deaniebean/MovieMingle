@@ -55,4 +55,10 @@ async function discoverRandomMovies(totalPages: number, genre: string[], years: 
   }
 }
 
-export { createOptionsDiscover, discoverMovies, discoverRandomMovies };
+
+
+async function addToWatchList() {
+  // Add movie to watchlist
+}
+
+export { createOptionsDiscover, discoverMovies, discoverRandomMovies, addToWatchList };
