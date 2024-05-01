@@ -70,6 +70,8 @@ test("test register successful", async () => {
     uuid,
     username: req.body.username,
     password: hashedPassword,
+    watch_list: [],
+    history: [],
   };
 
   await register(req, res);

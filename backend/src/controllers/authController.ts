@@ -28,6 +28,8 @@ export const register = async (
       uuid: await uuidv4(),
       username: request.body.username,
       password: hashedPassword,
+      watch_list: [],
+      history: [],
     };
 
     await saveUserInDb(userModel);
