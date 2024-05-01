@@ -1,10 +1,12 @@
 import './App.css';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import ProtectedRoutes from './ProtectedRoutes';
 import Auth from './components/Auth';
 import InputFieldsMovie from './pratice_fetches/InputFieldsMovie';
+import FilterPage from './components/FilterPage';
 import ThisOrThat from './components/ThisOrThat';
 import { Movie } from './pratice_fetches/MovieType';
 import { useState } from 'react';
@@ -19,7 +21,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/this-or-that" element={<ThisOrThat movies={movies} setMovies={setMovies} />} />
-        <Route path="/" element={<InputFieldsMovie setMovies={setMovies}/>} />
+        <Route path="/" element={<FilterPage setMovies={setMovies}/>} />
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Auth />} />
