@@ -5,11 +5,11 @@ interface MovieModel{
     genre: string[], // convert id numbers to strings before adding to model
     release_date: string;
     poster_path: string | "",
-    vote: Number,
-    vote_count: Number,
+    vote: number,
+    vote_count: number,
     trailer: string,
     date: Date,
-    rating: Number
+    rating: number
 
 }
 export default MovieModel;
