@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RangeSlider from 'react-range-slider-input';
 import 'react-range-slider-input/dist/style.css';
 import '../styles/filterSlider.css';
 import '../styles/globals.css';
@@ -243,13 +242,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
         <h2>Release year</h2>
         <label>
           Years
-          {/* <Slider
-              getAriaLabel={() => 'Temperature range'}
-              // value={value}
-              onChange={onYearChange}
-              valueLabelDisplay="auto"
-              // getAriaValueText={valuetext}
-            /> */}
           <Slider
             getAriaLabel={() => 'Release Date'}
             defaultValue={30}
