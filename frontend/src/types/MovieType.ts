@@ -18,3 +18,4 @@ interface Movie {
 }
 
 export type { Movie };
+
