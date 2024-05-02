@@ -8,6 +8,8 @@ import InputFieldsMovie from './pratice_fetches/InputFieldsMovie';
 import ThisOrThat from './pratice_fetches/ThisOrThat';
 import { Movie } from './types/MovieType';
 import { useState } from 'react';
+import React from 'react';
+
 
 //        <Route path="/" element={< InputFieldsMovie/>} />
 //        <Route path="/login" element={<Login />} />
