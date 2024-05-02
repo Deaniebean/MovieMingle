@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { Movie } from '../types/MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
 
+import { Button } from "@material-tailwind/react";
+
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
 }
@@ -56,6 +58,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
 
   return (
     <div>
+      <Button>Button</Button>
       <form onSubmit={queryParams}>
         <label>
           Genre
