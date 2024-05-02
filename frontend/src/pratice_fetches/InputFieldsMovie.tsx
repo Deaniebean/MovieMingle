@@ -2,13 +2,13 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Movie } from './MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
+import { Movie } from '../types/MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
 
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
 }
 
-const InputFieldsMovie : React.FC<Props> = ({ setMovies }) => {
+const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   const [genre, setGenre] = useState<number[]>([]);
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
