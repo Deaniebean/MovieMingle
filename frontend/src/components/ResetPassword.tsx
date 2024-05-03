@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosError } from 'axios';
 import '../styles/globals.css';
-import '../styles/tailwind.css';
 import './Register.css';
 
 //To-do: password strength meter

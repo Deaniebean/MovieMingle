@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosResponse } from 'axios';
 import '../styles/globals.css';
-import '../styles/tailwind.css';
 import './Register.css';
 
 
