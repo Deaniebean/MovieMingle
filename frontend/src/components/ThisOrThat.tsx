@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Movie } from './Movie';
+import { Movie } from '../types/MovieType';
 import './ThisOrThat.css'; 
 
 

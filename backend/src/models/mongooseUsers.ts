@@ -23,15 +23,5 @@ const UserSchema = new mongoose.Schema({
 });
 
 
-// Response object
-const userTokenValues = {
-  uuid: UserSchema.path('uuid').toString(),
-  username: UserSchema.path('username').toString(),
-  password: UserSchema.path('password').toString(),
-};
-
-
-
-
 const User = mongoose.model('User', UserSchema);
-export {User, userTokenValues};
+export {User};
