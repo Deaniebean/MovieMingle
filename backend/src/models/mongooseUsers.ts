@@ -21,5 +21,17 @@ const UserSchema = new mongoose.Schema({
   watch_list: [{ type: Schema.Types.ObjectId, ref: "Movie" }], // Movies in the watch list
   history: [{ type: Schema.Types.ObjectId, ref: "Movie" }], // Movies watched
 });
+
+
+// Response object
+const userTokenValues = {
+  uuid: UserSchema.path('uuid').toString(),
+  username: UserSchema.path('username').toString(),
+  password: UserSchema.path('password').toString(),
+};
+
+
+
+
 const User = mongoose.model('User', UserSchema);
-export default User;
+export {User, userTokenValues};

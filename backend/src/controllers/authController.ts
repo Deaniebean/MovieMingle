@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/mongooseUsers";
+import {User, userTokenValues } from "../models/mongooseUsers";
 import express from "express";
 import UserModel from "../models/userModel";
 import { v4 as uuidv4 } from "uuid";
@@ -34,11 +34,11 @@ export const register = async (
 
     await saveUserInDb(userModel);
 
-    const token = jwt.sign(userModel, "RANDOM-TOKEN");
+    const token = jwt.sign(userTokenValues, "RANDOM-TOKEN");
     response.status(200).send({
       message: "Sign Up Successful",
       token,
-      uuid: userModel.uuid,
+      uuid: userTokenValues.uuid,
     });
   } catch (error) {
     console.log(error);
@@ -74,15 +74,15 @@ export const login = async (
     }
 
     const token = jwt.sign(
-      { uuid: user.uuid, username: user.username },
+      { uuid: userTokenValues.uuid, username: userTokenValues.username },
       "RANDOM-TOKEN"
     );
-    console.log("user", user)
-    console.log("uuid", user.uuid)
+    console.log("user", userTokenValues)
+    console.log("uuid", userTokenValues.uuid)
     response.status(200).send({
       message: "Login Successful",
       token,
-      uuid: user.uuid,
+      uuid: userTokenValues.uuid,
     });
   } catch (error) {
     console.log(error);

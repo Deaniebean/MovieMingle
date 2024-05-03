@@ -26,7 +26,7 @@ const ThisOrThat: React.FC<Props> = ({ movies }): React.ReactNode => {
     const release_date = movies[index].release_date;
     
   if(movies[index].poster_path){
-    const poster_path = movies[index].poster_path;
+    const poster_path = "https://image.tmdb.org/t/p/original" + movies[index].poster_path;
    console.log('poster_path:', poster_path);
   } else {
     const poster_path = 'No poster available';

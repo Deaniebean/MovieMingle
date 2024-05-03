@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Movie } from '../types/MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
+import React from 'react';
 
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;

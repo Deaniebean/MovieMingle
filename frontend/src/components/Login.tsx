@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosResponse } from 'axios';
+import React from 'react';
 const cookies = new Cookies();
 
 const Login = () => {
@@ -28,12 +29,12 @@ const Login = () => {
           path: '/',
         });
         // Set another cookie with the user's MongoDB ID
-        cookies.set('USER_ID', result.data.userId, {
+        cookies.set('UUID', result.data.uuid, {
           path: '/',
         });
         window.location.href = '/home';
         setLogin(true);
-        getCookie('USER_ID')
+        getCookie('UUID')
       })
       .catch((error: Error) => {
         console.log(error);
@@ -75,3 +76,7 @@ const Login = () => {
 };
 
 export default Login;
+function getCookie(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

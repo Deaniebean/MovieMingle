@@ -7,8 +7,7 @@ import { saveUserInDb } from "./saveUserInDb";
 import UserModel from "../models/userModel";
 import { register } from "./authController";
 import { login } from "./authController";
-import User from "../models/mongooseUsers";
-import mongoose from "mongoose";
+import {User} from "../models/mongooseUsers";
 
 // SETUP
 

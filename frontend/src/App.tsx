@@ -11,7 +11,7 @@ import { useState } from 'react';
 import React from 'react';
 
 
-//        <Route path="/" element={< InputFieldsMovie/>} />
+//        <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 //        <Route path="/login" element={<Login />} />
 
 function App() {
@@ -19,11 +19,11 @@ function App() {
   return (
     <Router>
       <Routes>
+      <Route path="/" element={<Login />} />
         <Route
           path="/this-or-that"
           element={<ThisOrThat movies={movies} setMovies={setMovies} />}
         />
-        <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Auth />} />
