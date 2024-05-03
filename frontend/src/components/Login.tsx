@@ -32,11 +32,18 @@ const Login = () => {
     };
     axios(configuration)
       .then((result: AxiosResponse) => {
+        console.log(result.data);
+
         cookies.set('TOKEN', result.data.token, {
+          path: '/',
+        });
+        // Set another cookie with the user's MongoDB ID
+        cookies.set('USER_ID', result.data.userId, {
           path: '/',
         });
         window.location.href = '/home';
         setLogin(true);
+        getCookie('USER_ID')
       })
       .catch((error: Error) => {
         console.log(error);

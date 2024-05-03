@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "src/types/MovieType.ts", "src/types/VideoType.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
