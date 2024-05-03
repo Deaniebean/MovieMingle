@@ -12,7 +12,7 @@ const cookies = new Cookies();
 
 const ResetPassword = () => {
   const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [newPassword, setPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [resetPassword, setResetPassword] = React.useState(false);
@@ -23,18 +23,18 @@ const ResetPassword = () => {
     e.preventDefault();
 
     // Check whether passwords match
-    if (password !== verifyPassword) {
+    if (newPassword !== verifyPassword) {
       setErrorMessage('Passwords do not match');
       return;
     }
 
     // Send form data
     const configuration = {
-      method: 'post',
+      method: 'put',
       url: 'http://localhost:8082/authenticate/reset-password',
       data: {
         username,
-        password,
+        newPassword,
       },
     };
     axios(configuration)
@@ -96,7 +96,7 @@ const ResetPassword = () => {
               type="password"
               placeholder='New Password'
               name="password"
-              value={password}
+              value={newPassword}
               onChange={(e) => setPassword(e.target.value)}
             />
             <input

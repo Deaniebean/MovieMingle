@@ -10,6 +10,8 @@ import ThisOrThat from './pratice_fetches/ThisOrThat';
 import { Movie } from './types/MovieType';
 import { useState } from 'react';
 
+// <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
+
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   return (
@@ -20,7 +22,6 @@ function App() {
           path="/this-or-that"
           element={<ThisOrThat movies={movies} setMovies={setMovies} />}
         />
-        <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword/>}/>
