@@ -7,13 +7,11 @@ import '../styles/globals.css';
 import '../styles/tailwind.css';
 import './Register.css';
 
-
+//To-do: password strength meter
 
 const cookies = new Cookies();
 
 const ResetPassword = () => {
-  const [lightMode, setLightMode] = useState(false);
-  const [lightOrDark, setLightOrDark] = useState('on');
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
@@ -34,7 +32,7 @@ const ResetPassword = () => {
     // Send form data
     const configuration = {
       method: 'post',
-      url: 'http://localhost:8082/authenticate/register',
+      url: 'http://localhost:8082/authenticate/reset-password',
       data: {
         username,
         password,
@@ -72,11 +70,6 @@ const ResetPassword = () => {
       });
   };
 
-  // Toggle light mode
-  const clickLight = () => {
-    setLightMode(!lightMode);
-    setLightOrDark(lightMode ? 'on' : 'off');
-  };
 
   return (
     <div className='wrapper'>
@@ -102,7 +95,7 @@ const ResetPassword = () => {
             <input
               className='dataInput'
               type="password"
-              placeholder='Password'
+              placeholder='New Password'
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -110,7 +103,7 @@ const ResetPassword = () => {
             <input
               className='dataInput'
               type="password"
-              placeholder='Verify Password'
+              placeholder='Verify New Password'
               name="verifyPassword"
               value={verifyPassword}
               onChange={(e) => setVerifyPassword(e.target.value)}
@@ -122,13 +115,12 @@ const ResetPassword = () => {
             </div>
           </div>
           <button className='button' type="submit">Reset Password</button>
-          <p>
-            Not registered yet?&nbsp; 
+          <p>Not registered yet?&nbsp; 
             <Link className='link' to="/">Create an account</Link>
           </p>
-          <p>
-            Turn the lights&nbsp;<strong onClick={clickLight}>{lightOrDark}</strong>
-          </p>
+          <Link to="/login">
+            <span className="back">&#8592; Back to Log IN</span>
+          </Link>
         </form>
       </div>
     </div>

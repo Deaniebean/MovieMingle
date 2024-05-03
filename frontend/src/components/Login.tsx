@@ -11,8 +11,6 @@ import './Register.css';
 const cookies = new Cookies();
 
 const Login = () => {
-  const [lightMode, setLightMode] = useState(false);
-  const [lightOrDark, setLightOrDark] = useState('on');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -50,12 +48,6 @@ const Login = () => {
       });
   };
 
-  // Toggle light mode
-  const clickLight = () => {
-    setLightMode(!lightMode);
-    setLightOrDark(lightMode ? 'on' : 'off');
-  };
-
   return (
     <div className='wrapper'>
       <div className='titlebar'>
@@ -85,7 +77,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <p className='forgotPassword'><Link to="/resetPassword">Forgot password?</Link></p>
+            <p className='forgotPassword'><Link to="/reset-password">Forgot password?</Link></p>
             <div className='errorMessageContainer'>
               {(loginClicked && !login) ? (
                 <p className='error'>{errorMessage}</p>
@@ -96,9 +88,6 @@ const Login = () => {
           <p>
             Not registered yet?&nbsp; 
             <Link className='link' to="/">Create an account</Link>
-          </p>
-          <p>
-            Turn the lights&nbsp;<strong onClick={clickLight}>{lightOrDark}</strong>
           </p>
         </form>
       </div>

@@ -7,22 +7,17 @@ import '../styles/globals.css';
 import '../styles/tailwind.css';
 import './Register.css';
 
-
+//To-do: password strength meter
 
 const cookies = new Cookies();
 
-interface RegisterProps {}
-
-const Register = (props: RegisterProps) => {
-  const [lightMode, setLightMode] = useState(false);
-  const [lightOrDark, setLightOrDark] = useState('on');
+const Register = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [register, setRegister] = React.useState(false);
   const [registerClicked, setRegisterClicked] = useState(false);
-
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,12 +69,6 @@ const Register = (props: RegisterProps) => {
       });
   };
 
-  // Toggle light mode
-  const clickLight = () => {
-    setLightMode(!lightMode);
-    setLightOrDark(lightMode ? 'on' : 'off');
-  };
-
   return (
     <div className='wrapper'>
       <div className='titlebar'>
@@ -127,9 +116,6 @@ const Register = (props: RegisterProps) => {
           <p>
             Already have an account?&nbsp; 
             <Link className='link' to="/login">Log In now</Link>
-          </p>
-          <p>
-            Turn the lights&nbsp;<strong onClick={clickLight}>{lightOrDark}</strong>
           </p>
         </form>
       </div>
