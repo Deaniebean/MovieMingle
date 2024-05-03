@@ -12,7 +12,7 @@ const cookies = new Cookies();
 
 const ResetPassword = () => {
   const [username, setUsername] = React.useState('');
-  const [newPassword, setPassword] = React.useState('');
+  const [newPassword, setNewPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [resetPassword, setResetPassword] = React.useState(false);
@@ -97,7 +97,7 @@ const ResetPassword = () => {
               placeholder='New Password'
               name="password"
               value={newPassword}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setNewPassword(e.target.value)}
             />
             <input
               className='dataInput'
