@@ -97,13 +97,22 @@ export const resetPassword = async (
   req: express.Request,
   res: express.Response
 ) => {
-  const user = await User.findOne({ username: req.body.username });
-  if (!user) {
-    res.status(404).send({ message: "User not found" });
-    return;
-  }
-  user.password = await bcrypt.hash(req.body.newPassword, 10);
-  await user.save();
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) {
+      res.status(404).send({ message: "User not found" });
+      return;
+    }
+    if (!req.body.newPassword) {
+      res.status(400).send({ message: "New password is required" });
+      return;
+    }
+    user.password = await bcrypt.hash(req.body.newPassword, 10);
+    await user.save();
 
-  res.status(200).send({ message: "Password reset successful" });
+    res.status(200).send({ message: "Password reset successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "An error occurred with password reset" });
+  }
 };
