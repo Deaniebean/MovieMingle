@@ -3,12 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import ProtectedRoutes from './ProtectedRoutes';
-import Auth from './components/Auth';
 import ResetPassword from './components/ResetPassword';
-import InputFieldsMovie from './pratice_fetches/InputFieldsMovie';
 import ThisOrThat from './pratice_fetches/ThisOrThat';
 import { Movie } from './types/MovieType';
 import { useState } from 'react';
+import LandingPage from './components/LandingPage';
 
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
@@ -26,7 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword/>}/>
         <Route element={<ProtectedRoutes />}>
-          <Route path="/home" element={<Auth />} />
+          <Route path="/home" element={<LandingPage />} />
         </Route>
       </Routes>
     </Router>

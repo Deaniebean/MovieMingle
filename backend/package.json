@@ -23,7 +23,8 @@
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.1",
     "universal-cookie": "^7.1.4",
-    "uuid": "^9"
+    "uuid": "^9",
+    "valibot": "^0.30.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",

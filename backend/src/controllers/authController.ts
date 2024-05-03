@@ -6,9 +6,18 @@ import UserModel from "../models/userModel";
 import { v4 as uuidv4 } from "uuid";
 import { saveUserInDb } from "./saveUserInDb";
 import dotenv from "dotenv";
+import { Output, object, parse, string } from "valibot";
 
 dotenv.config();
 const secretKey = process.env.JWT_SECRET
+
+
+// Valibot Schema for input validation
+const UserSchema = object({
+  username: string(),
+  password: string()
+});
+type UserData = Output<typeof UserSchema>;
 
 export const register = async (
   request: express.Request,
@@ -20,18 +29,21 @@ export const register = async (
     return;
   }
 
-  if (!request.body.username || !request.body.password) {
-    response.status(400).send({ message: "Username or password is missing" });
+  let data: UserData;
+  try {
+    data = parse(UserSchema, request.body);
+  } catch (error) {
+    response.status(400).send({ message: "Invalid request body", error });
     return;
   }
 
   try {
     // hash the password
-    const hashedPassword = await bcrypt.hash(request.body.password, 10);
+    const hashedPassword = await bcrypt.hash(data.password, 10);
 
     const userModel: UserModel = {
       uuid: await uuidv4(),
-      username: request.body.username,
+      username: data.username,
       password: hashedPassword,
       watch_list: [],
       history: [],
@@ -56,14 +68,24 @@ export const register = async (
   }
 };
 
+
+
+
 export const login = async (
   request: express.Request,
   response: express.Response,
   next: express.NextFunction
 
 ): Promise<void> => {
+  let data: UserData;
   try {
-    const user = await User.findOne({ username: request.body.username });
+    data = parse(UserSchema, request.body);
+  } catch (error) {
+    response.status(400).send({ message: "Invalid request body", error });
+    return;
+  }
+  try {
+    const user = await User.findOne({ username: data.username });
     if (!user) {
       response.status(404).send({
         message: "user not found",
@@ -72,7 +94,7 @@ export const login = async (
     }
 
     const passwordCheck = await bcrypt.compare(
-      request.body.password,
+      data.password,
       user.password
     );
     if (!passwordCheck) {
@@ -105,16 +127,25 @@ export const resetPassword = async (
   next: express.NextFunction
 ) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
+
+    let data: UserData;
+    try {
+      data = parse(UserSchema, req.body);
+    } catch (error) {
+      res.status(400).send({ message: "Invalid request body", error });
+      return;
+    }
+
+    const user = await User.findOne({ username: data.username });
     if (!user) {
       res.status(404).send({ message: "User not found" });
       return;
     }
-    if (!req.body.newPassword) {
+    if (!data.password) {
       res.status(400).send({ message: "New password is required" });
       return;
     }
-    user.password = await bcrypt.hash(req.body.newPassword, 10);
+    user.password = await bcrypt.hash(data.password, 10);
     await user.save();
 
     res.status(200).send({ message: "Password reset successful" });
