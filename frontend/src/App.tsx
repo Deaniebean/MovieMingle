@@ -4,15 +4,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import ProtectedRoutes from './ProtectedRoutes';
 import Auth from './components/Auth';
-import InputFieldsMovie from './pratice_fetches/InputFieldsMovie';
-import ThisOrThat from './pratice_fetches/ThisOrThat';
-import { Movie } from './types/MovieType';
-import { useState } from 'react';
-import React from 'react';
-
-
-//        <Route path="/" element={< InputFieldsMovie/>} />
-//        <Route path="/login" element={<Login />} />
+import ResetPassword from './components/ResetPassword';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -25,6 +17,7 @@ function App() {
         />
         <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPassword/>}/>
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Auth />} />
         </Route>
