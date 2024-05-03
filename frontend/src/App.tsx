@@ -8,6 +8,7 @@ import ThisOrThat from './pratice_fetches/ThisOrThat';
 import { Movie } from './types/MovieType';
 import { useState } from 'react';
 import LandingPage from './components/LandingPage';
+import MovieSelector from './pratice_fetches/function_get_match';
 
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
@@ -16,7 +17,7 @@ function App() {
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<Login />} />
+        <Route path="/select" element={<MovieSelector/>} />
         <Route
           path="/this-or-that"
           element={<ThisOrThat movies={movies} setMovies={setMovies} />}
