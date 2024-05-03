@@ -1,14 +1,19 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import {User, userTokenValues } from "../models/mongooseUsers";
+import {User } from "../models/mongooseUsers";
 import express from "express";
 import UserModel from "../models/userModel";
 import { v4 as uuidv4 } from "uuid";
 import { saveUserInDb } from "./saveUserInDb";
+import dotenv from "dotenv";
+
+dotenv.config();
+const secretKey = process.env.JWT_SECRET
 
 export const register = async (
   request: express.Request,
-  response: express.Response
+  response: express.Response,
+  next: express.NextFunction
 ): Promise<void> => {
   if (!request.body) {
     response.status(400).send({ message: "Request body is missing" });
@@ -34,7 +39,12 @@ export const register = async (
 
     await saveUserInDb(userModel);
 
-    const token = jwt.sign(userTokenValues, "RANDOM-TOKEN");
+    const userTokenValues = {
+      uuid: userModel.uuid,
+      username: userModel.username
+    };
+
+    const token = jwt.sign(userTokenValues, secretKey);
     response.status(200).send({
       message: "Sign Up Successful",
       token,
@@ -42,16 +52,15 @@ export const register = async (
     });
   } catch (error) {
     console.log(error);
-    response.status(500).send({
-      message: "Error creating user",
-      error,
-    });
+    next(new Error("Error creating user"))
   }
 };
 
 export const login = async (
   request: express.Request,
-  response: express.Response
+  response: express.Response,
+  next: express.NextFunction
+
 ): Promise<void> => {
   try {
     const user = await User.findOne({ username: request.body.username });
@@ -74,28 +83,26 @@ export const login = async (
     }
 
     const token = jwt.sign(
-      { uuid: userTokenValues.uuid, username: userTokenValues.username },
+      { uuid: user.uuid, username: user.username },
       "RANDOM-TOKEN"
     );
-    console.log("user", userTokenValues)
-    console.log("uuid", userTokenValues.uuid)
+    console.log("user", user.username)
+    console.log("uuid", user.uuid)
     response.status(200).send({
       message: "Login Successful",
       token,
-      uuid: userTokenValues.uuid,
+      uuid: user.uuid,
     });
   } catch (error) {
     console.log(error);
-    response.status(500).send({
-      message: "An error occurred",
-      error,
-    });
+    next(new Error("Error during login"))
   }
 };
 
 export const resetPassword = async (
   req: express.Request,
-  res: express.Response
+  res: express.Response,
+  next: express.NextFunction
 ) => {
   try {
     const user = await User.findOne({ username: req.body.username });
@@ -113,6 +120,6 @@ export const resetPassword = async (
     res.status(200).send({ message: "Password reset successful" });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ message: "An error occurred with password reset" });
+    next(new Error("An error occurred with password reset"))
   }
 };

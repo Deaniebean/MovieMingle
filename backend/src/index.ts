@@ -4,6 +4,7 @@ import corsMiddleware from "./middleware/cors";
 import authRoutes from "./routes/authRoutes";
 import tmdbRoutes from "./routes/tmdbRoutes";
 import connectDB from "./config/db";
+import { errorHandler } from "./middleware/errors";
 dotenv.config();
 const port = process.env.PORT || 8082;
 
@@ -18,6 +19,8 @@ app.use((req, res) => {
   res.status(404);
   res.json({ message: "Route not found" });
 });
+
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
