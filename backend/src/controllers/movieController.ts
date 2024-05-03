@@ -13,7 +13,7 @@ function logSearchParams(genre: string[], years: string[], rounds: number, langu
 
 // Fetch movies based on the search parameters and include trailers
 // need to fetch movies with parameter page 1 to get total_pages which are then used in discoverRandomMovies to select random page
-async function discoverMovies(genre: string[], years: string[], rounds: number, language: string) {
+export async function discoverMovies(genre: string[], years: string[], rounds: number, language: string) {
   const options = createOptionsDiscover(1, genre, years, rounds, language);
   try {
     const response = await axios.request(options);
@@ -34,13 +34,19 @@ async function discoverMovies(genre: string[], years: string[], rounds: number, 
     console.log("Movies:", moviesWithVideos);
     return moviesWithVideos;
   } catch (error) {
-    console.error(error);
+    if (error.response) {
+      console.error(`Server responded with status code ${error.response.status}`);
+    } else if (error.request) {
+      console.error('No response received from server');
+    } else {
+      console.error('Error setting up request:', error.message);
+    }
     return [];
   }
 }
 
 // function for fetching a random page of result movies
-async function discoverRandomMovies(totalPages: number, genre: string[], years: string[], rounds: number, language: string) {
+export async function discoverRandomMovies(totalPages: number, genre: string[], years: string[], rounds: number, language: string) {
   const maxPage = Math.min(totalPages > 1000 ? 1000 : totalPages, 500);
   const randomPage = Math.floor(Math.random() * maxPage) + 1;
   const options = createOptionsDiscover(randomPage, genre, years, rounds, language);
@@ -50,15 +56,18 @@ async function discoverRandomMovies(totalPages: number, genre: string[], years: 
     console.log("Random page:", randomPage);
     return response.data.results.slice(0, rounds);
   } catch (error) {
-    console.error(error);
-    return [];
+    if (error.response) {
+      console.error(`Server responded with status code ${error.response.status}`);
+    } else if (error.request) {
+      console.error('No response received from server');
+    } else {
+      console.error('Error setting up request:', error.message);
+    }
+    throw error;
   }
 }
 
 
-
-async function addToWatchList() {
+export async function addToWatchList() {
   // Add movie to watchlist
 }
-
-export { createOptionsDiscover, discoverMovies, discoverRandomMovies, addToWatchList };
