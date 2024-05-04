@@ -1,11 +1,8 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'react-range-slider-input/dist/style.css';
 import '../styles/filterSlider.css';
 import '../styles/globals.css';
-
-
 
 import { Movie } from '../pratice_fetches/MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
 
@@ -19,9 +16,11 @@ import {
   Select,
   Option,
   Radio,
+  Button,
 } from '@material-tailwind/react';
-
 import Slider from '@mui/material/Slider';
+import Box from '@mui/material/Box';
+import FilterSeparator from './FilterSeparator';
 
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
@@ -29,20 +28,13 @@ interface Props {
 
 const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   const [genre, setGenre] = useState<number[]>([]);
+  const [showMore, setShowMore] = useState(false);
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
   const [yearSlider, setYearSlider] = useState<number[]>([1990, 2024]);
   const [rounds, setRounds] = useState('6');
   const [language, setLanguage] = useState('en');
   const navigate = useNavigate();
-
-  const onChangeYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // Setting decade range e.g 1970's = 1970-1979
-    const startYear = `${e.target.value}-01-01`;
-    const endYear = `${parseInt(e.target.value) + 9}-12-31`; // Possible use for a slider, manually select date range instead
-    setStartYear(startYear);
-    setEndYear(endYear.toString());
-  };
 
   const queryParams = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -88,6 +80,14 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     setYearSlider(newValue as number[]);
   };
 
+  const onChangeYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    // Setting decade range e.g 1970's = 1970-1979
+    const startYear = `${e.target.value}-01-01`;
+    const endYear = `${parseInt(e.target.value) + 9}-12-31`; // Possible use for a slider, manually select date range instead
+    setStartYear(startYear);
+    setEndYear(endYear.toString());
+  };
+
   const onRoundChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // setRounds((event.target as HTMLInputElement).value);
     setRounds(event.target.value);
@@ -116,8 +116,9 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     { id: 37, label: 'Western' },
   ].map((genre, index) => {
     return (
+      // Hover on desktop only, min -1024px
       <ListItem
-        className="p-0 max-w-fit rounded-full border border-secondary py-2 px-3"
+        className="p-0 max-w-fit rounded-full border border-secondary py-1 px-2.5 hover:bg-primary active:bg-primary focus:bg-primary lg:hover:bg-violet-950"
         key={index}
       >
         <label className="flex cursor-pointer items-center">
@@ -125,9 +126,9 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
             <Checkbox
               value={genre.id}
               ripple={false}
-              color="gray"
+              color="indigo"
               onChange={onGenreChange}
-              className="hover:before:opacity-0 rounded-full border-secondary"
+              className="border-2 rounded-full border-secondary h-4 w-4 transition-all"
               containerProps={{
                 className: 'p-0',
               }}
@@ -137,7 +138,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
           <Typography
             color="blue-gray"
             variant="small"
-            className="font-main pe-1 text-secondary"
+            className="font-main pe-1 text-secondary font-semibold"
           >
             {genre.label}
           </Typography>
@@ -152,8 +153,8 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     { value: '18', text: 'Epic Battle' },
   ].map((round, i) => {
     return (
-      <ListItem key={i} className="p-0">
-        <label className="flex w-full cursor-pointer items-center px-3 py-2">
+      <ListItem key={i} className="p-0 bg-secondaryDark">
+        <label className="flex w-full cursor-pointer px-3 py-2 flex justify-center">
           {/* Hides radio button circle on mobile */}
           <ListItemPrefix className="mr-3 hidden md:inline">
             <Radio
@@ -168,17 +169,11 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
               onChange={onRoundChange}
             />
           </ListItemPrefix>
-          <div className="items-center">
-            <Typography
-              color="blue-gray"
-              className="font-medium text-blue-gray-400"
-            >
+          <div className="items-center text-center text-nowrap">
+            <Typography className="text-light font-medium text-xs">
               {round.text}
             </Typography>
-            <Typography
-              color="blue-gray"
-              className="font-medium text-blue-gray-400"
-            >
+            <Typography className="text-light font-bold text-sm">
               {round.value} Movies
             </Typography>
           </div>
@@ -216,48 +211,81 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   ];
 
   return (
-    <div className='bg-primary text-secondary'>
-      <form onSubmit={queryParams}>
-        <h2>Genres</h2>
-        {/* Map over all Genres */}
-        <div className="flex flex-wrap gap-x-3 gap-y-2 ">{genreList}</div>
+    <div className="text-secondary ">
+      <div className="container mx-auto px-6 pt-24 h-screen">
+        <form onSubmit={queryParams} className="flex flex-col content-around" >
+          <div className="flex flex-col gap-6">
+            <div>
+              <FilterSeparator text={'Genres'} />
+              {/* Map over all Genres */}
+              <div className="flex flex-wrap gap-x-3 gap-y-2 ">
+                {showMore ? genreList : genreList.slice(0, 6)}
+              </div>
+              <div className="flex justify-end">
+                <p
+                  onClick={() => setShowMore(!showMore)}
+                  className="border-secondary text-secondary pt-3"
+                >
+                  {showMore ? 'Show less' : 'Show more'}
+                </p>
+              </div>
+            </div>
+            <div>
+              <FilterSeparator text={'Language'} />
+              <div className="flex gap-6 items-center">
+                <p className="text-light text-nowrap text-sm">Select Language</p>
+                <div className="w-72">
+                  <Select
+                    variant="standard"
+                    name="lanuage"
+                    value={language}
+                    onChange={(val) => setLanguage(val as string)}
+                    className="bg-secondaryDark border-0 rounded-lg text-light"
+                  >
+                    <Option value="en" className=''>English</Option>
+                    <Option value="de">German</Option>
+                    <Option value="es">Spanish</Option>
+                    <Option value="fr">French</Option>
+                  </Select>
+                </div>
+              </div>
+            </div>
+            <div>
+              <FilterSeparator text={'Release year'} />
+              <label>
+                <div className="ms-4 me-1 mx-auto">
+                  <Slider
+                    getAriaLabel={() => 'Release Date'}
+                    defaultValue={30}
+                    value={yearSlider}
+                    onChange={onYearChange}
+                    valueLabelDisplay="auto"
+                    shiftStep={30}
+                    step={5}
+                    marks={yearMarks}
+                    min={1970}
+                    max={2024}
+                    color="text-secondary"
+                    sx={{
+                      '& .MuiSlider-markLabel': {
+                        color: '#F6F1FF',
+                      },
+                    }}
+                  />
+                </div>
+              </label>
+            </div>
+            <div>
+              <FilterSeparator text={'Select Round'} />
+              <List className="flex-row gap-3 px-0">{roundList}</List>
+            </div>
+          </div>
 
-        <h2>Language</h2>
-        <div className="w-72">
-          <Select
-            name="lanuage"
-            label="Language"
-            value={language}
-            onChange={(val) => setLanguage(val as string)}
-          >
-            <Option value="en">English</Option>
-            <Option value="de">German</Option>
-            <Option value="es">Spanish</Option>
-            <Option value="fr">French</Option>
-          </Select>
-        </div>
-
-        <h2>Select Round</h2>
-        <List className="flex-row">{roundList}</List>
-        <h2>Release year</h2>
-        <label>
-          Years
-          <Slider
-            getAriaLabel={() => 'Release Date'}
-            defaultValue={30}
-            value={yearSlider}
-            onChange={onYearChange}
-            // getAriaValueText={valuetext}
-            valueLabelDisplay="auto"
-            shiftStep={30}
-            step={5}
-            marks={yearMarks}
-            min={1970}
-            max={2024}
-          />
-        </label>
-        <button type="submit">Start</button>
-      </form>
+          <Button type="submit" size='lg' className="bg-secondary px-16 m-auto text-primary">
+            Start
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };
