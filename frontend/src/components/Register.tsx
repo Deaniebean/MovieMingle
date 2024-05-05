@@ -18,7 +18,7 @@ const Register = () => {
   const [register, setRegister] = React.useState(false);
   const [registerClicked, setRegisterClicked] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Check whether passwords match
@@ -36,38 +36,36 @@ const Register = () => {
         password,
       },
     };
-    axios(configuration)
-      .then((result) => {
-        console.log(result);
-        cookies.set('TOKEN', result.data.token, {
-          path: '/',
-        });
-        window.location.href = '/home';
-        setRegister(true);
-      })
-      .catch((error: AxiosError) => {
-        setRegister(false);
-        if (error.response) {
-          console.log('Error response data:', error.response.data);
-          console.log('Error response status:', error.response.status);
-          console.log('Error response headers:', error.response.headers);
-          setErrorMessage('This username already exists');
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.log('Error request:', error.request);
-          setErrorMessage('Registration failed');
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error message:', error.message);
-          setErrorMessage('Registration failed');
-        }
-        console.log('Error config:', error.config);
-      })
-      .finally(() => {
-        setRegisterClicked(true);
+    try {
+      const result = await axios(configuration);
+      console.log(result);
+      cookies.set('TOKEN', result.data.token, {
+        path: '/',
       });
+      window.location.href = '/home';
+      setRegister(true);
+    } catch (error) {
+      if(axios.isAxiosError(error)) {
+      setRegister(false);
+      if (error.response) {
+        console.log('Error response data:', error.response.data);
+        console.log('Error response status:', error.response.status);
+        console.log('Error response headers:', error.response.headers);
+        setErrorMessage('This username already exists');
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log('Error request:', error.request);
+        setErrorMessage('Registration failed');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error message:', error.message);
+        setErrorMessage('Registration failed');
+      }
+      console.log('Error config:', error.config);
+    }}finally {
+      setRegisterClicked(true);
+    }
   };
-
   return (
     <div className='wrapper'>
       <div className='titlebar'>
