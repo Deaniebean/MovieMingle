@@ -18,18 +18,19 @@ function App() {
   return (
     <Router>
       <Routes>
-      <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
-        <Route
-          path="/this-or-that"
-          element={<ThisOrThat movies={movies} setMovies={setMovies} />}
-        />
-        <Route path="/winner" element={<Winner/>}/>
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword/>}/>
-        <Route element={<ProtectedRoutes />}>
-          <Route path="/home" element={<LandingPage />} />
-        </Route>
+          
+          
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/home" element={<LandingPage />} />
+            <Route path="/select" element={<InputFieldsMovie setMovies={setMovies} />} />
+            <Route
+              path="/this-or-that" element={<ThisOrThat movies={movies} setMovies={setMovies} />}/>
+            <Route path="/winner" element={<Winner/>}/>
+        
+          </Route>
       </Routes>
     </Router>
   );

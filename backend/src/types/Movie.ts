@@ -1,4 +1,4 @@
-interface Movie {
+interface MovieType {
     id: number;
     backdrop_path?: string;
     genre_ids: number[];
@@ -15,4 +15,4 @@ interface Movie {
     videos?: string[];
   }
 
-  export type { Movie };
+  export type { MovieType };
