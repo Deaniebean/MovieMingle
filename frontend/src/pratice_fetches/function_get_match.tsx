@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Movie } from '../types/MovieType';
 
-const MovieSelector = () => {
-  const [movies, setMovies] = useState([
-    {original_title: "Monster Inc"},
-    {original_title: "The Incredibles"},
-    {original_title: "the Minions"},
-    {original_title: "Moana"},
-    {original_title: "Pocahontas"},
-    {original_title:"The Little Mermaid"}
-  ]);
+interface Props {
+  movies: Movie[];
+  setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
+}
+
+
+const MovieSelector: React.FC<Props> = ({ movies }): React.ReactNode =>{
 
   const [index1, setIndex1] = useState(0);
   const [index2, setIndex2] = useState(1);
@@ -37,7 +36,6 @@ const MovieSelector = () => {
     let newIndex2 = (newIndex1 + 1) % newMovies.length;
 
   // Update state
-  setMovies(newMovies);
   setIndex1(newIndex1);
   setIndex2(newIndex2);
   
