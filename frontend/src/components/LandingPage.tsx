@@ -6,6 +6,7 @@ import refineYourChoiceIcon from "../assets/RefineYourChoice.png";
 import makeYourChoiceIcon from "../assets/MakeYourChoice.png";
 import enjoyYourChoiceIcon from "../assets/EnjoyYourChoice.png";
 import mobileImage from "../assets/MobileImage.png";
+import { useNavigate } from "react-router-dom";
 
 interface LogoProps {
   src: string;
@@ -48,6 +49,12 @@ const features: FeatureProps[] = [
 ];
 
 const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  function nextPage() {
+    navigate("/select");
+  }
+
   return (
     <div className="landing-page">
       <header className="header-container">
@@ -71,7 +78,7 @@ const LandingPage: React.FC = () => {
       
       <img src={mobileImage} alt="Mobile Image" className="mobile-image" />
       
-      <button className="buttonStart">
+      <button className="buttonStart" onClick={nextPage}>
         Find your match now!
       </button>
     </div>

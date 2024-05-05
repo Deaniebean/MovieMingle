@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createOptionsDiscover, createOptionsTrailer } from "../services/tmdb";
-import { Movie } from "../types/Movie";
+import { MovieType } from "../types/Movie";
 
 // Log the search parameters
 function logSearchParams(genre: string[], years: string[], rounds: number, language: string, totalPages: number) {
@@ -22,7 +22,7 @@ export async function discoverMovies(genre: string[], years: string[], rounds: n
     const movies = await discoverRandomMovies(response.data.total_pages, genre, years, rounds, language);
 
     // Fetch trailers for each movie
-    const movieTrailers = movies.map(async (movie: Movie) => {
+    const movieTrailers = movies.map(async (movie: MovieType) => {
       const options = createOptionsTrailer(movie.id);
       const response = await axios.request(options);
       movie.videos = response.data.results;
@@ -68,6 +68,6 @@ export async function discoverRandomMovies(totalPages: number, genre: string[], 
 }
 
 
-export async function addToWatchList() {
+export async function addToWatchList(movie:MovieType, userUUID:string ) {
   // Add movie to watchlist
 }
