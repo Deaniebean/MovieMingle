@@ -17,4 +17,13 @@ router.post("/discover/movies", async (req, res) => {
   res.json(movies);
 });
 
+
+
+router.post("/save/watchlist", (req: Request, res: Response) => {
+  const { movieData, userUUID } = req.body;
+  console.log("movieData:", movieData);
+  res.json({ movieData, userUUID});
+}
+)
+
 export default router;

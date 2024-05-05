@@ -2,7 +2,7 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import corsMiddleware from "./middleware/cors";
 import authRoutes from "./routes/authRoutes";
-import tmdbRoutes from "./routes/tmdbRoutes";
+import movieRoutes from "./routes/movieRoutes";
 import connectDB from "./config/db";
 import { errorHandler } from "./middleware/errors";
 dotenv.config();
@@ -13,7 +13,7 @@ const app: Express = express();
 app.use(express.json());
 app.use(corsMiddleware);
 app.use("/authenticate", authRoutes);
-app.use(tmdbRoutes);
+app.use(movieRoutes);
 
 app.use((req, res) => {
   res.status(404);
