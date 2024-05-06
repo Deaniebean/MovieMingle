@@ -26,7 +26,7 @@ module.exports = withMT({
         errorLight: '#db7d74',
 
         // To use Tailwinds extended color palette
-        ...colors 
+        // ...colors 
       },
       fontFamily: {
         main: 'Montserrat',
