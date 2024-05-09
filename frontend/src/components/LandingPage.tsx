@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import "./LandingPage.css";
 import '../styles/globals.css';
@@ -22,6 +23,12 @@ interface FeatureProps {
   alt: string;
   text: string;
 }
+
+interface LandingPageProps {
+  setShowNavbar: (value: boolean) => void;
+
+}
+
 
 const Feature: React.FC<FeatureProps> = ({ src, alt, text }) => (
   <div className="feature">
@@ -48,8 +55,12 @@ const features: FeatureProps[] = [
   },
 ];
 
-const LandingPage: React.FC = () => {
+const LandingPage: React.FC<LandingPageProps> = ({setShowNavbar}) => {
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    setShowNavbar(true);
+  }, []);
 
   function nextPage() {
     navigate("/select");

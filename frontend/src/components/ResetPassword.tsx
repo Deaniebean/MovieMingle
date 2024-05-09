@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,7 +11,11 @@ import './Register.css';
 
 const cookies = new Cookies();
 
-const ResetPassword = () => {
+interface ResetPasswordProps {
+  setShowNavbar: (value: boolean) => void;
+}
+
+const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
   const [username, setUsername] = React.useState('');
   const [newPassword, setNewPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
@@ -18,6 +23,9 @@ const ResetPassword = () => {
   const [resetPassword, setResetPassword] = React.useState(false);
   const [resetPasswordClicked, setResetPasswordClicked] = useState(false);
 
+  React.useEffect(() => {
+    setShowNavbar(false);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,22 +77,21 @@ const ResetPassword = () => {
       });
   };
 
-
   return (
-    <div className='wrapper'>
-      <div className='titlebar'>
+    <div className="wrapper">
+      <div className="titlebar">
         <h1>MovieMingle</h1>
       </div>
-      <div className='textContainer'>
-        <p className='text'>Discover, decide, rate</p>
-        <p className='text'> - your ultimate movie compass!</p>
+      <div className="textContainer">
+        <p className="text">Discover, decide, rate</p>
+        <p className="text"> - your ultimate movie compass!</p>
       </div>
-      <div className='container'>
+      <div className="container">
         <h2>Reset Password</h2>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div className='dataInputWrapper'>
+          <div className="dataInputWrapper">
             <input
-              className='dataInput'
+              className="dataInput"
               type="text"
               placeholder="E-Mail or Username"
               name="username"
@@ -92,30 +99,38 @@ const ResetPassword = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
-              className='dataInput'
+              className="dataInput"
               type="password"
-              placeholder='New Password'
+              placeholder="New Password"
               name="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <input
-              className='dataInput'
+              className="dataInput"
               type="password"
-              placeholder='Verify New Password'
+              placeholder="Verify New Password"
               name="verifyPassword"
               value={verifyPassword}
               onChange={(e) => setVerifyPassword(e.target.value)}
             />
-            <div className='errorMessageContainer'>
-              {(errorMessage && !resetPassword) || (resetPasswordClicked && !resetPassword) ? (
-                <p className='error'>{errorMessage || 'You Are Not Registered'}</p>
+            <div className="errorMessageContainer">
+              {(errorMessage && !resetPassword) ||
+              (resetPasswordClicked && !resetPassword) ? (
+                <p className="error">
+                  {errorMessage || 'You Are Not Registered'}
+                </p>
               ) : null}
             </div>
           </div>
-          <button className='button' type="submit">Reset Password</button>
-          <p>Not registered yet?&nbsp; 
-            <Link className='link' to="/">Create an account</Link>
+          <button className="button" type="submit">
+            Reset Password
+          </button>
+          <p>
+            Not registered yet?&nbsp;
+            <Link className="link" to="/">
+              Create an account
+            </Link>
           </p>
           <Link to="/login">
             <span className="back">&#8592; Back to Log IN</span>

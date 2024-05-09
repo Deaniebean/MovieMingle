@@ -15,24 +15,45 @@ import Winner from './components/Winner';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [showNavbar, setShowNavbar] = useState(true);
+  // TODO @Fiona füge die Zeile mit deiner Navbar über dem div page-container ein : {showNavbar && <Navbar />} 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/reset-password" element={<ResetPassword/>}/>
-          
-          
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/home" element={<LandingPage />} />
-            <Route path="/select" element={<InputFieldsMovie setMovies={setMovies} />} />
+    <>
+      <div className="page-container">
+        <Router>
+          <Routes>
             <Route
-              path="/this-or-that" element={<ThisOrThat movies={movies} setMovies={setMovies} />}/>
-            <Route path="/winner" element={<Winner/>}/>
-        
-          </Route>
-      </Routes>
-    </Router>
+              path="/"
+              element={<Register setShowNavbar={setShowNavbar} />}
+            />
+            <Route
+              path="/login"
+              element={<Login setShowNavbar={setShowNavbar} />}
+            />
+            <Route
+              path="/reset-password"
+              element={<ResetPassword setShowNavbar={setShowNavbar} />}
+            />
+
+            <Route element={<ProtectedRoutes />}>
+              <Route
+                path="/home"
+                element={<LandingPage setShowNavbar={setShowNavbar} />}
+              />
+              <Route
+                path="/select"
+                element={<InputFieldsMovie setMovies={setMovies} />}
+              />
+              <Route
+                path="/this-or-that"
+                element={<ThisOrThat movies={movies} setMovies={setMovies} />}
+              />
+              <Route path="/winner" element={<Winner />} />
+            </Route>
+          </Routes>
+        </Router>
+      </div>
+    </>
   );
 }
 
