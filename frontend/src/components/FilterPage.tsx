@@ -13,14 +13,13 @@ import {
   ListItem,
   ListItemPrefix,
   Typography,
-  Select,
-  Option,
   Radio,
   Button,
 } from '@material-tailwind/react';
-import Slider from '@mui/material/Slider'; // Working despite 'cannot find module' error
 import FilterSeparator from './FilterSeparator';
 import NavTemp from './NavTemp';
+import Slider from '@mui/material/Slider'; // Working despite 'cannot find module' error
+import RadioMUI from '@mui/material/Radio';
 
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
@@ -88,12 +87,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     setEndYear(endYear.toString());
   };
 
-  const onRoundChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setRounds((event.target as HTMLInputElement).value);
-    setRounds(event.target.value);
-    // console.log(rounds)
-  };
-
   //  Defining genres
   const genreList = [
     { id: 28, label: 'Action' },
@@ -153,32 +146,87 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     { value: '18', text: 'Epic Battle' },
   ].map((round, i) => {
     return (
-      <ListItem key={i} className="p-0 bg-secondaryDark">
-        <label className="flex w-full cursor-pointer px-3 py-2 flex justify-center">
-          {/* Hides radio button circle on mobile */}
-          <ListItemPrefix className="mr-3 hidden md:inline">
-            <Radio
-              value={round.value}
-              name="horizontal-list"
-              id="horizontal-list-react"
-              ripple={false}
-              className="hover:before:opacity-0"
-              containerProps={{
-                className: 'p-0',
-              }}
-              onChange={onRoundChange}
-            />
-          </ListItemPrefix>
-          <div className="items-center text-center text-nowrap">
-            <Typography className="text-light font-medium text-xs">
+      // <ListItem key={i} className="p-0 bg-secondaryDark md:bg-inherit">
+      //   <label className="flex w-full cursor-pointer px-3 py-2 flex justify-center">
+      //     {/* Hides radio button circle on mobile */}
+      //     <ListItemPrefix className="mr-3 hidden md:inline">
+      //       {/* <ListItemPrefix className="mr-3 hidden md:inline mt-auto"> */}
+      //       {/* <RadioMUI value="large" label="Large" size="lg" /> */}
+      //       <Radio
+      //         value={round.value}
+      //         name="horizontal-list"
+      //         id="horizontal-list-react"
+      //         ripple={false}
+      //         className="hover:before:opacity-0"
+      //         containerProps={{
+      //           className: 'p-0',
+      //         }}
+      //         onChange={onRoundChange}
+      //       />
+      //     </ListItemPrefix>
+      //     <div className="items-center text-center text-nowrap md:hidden">
+      //       <Typography className="text-light font-medium text-xs">
+      //         {round.text}
+      //       </Typography>
+      //       <Typography className="text-light font-bold text-sm">
+      //         {round.value} Movies
+      //       </Typography>
+      //     </div>
+      //   </label>
+      // </ListItem>
+      <div key={i}>
+        <label
+          htmlFor={round.value}
+          className="block cursor-pointer select-none rounded-xl p-2 text-center md:text-left has-[:checked]:bg-secondaryDark has-[:checked]:font-bold has-[:checked]:text-white justify-content-center md:flex"
+        >
+          <input
+            type="radio"
+            name="rounds"
+            value={round.value}
+            id={round.value}
+            className="peer hidden"
+            onChange={(e) => setRounds(e.target.value)}
+          />
+          <div className="hidden md:inline">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="3em"
+              height="3em"
+              viewBox="0 0 32 32"
+              className="w-22 mr-4 mt-auto peer-checked:hidden"
+            >
+              <path
+                fill="currentColor"
+                d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2m0 26a12 12 0 1 1 12-12a12 12 0 0 1-12 12"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="3em"
+              height="3em"
+              viewBox="0 0 24 24"
+              className="w-22 mr-4 mt-auto hidden peer-checked:inline "
+            >
+              <path
+                fill="currentColor"
+                d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 18a8 8 0 1 1 8-8a8 8 0 0 1-8 8"
+              />
+              <path
+                fill="currentColor"
+                d="M12 7a5 5 0 1 0 5 5a5 5 0 0 0-5-5m0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3"
+              />
+            </svg>
+          </div>
+          <div className="">
+            <Typography className="text-light font-medium text-xs md:text-xl">
               {round.text}
             </Typography>
-            <Typography className="text-light font-bold text-sm">
+            <Typography className="text-light font-bold text-sm md:text-xl">
               {round.value} Movies
             </Typography>
           </div>
         </label>
-      </ListItem>
+      </div>
     );
   });
 
@@ -290,7 +338,10 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
           </div>
           <div>
             <FilterSeparator text={'Select Round'} />
-            <List className="flex-row gap-3 px-0">{roundList}</List>
+            {/* <List className="flex-row gap-3 px-0">{roundList}</List> */}
+            <div className="grid w-full grid-cols-3 gap-2 rounded-xl py-2 mx-auto">
+              {roundList}{' '}
+            </div>
           </div>
         </div>
         <div className="flex flex-1 mx-auto py-3 items-center">
