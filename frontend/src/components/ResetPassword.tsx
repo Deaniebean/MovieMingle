@@ -106,7 +106,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
       </div>
       <div className="registerForm">
         <h2 className="title">Reset Password</h2>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} className="formElement">
           <div className="dataInputWrapper_resetPassword">
             <input
               className="dataInput"
