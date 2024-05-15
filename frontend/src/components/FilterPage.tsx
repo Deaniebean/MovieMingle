@@ -143,34 +143,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     { value: '18', text: 'Epic Battle' },
   ].map((round, i) => {
     return (
-      // <ListItem key={i} className="p-0 bg-secondaryDark md:bg-inherit">
-      //   <label className="flex w-full cursor-pointer px-3 py-2 flex justify-center">
-      //     {/* Hides radio button circle on mobile */}
-      //     <ListItemPrefix className="mr-3 hidden md:inline">
-      //       {/* <ListItemPrefix className="mr-3 hidden md:inline mt-auto"> */}
-      //       {/* <RadioMUI value="large" label="Large" size="lg" /> */}
-      //       <Radio
-      //         value={round.value}
-      //         name="horizontal-list"
-      //         id="horizontal-list-react"
-      //         ripple={false}
-      //         className="hover:before:opacity-0"
-      //         containerProps={{
-      //           className: 'p-0',
-      //         }}
-      //         onChange={onRoundChange}
-      //       />
-      //     </ListItemPrefix>
-      //     <div className="items-center text-center text-nowrap md:hidden">
-      //       <Typography className="text-light font-medium text-xs">
-      //         {round.text}
-      //       </Typography>
-      //       <Typography className="text-light font-bold text-sm">
-      //         {round.value} Movies
-      //       </Typography>
-      //     </div>
-      //   </label>
-      // </ListItem>
       <div key={i}>
         <label
           htmlFor={round.value}
