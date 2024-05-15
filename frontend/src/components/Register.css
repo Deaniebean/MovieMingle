@@ -52,12 +52,21 @@
     font-weight: bold;
 }
 
-form {
+
+.formElement {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
+/* Temp disabling styling on html element, itäs interfering forms on other pages */
+/* form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
 
 .dataInputWrapper {
     display: flex;
