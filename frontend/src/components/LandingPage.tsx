@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import "./LandingPage.css";
 import '../styles/globals.css';
@@ -6,6 +7,7 @@ import refineYourChoiceIcon from "../assets/RefineYourChoice.png";
 import makeYourChoiceIcon from "../assets/MakeYourChoice.png";
 import enjoyYourChoiceIcon from "../assets/EnjoyYourChoice.png";
 import mobileImage from "../assets/MobileImage.png";
+import { useNavigate } from "react-router-dom";
 
 interface LogoProps {
   src: string;
@@ -21,6 +23,12 @@ interface FeatureProps {
   alt: string;
   text: string;
 }
+
+interface LandingPageProps {
+  setShowNavbar: (value: boolean) => void;
+
+}
+
 
 const Feature: React.FC<FeatureProps> = ({ src, alt, text }) => (
   <div className="feature">
@@ -47,7 +55,17 @@ const features: FeatureProps[] = [
   },
 ];
 
-const LandingPage: React.FC = () => {
+const LandingPage: React.FC<LandingPageProps> = ({setShowNavbar}) => {
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    setShowNavbar(true);
+  }, []);
+
+  function nextPage() {
+    navigate("/select");
+  }
+
   return (
     <div className="landing-page">
       <header className="header-container">
@@ -71,7 +89,7 @@ const LandingPage: React.FC = () => {
       
       <img src={mobileImage} alt="Mobile Image" className="mobile-image" />
       
-      <button className="buttonStart">
+      <button className="buttonStart" onClick={nextPage}>
         Find your match now!
       </button>
     </div>

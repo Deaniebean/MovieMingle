@@ -1,32 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import '../styles/globals.css';
 import './Register.css';
 
+//To-do: password strength meter
 
 const cookies = new Cookies();
 
-interface RegisterProps {
+interface ResetPasswordProps {
   setShowNavbar: (value: boolean) => void;
 }
 
-const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
+const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
   const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [newPassword, setNewPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [register, setRegister] = React.useState(false);
-  const [registerClicked, setRegisterClicked] = useState(false);
+  const [resetPassword, setResetPassword] = React.useState(false);
+  const [resetPasswordClicked, setResetPasswordClicked] = useState(false);
 
-  useLayoutEffect(() => {
+  React.useEffect(() => {
     setShowNavbar(false);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Check username is empty
@@ -36,43 +37,43 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
     }
 
     // Check password is empty
-    if (!password) {
-      setErrorMessage('Please enter a password');
+    if (!newPassword) {
+      setErrorMessage('Please enter a new password');
       return;
     }
 
     // Check verifyPassword is empty
     if (!verifyPassword) {
-      setErrorMessage('Please verify your password');
+      setErrorMessage('Please verify your new password');
       return;
     }
 
     // Check whether passwords match
-    if (password !== verifyPassword) {
+    if (newPassword !== verifyPassword) {
       setErrorMessage('Passwords do not match');
       return;
     }
 
     // Send form data
     const configuration = {
-      method: 'post',
-      url: 'http://localhost:8082/authenticate/register',
+      method: 'put',
+      url: 'http://localhost:8082/authenticate/reset-password',
       data: {
         username,
-        password,
+        newPassword,
       },
     };
-    try {
-      const result = await axios(configuration);
-      console.log(result);
-      cookies.set('TOKEN', result.data.token, {
-        path: '/',
-      });
-      window.location.href = '/home';
-      setRegister(true);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setRegister(false);
+    axios(configuration)
+      .then((result) => {
+        console.log(result);
+        cookies.set('TOKEN', result.data.token, {
+          path: '/',
+        });
+        window.location.href = '/home';
+        setResetPassword(true);
+      })
+      .catch((error: AxiosError) => {
+        setResetPassword(false);
         if (error.response) {
           console.log('Error response data:', error.response.data);
           console.log('Error response status:', error.response.status);
@@ -81,18 +82,19 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
         } else if (error.request) {
           // The request was made but no response was received
           console.log('Error request:', error.request);
-          setErrorMessage('Registration failed');
+          setErrorMessage('reset password failed');
         } else {
           // Something happened in setting up the request that triggered an Error
           console.log('Error message:', error.message);
-          setErrorMessage('Registration failed');
+          setErrorMessage('reset password failed');
         }
         console.log('Error config:', error.config);
-      }
-    } finally {
-      setRegisterClicked(true);
-    }
+      })
+      .finally(() => {
+        setResetPasswordClicked(true);
+      });
   };
+
   return (
     <div className="wrapper">
       <div className="titlebar">
@@ -103,9 +105,9 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
         <p className="description"> - your ultimate movie compass!</p>
       </div>
       <div className="registerForm">
-        <h2 className="title">Register</h2>
+        <h2 className="title">Reset Password</h2>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="dataInputWrapper">
+          <div className="dataInputWrapper_resetPassword">
             <input
               className="dataInput"
               type="text"
@@ -117,21 +119,22 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
             <input
               className="dataInput"
               type="password"
-              placeholder="Password"
+              placeholder="New Password"
               name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
             />
             <input
               className="dataInput"
               type="password"
-              placeholder="Verify Password"
+              placeholder="Verify New Password"
               name="verifyPassword"
               value={verifyPassword}
               onChange={(e) => setVerifyPassword(e.target.value)}
             />
             <div className="errorMessageContainer">
-              {(errorMessage && !register) || (registerClicked && !register) ? (
+              {(errorMessage && !resetPassword) ||
+              (resetPasswordClicked && !resetPassword) ? (
                 <p className="error">
                   {errorMessage || 'You Are Not Registered'}
                 </p>
@@ -139,18 +142,21 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
             </div>
           </div>
           <button className="button" type="submit">
-            Register
+            Reset Password
           </button>
           <p className="linkText">
-            Already have an account?&nbsp;
-            <Link className="link" to="/login">
-              Log In now
+            Not registered yet?&nbsp;
+            <Link className="link" to="/">
+              Create an account
             </Link>
           </p>
+          <Link to="/login">
+            <span className="back">&#8592; Back to Log IN</span>
+          </Link>
         </form>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default ResetPassword;

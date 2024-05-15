@@ -4,4 +4,4 @@ function getCookie(name: string) {
   if (parts.length === 2) return parts.pop()?.split(';').shift() as string;
 }
 
-getCookie('USER_ID');
+getCookie('UUID')

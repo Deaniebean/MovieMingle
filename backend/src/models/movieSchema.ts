@@ -5,7 +5,7 @@ interface MovieModel{
     genre: string[], // convert id numbers to strings before adding to model
     release_date: string;
     poster_path: string | "",
-    vote: number,
+    vote: number, // Number threw error
     vote_count: number,
     trailer: string,
     date: Date,

@@ -7,8 +7,7 @@ import { saveUserInDb } from "./saveUserInDb";
 import UserModel from "../models/userModel";
 import { register } from "./authController";
 import { login } from "./authController";
-import User from "../models/mongooseUsers";
-import mongoose from "mongoose";
+import {User} from "../models/mongooseUsers";
 
 // SETUP
 
@@ -23,6 +22,7 @@ jest.mock("./saveUserInDb");
 
 let req: MockProxy<Request>;
 let res: MockProxy<Response>;
+const next = jest.fn();
 
 beforeEach(() => {
   req = mock<Request>();
@@ -39,7 +39,7 @@ test("missing username or password should return 400", async () => {
     password: "",
   };
 
-  await register(req, res);
+  await register(req, res, next);
 
   expect(res.status).toHaveBeenCalledWith(400);
   expect(res.send).toHaveBeenCalledWith({
@@ -50,7 +50,7 @@ test("missing username or password should return 400", async () => {
 test("missing request body should return 400", async () => {
   req.body = null;
 
-  await register(req, res);
+  await register(req, res, next);
 
   expect(res.status).toHaveBeenCalledWith(400);
   expect(res.send).toHaveBeenCalledWith({ message: "Request body is missing" });
@@ -70,10 +70,11 @@ test("test register successful", async () => {
     uuid,
     username: req.body.username,
     password: hashedPassword,
+    watch_list: [],
+    history: [],
   };
 
-  await register(req, res);
-  await register(req, res);
+  await register(req, res, next);
 
   expect(jwt.sign as jest.Mock).toHaveBeenCalled();
   expect((jwt.sign as jest.Mock).mock.calls).toHaveLength(2); // counts from index 0
@@ -92,10 +93,11 @@ test("login user not found", async () => {
   req.body = {
     username: "test",
   };
-  await login(req, res);
+  await login(req, res,next);
 
   expect(res.status).toHaveBeenCalledWith(404);
   expect(res.send).toHaveBeenCalledWith({ message: "user not found" });
+  return login(req, res, next);
 });
 
 test("login wrong password", async () => {
@@ -112,10 +114,11 @@ test("login wrong password", async () => {
   jest
     .spyOn(bcrypt, "compare")
     .mockImplementation(() => Promise.resolve(false));
-  await login(req, res);
+  await login(req, res, next);
 
   expect(res.status).toHaveBeenCalledWith(400);
   expect(res.send).toHaveBeenCalledWith({ message: "Password is incorrect" });
+  return login(req, res, next);
 });
 
 test("login successful", async () => {
@@ -133,7 +136,7 @@ test("login successful", async () => {
   jest.spyOn(bcrypt, "compare").mockImplementation(() => Promise.resolve(true));
   jest.spyOn(jwt, "sign").mockImplementation(() => "token");
 
-  await login(req, res);
+  await login(req, res, next);
 
   expect(jwt.sign as jest.Mock).toHaveBeenCalled();
   expect((jwt.sign as jest.Mock).mock.calls).toHaveLength(1);
@@ -148,4 +151,5 @@ test("login successful", async () => {
     token: "token",
     user: "666",
   });
+  return login(req, res, next);
 });
