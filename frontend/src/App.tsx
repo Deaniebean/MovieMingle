@@ -10,15 +10,17 @@ import { useState } from 'react';
 import LandingPage from './components/LandingPage';
 import InputFieldsMovie from './pratice/InputFieldsMovie';
 import Winner from './components/Winner';
+import Navbar from './components/Navbar';
 
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [showNavbar, setShowNavbar] = useState(true);
-  // TODO @Fiona füge die Zeile mit deiner Navbar über dem div page-container ein : {showNavbar && <Navbar />} 
+
   return (
     <>
+      <Navbar isOpen={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />      
       <div className="page-container">
         <Router>
           <Routes>
