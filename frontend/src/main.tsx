@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import { ThemeProvider } from '@material-tailwind/react'; // Required for component library
+import { ThemeProvider } from "@material-tailwind/react"; // Required for Material-Tailwind components
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

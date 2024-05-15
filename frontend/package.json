@@ -12,12 +12,16 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@material-tailwind/react": "^2.1.9",
+    "@mui/material": "^5.15.16",
     "axios": "^1.6.8",
     "node": "^18.20.2",
     "react": "^18.2.0",
     "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
+    "react-range-slider-input": "^3.0.7",
     "react-router-dom": "^6.22.3",
     "universal-cookie": "^7.1.4"
   },
@@ -25,7 +29,7 @@
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.2",
     "@testing-library/user-event": "^14.5.2",
-    "@types/react": "^18.2.66",
+    "@types/react": "^18.2.19",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",

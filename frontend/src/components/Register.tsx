@@ -104,7 +104,8 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
       </div>
       <div className="registerForm">
         <h2 className="title">Register</h2>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        {/* temp adding class of 'formElement' on form instead of styling element directly */}
+        <form onSubmit={(e) => handleSubmit(e)} className="formElement">
           <div className="dataInputWrapper">
             <input
               className="dataInput"

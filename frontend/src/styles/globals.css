@@ -30,6 +30,10 @@
   --title-font: Kumar One, sans-serif;
 }
 
+body {
+  background-color: var(--primary);
+}
+
 h1 {
   color: var(--secondary);
   font-family: var(--title-font);
