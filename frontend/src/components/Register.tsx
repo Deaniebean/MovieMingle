@@ -3,11 +3,10 @@ import React, { useLayoutEffect } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import '../styles/globals.css';
 import './Register.css';
 
-//To-do: password strength meter
 
 const cookies = new Cookies();
 
@@ -29,6 +28,24 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Check username is empty
+    if (!username) {
+      setErrorMessage('Please enter a username');
+      return;
+    }
+
+    // Check password is empty
+    if (!password) {
+      setErrorMessage('Please enter a password');
+      return;
+    }
+
+    // Check verifyPassword is empty
+    if (!verifyPassword) {
+      setErrorMessage('Please verify your password');
+      return;
+    }
 
     // Check whether passwords match
     if (password !== verifyPassword) {
@@ -82,11 +99,11 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
         <h1>MovieMingle</h1>
       </div>
       <div className="textContainer">
-        <p className="text">Discover, decide, rate</p>
-        <p className="text"> - your ultimate movie compass!</p>
+        <p className="description">Discover, decide, rate</p>
+        <p className="description"> - your ultimate movie compass!</p>
       </div>
-      <div className="container">
-        <h2>Register</h2>
+      <div className="registerForm">
+        <h2 className="title">Register</h2>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="dataInputWrapper">
             <input
@@ -124,7 +141,7 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
           <button className="button" type="submit">
             Register
           </button>
-          <p>
+          <p className="linkText">
             Already have an account?&nbsp;
             <Link className="link" to="/login">
               Log In now

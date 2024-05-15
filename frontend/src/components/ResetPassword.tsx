@@ -30,6 +30,24 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Check username is empty
+    if (!username) {
+      setErrorMessage('Please enter a username');
+      return;
+    }
+
+    // Check password is empty
+    if (!newPassword) {
+      setErrorMessage('Please enter a new password');
+      return;
+    }
+
+    // Check verifyPassword is empty
+    if (!verifyPassword) {
+      setErrorMessage('Please verify your new password');
+      return;
+    }
+
     // Check whether passwords match
     if (newPassword !== verifyPassword) {
       setErrorMessage('Passwords do not match');
@@ -83,13 +101,13 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
         <h1>MovieMingle</h1>
       </div>
       <div className="textContainer">
-        <p className="text">Discover, decide, rate</p>
-        <p className="text"> - your ultimate movie compass!</p>
+        <p className="description">Discover, decide, rate</p>
+        <p className="description"> - your ultimate movie compass!</p>
       </div>
-      <div className="container">
-        <h2>Reset Password</h2>
+      <div className="registerForm">
+        <h2 className="title">Reset Password</h2>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="dataInputWrapper">
+          <div className="dataInputWrapper_resetPassword">
             <input
               className="dataInput"
               type="text"
@@ -126,7 +144,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
           <button className="button" type="submit">
             Reset Password
           </button>
-          <p>
+          <p className="linkText">
             Not registered yet?&nbsp;
             <Link className="link" to="/">
               Create an account

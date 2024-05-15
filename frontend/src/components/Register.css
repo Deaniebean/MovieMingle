@@ -26,13 +26,13 @@
     padding: 0 2rem 3rem 2rem;
 }
 
-.text {
+.description {
     font-size: 16px;
     color: var(--text);
-    margin: 0 !important;
+    margin: 0;
 }
 
-.container {
+.registerForm {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -45,11 +45,11 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
-h2 {
+.title {
     display: flex;
     justify-content: center;
-    font-size: 35px !important;
-    font-weight: bold !important;
+    font-size: 35px;
+    font-weight: bold;
 }
 
 form {
@@ -69,13 +69,26 @@ form {
     margin-bottom: 2rem;
 }
 
+.dataInputWrapper_resetPassword {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
 .dataInput {
-    color: var(--text-darker);
     font-family: var(--font);
     border-radius: 1rem;
     margin: 0.5rem 0;
     padding: 0.5rem;
     width: 100%;
+}
+
+.dataInput::placeholder {
+    color: var(--text-darker);
 }
 
 .dataInput:hover {
@@ -130,7 +143,11 @@ p {
     justify-content: center;
     font-size: 12px;
     color: var(--primary);
-    margin-top: 1rem !important;
+    margin-top: 1rem;
+}
+
+.linkText {
+    margin-top: 1rem;
 }
 
 .link {
@@ -149,7 +166,7 @@ p {
     font-family: var(--font);
     font-size: 12px;
     color: var(--error);
-    margin: 0;
+    margin-top: 1rem;
 }
 
 .back {
@@ -175,7 +192,7 @@ p {
       z-index: 10;
       background-color: var(--text);
       width: 0;
-      margin-bottom: 24rem;
+      margin-bottom: 23rem;
       font-size: 40px;
     }
 
@@ -184,13 +201,13 @@ p {
         margin-bottom: -2rem;
     }
 
-    .text {
+    .description {
         color: var(--primary);
         font-weight: bold;
     }
   
-    .container {
-      width: 70% !important;
+    .registerForm {
+      width: 70%;
       position: absolute;
       height: 75%;
       justify-content: center;
@@ -202,17 +219,22 @@ p {
       width: 80%;
       transition: all 1.0s ease;
     } 
+
+    .dataInputWrapper_resetPassword {
+        width: 80%;
+        transition: all 1.0s ease;
+      } 
 }  
 
 /* Media Query für Desktop-Version */
 @media (min-width: 750px) {
-    .container {
-      width: 60% !important;
+    .registerForm {
+      width: 60%;
       transition: all 1.0s ease;
     }
 
     .titlebar {
-        margin-bottom: 25rem;
+        margin-bottom: 24rem;
       }
 
     .textContainer {
@@ -223,8 +245,8 @@ p {
 
 /* Media Query für Desktop-Version */
 @media (min-width: 1000px) {
-    .container {
-      width: 50% !important;
+    .registerForm {
+      width: 50%;
       transition: all 1.0s ease;
     }
 
@@ -232,6 +254,11 @@ p {
       width: 70%;
       transition: all 1.0s ease;
     }
+
+    .dataInputWrapper_resetPassword {
+        width: 70%;
+        transition: all 1.0s ease;
+      }
 }
 
 /* Media Query für Desktop-Version */
@@ -240,4 +267,9 @@ p {
       width: 60%;
       transition: all 1.0s ease;
     }
+
+    .dataInputWrapper_resetPassword {
+        width: 60%;
+        transition: all 1.0s ease;
+      }
 }

@@ -30,6 +30,18 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
 
     setLoading(true);
 
+    // Check username is empty
+    if (!username) {
+      setErrorMessage('Please enter a username');
+      return;
+    }
+
+    // Check password is empty
+    if (!password) {
+      setErrorMessage('Please enter a password');
+      return;
+    }
+
     // Send form data
     const configuration = {
       method: 'post',
@@ -71,11 +83,11 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
         <h1>MovieMingle</h1>
       </div>
       <div className="textContainer">
-        <p className="text">Discover, decide, rate</p>
-        <p className="text"> - your ultimate movie compass!</p>
+        <p className="description">Discover, decide, rate</p>
+        <p className="description"> - your ultimate movie compass!</p>
       </div>
-      <div className="container">
-        <h2>Log In</h2>
+      <div className="registerForm">
+        <h2 className="title">Log In</h2>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="dataInputWrapper">
             <input
@@ -107,7 +119,7 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
           <button className="button" type="submit">
             Log In
           </button>
-          <p>
+          <p className="linkText">
             Not registered yet?&nbsp;
             <Link className="link" to="/">
               Create an account
