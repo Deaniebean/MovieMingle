@@ -4,22 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/filterSlider.css';
 import '../styles/globals.css';
 
-import { Movie } from '../pratice_fetches/MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
+import { Movie } from '../types/MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
 
 // Components
 import {
   Checkbox,
-  List,
   ListItem,
   ListItemPrefix,
   Typography,
-  Radio,
   Button,
 } from '@material-tailwind/react';
 import FilterSeparator from './FilterSeparator';
 import NavTemp from './NavTemp';
 import Slider from '@mui/material/Slider'; // Working despite 'cannot find module' error
-import RadioMUI from '@mui/material/Radio';
 
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
@@ -79,13 +76,13 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     setYearSlider(newValue as number[]);
   };
 
-  const onChangeYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // Setting decade range e.g 1970's = 1970-1979
-    const startYear = `${e.target.value}-01-01`;
-    const endYear = `${parseInt(e.target.value) + 9}-12-31`; // Possible use for a slider, manually select date range instead
-    setStartYear(startYear);
-    setEndYear(endYear.toString());
-  };
+  // const onChangeYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   // Setting decade range e.g 1970's = 1970-1979
+  //   const startYear = `${e.target.value}-01-01`;
+  //   const endYear = `${parseInt(e.target.value) + 9}-12-31`; // Possible use for a slider, manually select date range instead
+  //   setStartYear(startYear);
+  //   setEndYear(endYear.toString());
+  // };
 
   //  Defining genres
   const genreList = [
@@ -260,7 +257,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
 
   return (
     <div className="text-secondary h-screen flex flex-col">
-      <div className="py-3">
+      <div className="pb-3">
         <NavTemp />
       </div>
       <form
@@ -292,7 +289,8 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
                 <select
                   name="lanuage"
                   value={language}
-                  onChange={(val) => setLanguage(val as unknown as string)} // Unknown?
+                  onChange={(e) => setLanguage(e.target.value)} // Unknown?
+                  // onChange={(value) => setLanguage(value as unknown as string)} // Unknown?
                   className="bg-secondaryDark border-0 rounded-xl text-light px-10 py-4 border-r-8 border-transparent"
                 >
                   <option value="en">English</option>

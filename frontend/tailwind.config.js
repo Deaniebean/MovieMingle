@@ -1,6 +1,6 @@
 const withMT = require('@material-tailwind/react/utils/withMT');
-const colors = require('tailwindcss/colors')
- 
+const colors = require('tailwindcss/colors');
+
 module.exports = withMT({
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
@@ -11,7 +11,6 @@ module.exports = withMT({
         secondaryDark: '#32384F',
         tertiary: '#563d4f',
         light: '#F6F1FF',
-
 
         text: '#ffffff',
         textDark: '#dddddd',
@@ -26,17 +25,16 @@ module.exports = withMT({
         errorLight: '#db7d74',
 
         // To use Tailwinds extended color palette
-        // ...colors 
+        // ...colors
       },
       fontFamily: {
         main: 'Montserrat',
         display: ['Kumar One', 'sans-serif'],
       },
       screens: {
-        'betterhover': {'raw': '(hover: hover)'},
-    }
+        betterhover: { raw: '(hover: hover)' },
+      },
     },
   },
   plugins: [],
-});
 });

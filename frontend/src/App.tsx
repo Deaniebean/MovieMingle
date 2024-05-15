@@ -9,7 +9,7 @@ import ThisOrThat from './pratice/ThisOrThat';
 import { Movie } from './types/MovieType';
 import { useState } from 'react';
 import LandingPage from './components/LandingPage';
-import InputFieldsMovie from './pratice/InputFieldsMovie';
+import FilterPage from './components/FilterPage';
 import Winner from './components/Winner';
 
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
@@ -43,7 +43,7 @@ function App() {
               />
               <Route
                 path="/select"
-                element={<InputFieldsMovie setMovies={setMovies} />}
+                element={<FilterPage setMovies={setMovies} />}
               />
               <Route
                 path="/this-or-that"
