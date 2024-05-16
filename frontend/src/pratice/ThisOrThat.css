@@ -2,11 +2,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 50%;
     background-color: black;
     color: white;   
+}
 
-
+h2.this p.this {
+    color: white
 }
 
 .this .img-container, .that .img-container {
@@ -15,16 +17,14 @@
 
 .this .img-container img, .that .img-container img {
     width: auto;
-    height: 30vh;
+    height: 28vh;
 }
-
-
 
 .that {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 50%;
     background-color: #f5f5f5;
 }
 

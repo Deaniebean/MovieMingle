@@ -57,8 +57,8 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
       );
 
       console.log('Success:', response.data);
-      // setMovies(response.data);
-      // navigate('/this-or-that');
+      setMovies(response.data);
+      navigate('/this-or-that');
     } catch (error) {
       console.error('Error:', error);
     }
