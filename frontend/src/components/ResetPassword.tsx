@@ -105,7 +105,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
         <p className="description"> - your ultimate movie compass!</p>
       </div>
       <div className="registerForm">
-        <h2 className="title">Reset Password</h2>
+        <h2 className="titleForm">Reset Password</h2>
         <form onSubmit={(e) => handleSubmit(e)} className="formElement">
           <div className="dataInputWrapper_resetPassword">
             <input
@@ -146,12 +146,12 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
           </button>
           <p className="linkText">
             Not registered yet?&nbsp;
-            <Link className="link" to="/">
+            <Link className="linkTo" to="/">
               Create an account
             </Link>
           </p>
           <Link to="/login">
-            <span className="back">&#8592; Back to Log IN</span>
+            <span className="goBack">&#8592; Back to Log IN</span>
           </Link>
         </form>
       </div>

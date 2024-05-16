@@ -87,7 +87,7 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
         <p className="description"> - your ultimate movie compass!</p>
       </div>
       <div className="registerForm">
-        <h2 className="title">Log In</h2>
+        <h2 className="titleForm">Log In</h2>
         {/* temp adding class of 'formElement' on form instead of styling element directly */}
         <form onSubmit={(e) => handleSubmit(e)} className="formElement">
           <div className="dataInputWrapper">
@@ -122,7 +122,7 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
           </button>
           <p className="linkText">
             Not registered yet?&nbsp;
-            <Link className="link" to="/">
+            <Link className="linkTo" to="/">
               Create an account
             </Link>
           </p>
