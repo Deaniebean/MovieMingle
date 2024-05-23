@@ -16,7 +16,7 @@ dotenv.config();
 
 const API_KEY = process.env.TMDB_API_KEY;
 if (!API_KEY) {
-  throw new Error('Missing environment variables');
+  throw new Error('Missing environment variables TMDB_API_KEY');
 }
 
 

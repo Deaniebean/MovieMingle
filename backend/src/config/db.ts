@@ -1,19 +1,15 @@
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 dotenv.config();
-
-const db: string = process.env.DB_CONNECTION_STRING
-
-mongoose.set("strictQuery", true);
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db);
-    console.log("MongoDB is Connected...");
-  } catch (err) {
-    console.error(err.message);
-    process.exit(1);
+    const url = "mongodb://localhost:27017/moviemingle";
+    await mongoose.connect(url);
+    console.log('connected to database moviemingle ...');
+  } catch (error) {
+    console.error(`Failed to connect to the database. Error: ${error}`);
   }
-};
-export default connectDB;
+}
 
+export default connectDB;
