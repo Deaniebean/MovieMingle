@@ -18,7 +18,7 @@
     color: var(--text);
 }
 
-.textContainer {
+.text-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,7 +32,7 @@
     margin: 0;
 }
 
-.registerForm {
+.register-form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -45,7 +45,7 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
-.titleForm {
+.title-form {
     display: flex;
     justify-content: center;
     font-size: 35px;
@@ -53,32 +53,24 @@
 }
 
 
-.formElement {
+.form-element {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-/* Temp disabling styling on html element, itäs interfering forms on other pages */
-/* form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
-
-.dataInputWrapper {
+.data-input-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     width: 100%;
     margin-top: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
-.dataInputWrapper_resetPassword {
+.data-input-wrapper-reset-password {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -88,7 +80,7 @@
     margin-bottom: 1rem;
 }
 
-.dataInput {
+.data-input {
     font-family: var(--font);
     border-radius: 1rem;
     margin: 0.5rem 0;
@@ -96,15 +88,15 @@
     width: 100%;
 }
 
-.dataInput::placeholder {
+.data-input::placeholder {
     color: var(--text-darker);
 }
 
-.dataInput:hover {
+.data-input:hover {
     background-color: #dddddd87;
 }
 
-.forgotPassword {
+.forgot-password {
     margin: 0;
     color: var(--secondary);
     font-weight: 500;
@@ -114,7 +106,7 @@
     cursor: pointer;
 }
 
-.forgotPassword:hover {
+.forgot-password:hover {
     font-weight: 600;
 }
 
@@ -125,7 +117,7 @@
     margin-top: 1rem;
 }
 
-.errorMessageContainer {
+.error-message-container {
     height: 1.5em;
     width: 100%;
     display: flex;
@@ -157,13 +149,13 @@
     font-weight: 600;
 }
 
-.linkText {
+.link-text {
     margin-top: 1rem;
     font-size: 12px;
     color: var(--primary);
 }
 
-.linkTo {
+.link-to {
     font-family: var(--font);
     font-size: 12px;
     font-weight: bold;
@@ -171,11 +163,11 @@
     cursor: pointer;
 }
 
-.linkTo:hover {
+.link-to:hover {
     font-weight: 800;
 }
 
-.goBack {
+.go-back {
 font-family: var(--font);
 font-size: 12px;
 font-weight: bold;
@@ -183,7 +175,7 @@ color: var(--primary);
 cursor: pointer;
 }
 
-.goBack:hover {
+.go-back:hover {
     font-weight: 800;
 }
 
@@ -202,7 +194,7 @@ cursor: pointer;
       font-size: 40px;
     }
 
-    .textContainer {
+    .text-container {
         z-index: 10;
         margin-bottom: -2rem;
     }
@@ -212,7 +204,7 @@ cursor: pointer;
         font-weight: bold;
     }
   
-    .registerForm {
+    .register-form {
       width: 70%;
       position: absolute;
       height: 75%;
@@ -221,12 +213,12 @@ cursor: pointer;
       transition: all 1.0s ease;
     }
 
-    .dataInputWrapper {
+    .data-input-wrapper {
       width: 80%;
       transition: all 1.0s ease;
     } 
 
-    .dataInputWrapper_resetPassword {
+    .data-input-wrapper-reset-password {
         width: 80%;
         transition: all 1.0s ease;
       } 
@@ -234,7 +226,7 @@ cursor: pointer;
 
 /* Media Query für Desktop-Version */
 @media (min-width: 750px) {
-    .registerForm {
+    .register-form {
       width: 60%;
       transition: all 1.0s ease;
     }
@@ -243,7 +235,7 @@ cursor: pointer;
         margin-bottom: 24rem;
       }
 
-    .textContainer {
+    .textcontainer {
         flex-direction: row;
     }
 }
@@ -251,17 +243,17 @@ cursor: pointer;
 
 /* Media Query für Desktop-Version */
 @media (min-width: 1000px) {
-    .registerForm {
+    .register-form {
       width: 50%;
       transition: all 1.0s ease;
     }
 
-    .dataInputWrapper {
+    .data-input-wrapper {
       width: 70%;
       transition: all 1.0s ease;
     }
 
-    .dataInputWrapper_resetPassword {
+    .data-input-wrapper-reset-password {
         width: 70%;
         transition: all 1.0s ease;
       }
@@ -269,12 +261,12 @@ cursor: pointer;
 
 /* Media Query für Desktop-Version */
 @media (min-width: 1200px) {
-    .dataInputWrapper {
+    .data-input-wrapper {
       width: 60%;
       transition: all 1.0s ease;
     }
 
-    .dataInputWrapper_resetPassword {
+    .data-input-wrapper-reset-password {
         width: 60%;
         transition: all 1.0s ease;
       }

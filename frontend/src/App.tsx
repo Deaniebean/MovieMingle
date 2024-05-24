@@ -12,6 +12,7 @@ import LandingPage from './components/LandingPage';
 import FilterPage from './components/FilterPage';
 import Winner from './components/Winner';
 import NavTemp from './components/NavTemp';
+import MovieDetailView from './components/MovieDetailView';
 
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
@@ -51,6 +52,10 @@ function App() {
                 element={<ThisOrThat movies={movies} setMovies={setMovies} />}
               />
               <Route path="/winner" element={<Winner />} />
+              <Route
+                path="/movie-detail-view"
+                element={<MovieDetailView setShowNavbar={setShowNavbar} />}
+              />
             </Route>
           </Routes>
         </Router>

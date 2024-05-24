@@ -98,17 +98,17 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
       <div className="titlebar">
         <h1>MovieMingle</h1>
       </div>
-      <div className="textContainer">
+      <div className="text-container">
         <p className="description">Discover, decide, rate</p>
         <p className="description"> - your ultimate movie compass!</p>
       </div>
-      <div className="registerForm">
-        <h2 className="titleForm">Register</h2>
+      <div className="register-form">
+        <h2 className="title-form">Register</h2>
         {/* temp adding class of 'formElement' on form instead of styling element directly */}
-        <form onSubmit={(e) => handleSubmit(e)} className="formElement">
-          <div className="dataInputWrapper">
+        <form onSubmit={(e) => handleSubmit(e)} className="form-element">
+          <div className="data-input-wrapper">
             <input
-              className="dataInput"
+              className="data-input"
               type="text"
               placeholder="E-Mail or Username"
               name="username"
@@ -116,7 +116,7 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
-              className="dataInput"
+              className="data-input"
               type="password"
               placeholder="Password"
               name="password"
@@ -124,14 +124,14 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <input
-              className="dataInput"
+              className="data-input"
               type="password"
               placeholder="Verify Password"
               name="verifyPassword"
               value={verifyPassword}
               onChange={(e) => setVerifyPassword(e.target.value)}
             />
-            <div className="errorMessageContainer">
+            <div className="error-message-container">
               {(errorMessage && !register) || (registerClicked && !register) ? (
                 <p className="error">
                   {errorMessage || 'You Are Not Registered'}
@@ -142,9 +142,9 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
           <button className="button" type="submit">
             Register
           </button>
-          <p className="linkText">
+          <p className="link-text">
             Already have an account?&nbsp;
-            <Link className="linkTo" to="/login">
+            <Link className="link-to" to="/login">
               Log In now
             </Link>
           </p>
