@@ -53,7 +53,7 @@ router.delete("/delete/movie", async (req: Request, res: Response) => {
       res.status(404).json({ message: "Movie not found" });
       return;
     }
-
+  //remove movie from movie collection
     await Movie.deleteOne({ id: movieId });
 
     // Remove the movie's ObjectId from the watch_list
