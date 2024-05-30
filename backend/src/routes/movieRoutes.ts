@@ -53,7 +53,7 @@ router.delete("/delete/movie", async (req: Request, res: Response) => {
       res.status(404).json({ message: "Movie not found" });
       return;
     }
-  //remove movie from movie collection
+    // remove movie from movie collection
     await Movie.deleteOne({ id: movieId });
 
     // Remove the movie's ObjectId from the watch_list
@@ -78,6 +78,27 @@ router.get("/movie/:id", async (req: Request, res: Response) => {
     }
 
     res.json(movie);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred" });
+  }
+});
+
+router.put("/update/movie-rating", async (req: Request, res: Response) => {
+  const { movieId, rating } = req.body;
+
+  try {
+    const movie = await Movie.findOne({ id: movieId });
+
+    if (!movie) {
+      res.status(404).json({ message: "Movie not found" });
+      return;
+    }
+
+    movie.rating = rating;
+    await movie.save();
+
+    res.json({ message: "Rating updated successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "An error occurred" });
