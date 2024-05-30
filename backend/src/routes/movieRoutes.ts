@@ -43,26 +43,23 @@ router.post("/save/watchlist", async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/delete/watchlist", async (req: Request, res: Response) => {
-  const { movieId, userUUID } = req.body;
+router.delete("/delete/movie", async (req: Request, res: Response) => {
+  const { movieId } = req.body;
 
   try {
-    const user = await User.findOne({ uuid: userUUID });
+    const movie = await Movie.findOne({ id: movieId });
 
-    if (!user) {
-      res.status(404).json({ message: "User not found" });
+    if (!movie) {
+      res.status(404).json({ message: "Movie not found" });
       return;
     }
 
-    // Remove the movie from the watchlist
-    const index = user.watch_list.indexOf(movieId);
-    if (index > -1) {
-      user.watch_list.splice(index, 1);
-    }
+    await Movie.deleteOne({ id: movieId });
 
-    await user.save();
+    // Remove the movie's ObjectId from the watch_list
+    await User.updateMany({}, { $pull: { watch_list: movie._id } });
 
-    res.json({ movieId, userUUID });
+    res.json({ message: "Movie deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "An error occurred" });
