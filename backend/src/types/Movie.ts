@@ -13,6 +13,7 @@ interface MovieType {
     vote_average?: number;
     vote_count?: number;
     videos?: string[];
+    trailer?: string;
   }
 
   export type { MovieType };
