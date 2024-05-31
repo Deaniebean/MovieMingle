@@ -1,6 +1,6 @@
 // I added my own unique id to store in the Session, this will be used to to save movies for a specific user
 // (the Unique_id from Mongodb would make testing with jest unnecessarily complicated)
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
 const UserSchema = new mongoose.Schema({
   uuid: {
@@ -22,6 +22,5 @@ const UserSchema = new mongoose.Schema({
   history: [{ type: Schema.Types.ObjectId, ref: "Movie" }], // Movies watched
 });
 
-
-const User = mongoose.model('User', UserSchema);
-export {User};
+const User = mongoose.model("User", UserSchema);
+export { User };
