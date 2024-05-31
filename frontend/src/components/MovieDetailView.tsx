@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 //import { Movie } from '../types/MovieType';
 import StarRating from './StarRating';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import genreData from '../genre.json';
 import { Genre } from '../types/GenreType';
-import { Link } from 'react-router-dom';
-
+import { Link, useParams } from 'react-router-dom';
 
 // Assets
 import hamburgerMenuIcon from '../assets/solar_hamburger-menu-linear.png';
@@ -20,21 +19,22 @@ import './MovieDetailView.css';
 
 const data = [
   {
-    "adult": false,
-    "backdrop_path": null,
-    "genre_ids": [16],
-    "id": 424168,
-    "original_language": "en",
-    "original_title": "INNERVIEWS",
-    "overview": "An animated insight into the world views of Allen Ginsberg, Charles Bukowski, Nina Simone, Leonard Cohen and David Lynch.",
-    "popularity": 0.6,
-    "poster_path": "/zyIAWhLpMgTUFjIe1LRjFjPMDbl.jpg",
-    "release_date": "2015-07-06",
-    "title": "INNERVIEWS",
-    "video": false,
-    "vote_average": 0,
-    "vote_count": 0,
-    "videos": []
+    adult: false,
+    backdrop_path: null,
+    genre_ids: [14, 16, 35, 10402],
+    id: 424168,
+    original_language: 'en',
+    original_title: 'INNERVIEWS',
+    overview:
+      'An animated insight into the world views of Allen Ginsberg, Charles Bukowski, Nina Simone, Leonard Cohen and David Lynch.',
+    popularity: 0.6,
+    poster_path: '/zyIAWhLpMgTUFjIe1LRjFjPMDbl.jpg',
+    release_date: '2015-07-06',
+    title: 'INNERVIEWS',
+    video: false,
+    vote_average: 10,
+    vote_count: 1,
+    videos: [],
   },
 ];
 
@@ -53,18 +53,34 @@ interface MovieDetailViewProps {
 }
 
 const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
-  React.useEffect(() => {
+  const { id } = useParams<{ id: string }>(); // Extracting movieID from route params
+  const [movie, setMovie] = useState<any>(null); // State for movie data
+
+  useEffect(() => {
     setShowNavbar(true);
-  }, []);
+
+    // Fetching movie data based on the ID
+    axios
+      .get(`http://localhost:8082/movie/${id}`)
+      .then((response: AxiosResponse) => {
+        setMovie(response.data);
+      })
+      .catch((error: AxiosError) => {
+        console.error('Error fetching movie data:', error);
+      });
+  }, [id]);
+
+  if (!movie) {
+    return <div>Loading...</div>;
+  }
 
   const renderAverageRating = () => {
-    const ratingData = data[0];
-    if (!ratingData || !ratingData.vote_average) {
+    if (!movie.vote_average) {
       return '-';
     }
 
-    const averageRating = Math.round(ratingData.vote_average * 10) / 10;
-    const voteCount = ratingData.vote_count;
+    const averageRating = Math.round(movie.vote_average * 10) / 10;
+    const voteCount = movie.vote_count;
 
     return (
       <span>
@@ -82,7 +98,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
 
   // Renders genres for selected movie
   const renderFilmGenres = (index: number): JSX.Element => {
-    const genres = getGenreNames(data[0].genre_ids);
+    const genres = getGenreNames(movie.genre_ids);
 
     // max no. of genres displayed? 2-3?
     return (
@@ -91,9 +107,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
       >
         {genres.map((genre, i) => (
           <span
-            className={`border rounded-md px-3 py-1 text-xs ${
-              index === 0 ? 'border-white' : 'border-primary'
-            }`}
+            className={`border rounded-md px-3 py-1 text-xs ${index === 0 ? 'border-white' : 'border-primary'}`}
             key={i}
           >
             {genre}
@@ -114,15 +128,16 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
   // Send the rating to the backend
   const submitRating = (rating: number) => {
     const requestData = {
-      movieId: data[0].id,
+      movieId: movie.id,
       rating: rating,
     };
 
     const configuration = {
-      method: 'post',
-      url: 'http://localhost:8082/rateMovie', // TO-DO: URL anpassen, an die die Bewertung gesendet werden soll
+      method: 'put',
+      url: 'http://localhost:8082/update/movie-rating',
       data: requestData,
     };
+    console.log('Sending rating:', requestData);
 
     axios(configuration)
       .then((result: AxiosResponse) => {
@@ -130,6 +145,31 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
       })
       .catch((error: AxiosError) => {
         console.error('Fehler beim Senden der Bewertung:', error);
+      });
+  };
+
+  // Remove movie from watchlist
+  const removeFromWatchlist = () => {
+    const requestData = {
+      movieId: movie.id,
+    };
+
+    const configuration = {
+      method: 'delete',
+      url: 'http://localhost:8082/delete/movies',
+      data: requestData,
+    };
+
+    axios(configuration)
+      .then((result: AxiosResponse) => {
+        console.log(
+          'Film erfolgreich von der Watchlist entfernt:', result.data
+        );
+      })
+      .catch((error: AxiosError) => {
+        console.error(
+          'Fehler beim Entfernen des Films von der Watchlist:', error
+        );
       });
   };
 
@@ -149,16 +189,16 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
           <img
             // src={data[0].poster_path}
             src={
-              data[0].poster_path
-                ? `https://image.tmdb.org/t/p/original${data[0].poster_path}`
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
                 : 'path/to/default/image.jpg'
             }
-            alt={data[0].original_title}
-            className="w-4/5 h-auto rounded-lg  movie-img"
+            alt={movie.original_title}
+            className="h-auto rounded-lg  movie-img"
           />
         </div>
         <div>
-          <h2 className="movie-title">{data[0].original_title}</h2>
+          <h2 className="movie-title">{movie.original_title}</h2>
           <p className="descriptions">
             {' '}
             Genre
@@ -167,7 +207,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
           <p className="descriptions">
             Release Date <br />
             <span className="movie-detail">
-              {formatDate(data[0].release_date)}
+              {formatDate(movie.release_date)}
             </span>
           </p>
           <p className="descriptions">
@@ -176,11 +216,11 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
           </p>
           <p className="descriptions">
             Original Language <br />
-            <span className="movie-detail">{data[0].original_language}</span>
+            <span className="movie-detail">{movie.original_language}</span>
           </p>
           <p className="movie-title mt-8 ml-4">
             Overview <br />
-            <span className="overview">{data[0].overview}</span>
+            <span className="overview">{movie.overview}</span>
           </p>
           <button className="trailer-button" type="submit">
             <PlayArrowRoundedIcon />
@@ -194,13 +234,20 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
               <StarRating maxStars={5} onSubmitRating={submitRating} />
             </div>
           </div>
-          <button className="rating-button" type="submit">
+          <button
+            className="rating-button"
+            type="submit"
+            onClick={removeFromWatchlist}
+          >
             <CloseRoundedIcon />
             Remove from watchlist
           </button>
-          <br /><br />
+          <br />
+          <br />
           <Link to="/home" className="back-button">
-            <span><ArrowBackRoundedIcon /> Back to Watchlist</span>
+            <span>
+              <ArrowBackRoundedIcon /> Back to Watchlist
+            </span>
           </Link>
         </div>
       </div>
