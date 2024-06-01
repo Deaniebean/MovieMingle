@@ -6,8 +6,8 @@ import Cookies from 'universal-cookie';
 import axios, { AxiosError } from 'axios';
 import '../styles/globals.css';
 import './Register.css';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
-//To-do: password strength meter
 
 const cookies = new Cookies();
 
@@ -100,16 +100,16 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
       <div className="titlebar">
         <h1>MovieMingle</h1>
       </div>
-      <div className="textContainer">
+      <div className="text-container">
         <p className="description">Discover, decide, rate</p>
         <p className="description"> - your ultimate movie compass!</p>
       </div>
-      <div className="registerForm">
-        <h2 className="titleForm">Reset Password</h2>
-        <form onSubmit={(e) => handleSubmit(e)} className="formElement">
-          <div className="dataInputWrapper_resetPassword">
+      <div className="register-form">
+        <h2 className="title-form">Reset Password</h2>
+        <form onSubmit={(e) => handleSubmit(e)} className="form-element">
+          <div className="data-input-wrapper-reset-password">
             <input
-              className="dataInput"
+              className="data-input"
               type="text"
               placeholder="E-Mail or Username"
               name="username"
@@ -117,7 +117,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
-              className="dataInput"
+              className="data-input"
               type="password"
               placeholder="New Password"
               name="password"
@@ -125,14 +125,14 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <input
-              className="dataInput"
+              className="data-input"
               type="password"
               placeholder="Verify New Password"
               name="verifyPassword"
               value={verifyPassword}
               onChange={(e) => setVerifyPassword(e.target.value)}
             />
-            <div className="errorMessageContainer">
+            <div className="error-message-container">
               {(errorMessage && !resetPassword) ||
               (resetPasswordClicked && !resetPassword) ? (
                 <p className="error">
@@ -144,14 +144,14 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
           <button className="button" type="submit">
             Reset Password
           </button>
-          <p className="linkText">
+          <p className="link-text">
             Not registered yet?&nbsp;
-            <Link className="linkTo" to="/">
+            <Link className="link-to" to="/">
               Create an account
             </Link>
           </p>
           <Link to="/login">
-            <span className="goBack">&#8592; Back to Log IN</span>
+            <span className="go-back"><ArrowBackRoundedIcon /> Back to Log IN</span>
           </Link>
         </form>
       </div>
