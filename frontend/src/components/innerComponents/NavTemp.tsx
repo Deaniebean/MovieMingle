@@ -81,8 +81,8 @@ export function NavTemp() {
   }, []);
 
   return (
-    <Navbar className="mx-auto max-w-screen-xl px-6 py-3 rounded-none">
-      <div className="flex items-center justify-between text-blue-gray-900">
+    <Navbar className="mx-auto max-w-screen-xl px-6 py-3 rounded-none bg-primary border-primary">
+      <div className="flex items-center justify-between text-text">
         <Typography
           as="a"
           href="#"
