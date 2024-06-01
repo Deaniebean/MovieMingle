@@ -12,11 +12,12 @@ import {
   ListItem,
   ListItemPrefix,
   Typography,
-  Button,
+  // Button,
 } from '@material-tailwind/react';
 import FilterSeparator from './innerComponents/FilterSeparator';
 import NavTemp from './innerComponents/NavTemp';
 import Slider from '@mui/material/Slider'; // Working despite 'cannot find module' error
+import Button from './innerComponents/Button';
 
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
@@ -57,8 +58,8 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
       );
 
       console.log('Success:', response.data);
-      // setMovies(response.data);
-      // navigate('/this-or-that');
+      setMovies(response.data);
+      navigate('/this-or-that');
     } catch (error) {
       console.error('Error:', error);
     }
@@ -233,90 +234,93 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
       <div className="pb-3">
         <NavTemp />
       </div>
-      <form onSubmit={queryParams} className="flex flex-1 px-6 gap-10 md:pt-16 md:max-h-128">
+      <form
+        onSubmit={queryParams}
+        className="flex flex-1 px-6 gap-10 md:pt-16 md:max-h-128"
+      >
         <div className="flex flex-col md:gap-8 justify-between md:justify-between md:grid-cols-3 ">
           <div className="md:flex md:gap-12 flex flex-1 md:flex-none flex-col md:flex-row md:gap-8 justify-evenly">
-          {/* Genre */}
-          <div className="md:col-span-2 md:w-2/3 md:pe-16">
-            {/* <div className="md:w-2/3 md:pe-16"> */}
-            <FilterSeparator text={'Genres'} />
-            {/* Map over all Genres */}
-            <div className="md:hidden flex flex-wrap gap-x-3 gap-y-2 items-end">
-              {/* Not optimal,  if list is expended then retracted, any option from expanded list is removed
+            {/* Genre */}
+            <div className="md:col-span-2 md:w-2/3 md:pe-16">
+              {/* <div className="md:w-2/3 md:pe-16"> */}
+              <FilterSeparator text={'Genres'} />
+              {/* Map over all Genres */}
+              <div className="md:hidden flex flex-wrap gap-x-3 gap-y-2 items-end">
+                {/* Not optimal,  if list is expended then retracted, any option from expanded list is removed
                 Better to always render all options but hide them*/}
-              {showMore ? genreList : genreList.slice(0, 12)}
-              <p
-                onClick={() => setShowMore(!showMore)}
-                className="border-secondary text-secondary font-semibold"
-              >
-                {showMore ? 'Show less' : 'Show more'}
-              </p>
-            </div>
-            <div className="hidden md:flex flex-wrap gap-x-3 gap-y-2 items-end md:pe-8">
-              {/* Not optimal,  if list is expended then retracted, any option from expanded list is removed
-                Better to always render all options but hide them*/}
-              {genreList}
-            </div>
-          </div>
-          <div className="md:w-1/3 flex flex-1 flex-col md:gap-8 justify-evenly md:justify-normal">
-            {/* Language */}
-            <div>
-              <FilterSeparator text={'Language'} />
-              <div className="flex gap-6 items-center md:ps-6">
-                <p className="text-light text-nowrap text-sm">
-                  Select Language
+                {showMore ? genreList : genreList.slice(0, 12)}
+                <p
+                  onClick={() => setShowMore(!showMore)}
+                  className="border-secondary text-secondary font-semibold"
+                >
+                  {showMore ? 'Show less' : 'Show more'}
                 </p>
-                <div className="">
-                  <select
-                    name="lanuage"
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value)} // Unknown?
-                    // onChange={(value) => setLanguage(value as unknown as string)} // Unknown?
-                    className="bg-secondaryDark border-0 rounded-xl text-light px-10 py-4 border-r-8 border-transparent"
-                  >
-                    <option value="en">English</option>
-                    <option value="de">German</option>
-                    <option value="es">Spanish</option>
-                    <option value="fr">French</option>
-                  </select>
-                </div>
+              </div>
+              <div className="hidden md:flex flex-wrap gap-x-3 gap-y-2 items-end md:pe-8">
+                {/* Not optimal,  if list is expended then retracted, any option from expanded list is removed
+                Better to always render all options but hide them*/}
+                {genreList}
               </div>
             </div>
-            {/* Year */}
-            <div className="md:col-end-4">
-              <FilterSeparator text={'Release year'} />
-              <label>
-                <div className="ms-4 me-1 mx-auto">
-                  <Slider
-                    getAriaLabel={() => 'Release Date'}
-                    defaultValue={30}
-                    value={yearSlider}
-                    onChange={onYearChange}
-                    valueLabelDisplay="auto"
-                    shiftStep={30}
-                    step={5}
-                    marks={yearMarks}
-                    min={1970}
-                    max={2024}
-                    sx={{
-                      '& .MuiSlider-markLabel': {
-                        color: '#F6F1FF',
-                      },
-                      '& .MuiSlider-thumb': {
-                        color: '#8091be',
-                      },
-                      '& .MuiSlider-track': {
-                        color: '#8091be',
-                      },
-                      '& .MuiSlider-rail': {
-                        color: '#acc4e4',
-                      },
-                    }}
-                  />
+            <div className="md:w-1/3 flex flex-1 flex-col md:gap-8 justify-evenly md:justify-normal">
+              {/* Language */}
+              <div className='mb-8'>
+                <FilterSeparator text={'Language'} />
+                <div className="flex gap-6 items-center md:ps-6">
+                  <p className="text-light text-nowrap text-sm">
+                    Select Language
+                  </p>
+                  <div className="">
+                    <select
+                      name="lanuage"
+                      value={language}
+                      onChange={(e) => setLanguage(e.target.value)} // Unknown?
+                      // onChange={(value) => setLanguage(value as unknown as string)} // Unknown?
+                      className="bg-secondaryDark border-0 rounded-xl text-light px-10 py-4 border-r-8 border-transparent"
+                    >
+                      <option value="en">English</option>
+                      <option value="de">German</option>
+                      <option value="es">Spanish</option>
+                      <option value="fr">French</option>
+                    </select>
+                  </div>
                 </div>
-              </label>
+              </div>
+              {/* Year */}
+              <div className="md:col-end-4">
+                <FilterSeparator text={'Release year'} />
+                <label>
+                  <div className="ms-4 me-1 mx-auto">
+                    <Slider
+                      getAriaLabel={() => 'Release Date'}
+                      defaultValue={30}
+                      value={yearSlider}
+                      onChange={onYearChange}
+                      valueLabelDisplay="auto"
+                      shiftStep={30}
+                      step={5}
+                      marks={yearMarks}
+                      min={1970}
+                      max={2024}
+                      sx={{
+                        '& .MuiSlider-markLabel': {
+                          color: '#F6F1FF',
+                        },
+                        '& .MuiSlider-thumb': {
+                          color: '#8091be',
+                        },
+                        '& .MuiSlider-track': {
+                          color: '#8091be',
+                        },
+                        '& .MuiSlider-rail': {
+                          color: '#acc4e4',
+                        },
+                      }}
+                    />
+                  </div>
+                </label>
+              </div>
             </div>
-          </div>
           </div>
           {/* Round */}
           <div className="md:col-span-3">
@@ -327,13 +331,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
           </div>
           {/* Button */}
           <div className="flex mx-auto py-3 items-center mb-10 md:mb-0 md:col-span-3">
-            <Button
-              type="submit"
-              size="lg"
-              className="bg-secondary px-16 text-primary "
-            >
-              Start
-            </Button>
+            <Button text={'Start'}></Button>
           </div>
         </div>
       </form>

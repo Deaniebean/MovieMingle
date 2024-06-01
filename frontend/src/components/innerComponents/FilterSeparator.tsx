@@ -16,9 +16,9 @@ const defaultProps: Partial<FilterSeparatorProps> = {
 const FilterSeparator: React.FC<FilterSeparatorProps> = (props) => {
   // You can use props.prop1 and props.prop2 here
   return (
-    <div className={props.justify + "flex items-center gap-3 py-3.5"}>
+    <div className={props.justify + " flex items-center gap-3 py-3.5"}>
       <h2 className="text-light text-nowrap text-xl">{props.text}</h2>
-      <hr className="my-2 border-light w-full" />
+      <hr className="my-2 border-light w-full md:hidden" />
     </div>
   );
 };
