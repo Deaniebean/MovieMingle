@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Movie } from '../types/MovieType';
 import './ThisOrThat.css';
+import genreData from '../genre.json';
+// import tempMovies from './tempMovies.json';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
+
+// Components
+import NavTemp from './innerComponents/NavTemp';
 
 interface Props {
   movies: Movie[];

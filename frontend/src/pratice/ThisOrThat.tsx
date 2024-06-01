@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
+// Components
+import NavTemp from '../components/innerComponents/NavTemp';
+
 interface Props {
   movies: Movie[];
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
