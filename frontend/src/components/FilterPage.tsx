@@ -14,8 +14,8 @@ import {
   Typography,
   Button,
 } from '@material-tailwind/react';
-import FilterSeparator from './FilterSeparator';
-import NavTemp from './NavTemp';
+import FilterSeparator from './innerComponents/FilterSeparator';
+import NavTemp from './innerComponents/NavTemp';
 import Slider from '@mui/material/Slider'; // Working despite 'cannot find module' error
 
 interface Props {
@@ -143,48 +143,21 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     { value: '18', text: 'Epic Battle' },
   ].map((round, i) => {
     return (
-      // <ListItem key={i} className="p-0 bg-secondaryDark md:bg-inherit">
-      //   <label className="flex w-full cursor-pointer px-3 py-2 flex justify-center">
-      //     {/* Hides radio button circle on mobile */}
-      //     <ListItemPrefix className="mr-3 hidden md:inline">
-      //       {/* <ListItemPrefix className="mr-3 hidden md:inline mt-auto"> */}
-      //       {/* <RadioMUI value="large" label="Large" size="lg" /> */}
-      //       <Radio
-      //         value={round.value}
-      //         name="horizontal-list"
-      //         id="horizontal-list-react"
-      //         ripple={false}
-      //         className="hover:before:opacity-0"
-      //         containerProps={{
-      //           className: 'p-0',
-      //         }}
-      //         onChange={onRoundChange}
-      //       />
-      //     </ListItemPrefix>
-      //     <div className="items-center text-center text-nowrap md:hidden">
-      //       <Typography className="text-light font-medium text-xs">
-      //         {round.text}
-      //       </Typography>
-      //       <Typography className="text-light font-bold text-sm">
-      //         {round.value} Movies
-      //       </Typography>
-      //     </div>
-      //   </label>
-      // </ListItem>
       <div key={i}>
         <label
           htmlFor={round.value}
-          className="block cursor-pointer select-none rounded-xl p-2 text-center md:text-left has-[:checked]:bg-secondaryDark has-[:checked]:font-bold has-[:checked]:text-white justify-content-center md:flex"
+          className="block cursor-pointer select-none rounded-xl p-2 text-center md:text-left has-[:checked]:bg-secondaryDark has-[:checked]:md:bg-primary has-[:checked]:font-bold has-[:checked]:text-white md:flex md:items-center md:justify-center"
         >
-          <input
-            type="radio"
-            name="rounds"
-            value={round.value}
-            id={round.value}
-            className="peer hidden"
-            onChange={(e) => setRounds(e.target.value)}
-          />
           <div className="hidden md:inline">
+            <input
+              type="radio"
+              name="rounds"
+              value={round.value}
+              id={round.value}
+              className="peer hidden"
+              onChange={(e) => setRounds(e.target.value)}
+            />
+            {/* Checked or uncheck svg shown depending on status of input, peer class */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="3em"
@@ -215,10 +188,10 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
             </svg>
           </div>
           <div className="">
-            <Typography className="text-light font-medium text-xs md:text-xl">
+            <Typography className="text-light font-medium text-xs md:text-xl md:font-bold">
               {round.text}
             </Typography>
-            <Typography className="text-light font-bold text-sm md:text-xl">
+            <Typography className="text-light font-bold md:font-normal text-sm md:text-xl">
               {round.value} Movies
             </Typography>
           </div>
@@ -256,21 +229,21 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   ];
 
   return (
-    <div className="text-secondary h-screen flex flex-col">
+    <div className="text-secondary h-screen flex flex-col container mx-auto">
       <div className="pb-3">
         <NavTemp />
       </div>
-      <form
-        onSubmit={queryParams}
-        className="flex flex-col flex-1 justify-between px-6"
-      >
-        <div className="flex flex-col flex-1">
-          <div>
+      <form onSubmit={queryParams} className="flex flex-1 px-6 gap-10 md:pt-16 md:max-h-128">
+        <div className="flex flex-col md:gap-8 justify-between md:justify-between md:grid-cols-3 ">
+          <div className="md:flex md:gap-12 flex flex-1 md:flex-none flex-col md:flex-row md:gap-8 justify-evenly">
+          {/* Genre */}
+          <div className="md:col-span-2 md:w-2/3 md:pe-16">
+            {/* <div className="md:w-2/3 md:pe-16"> */}
             <FilterSeparator text={'Genres'} />
             {/* Map over all Genres */}
-            <div className="flex flex-wrap gap-x-3 gap-y-2 items-end">
+            <div className="md:hidden flex flex-wrap gap-x-3 gap-y-2 items-end">
               {/* Not optimal,  if list is expended then retracted, any option from expanded list is removed
-              Better to always render all options but hide them*/}
+                Better to always render all options but hide them*/}
               {showMore ? genreList : genreList.slice(0, 12)}
               <p
                 onClick={() => setShowMore(!showMore)}
@@ -279,77 +252,89 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
                 {showMore ? 'Show less' : 'Show more'}
               </p>
             </div>
-            <div className="flex justify-end"></div>
-          </div>
-          <div>
-            <FilterSeparator text={'Language'} />
-            <div className="flex gap-6 items-center">
-              <p className="text-light text-nowrap text-sm">Select Language</p>
-              <div className="w-72">
-                <select
-                  name="lanuage"
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)} // Unknown?
-                  // onChange={(value) => setLanguage(value as unknown as string)} // Unknown?
-                  className="bg-secondaryDark border-0 rounded-xl text-light px-10 py-4 border-r-8 border-transparent"
-                >
-                  <option value="en">English</option>
-                  <option value="de">German</option>
-                  <option value="es">Spanish</option>
-                  <option value="fr">French</option>
-                </select>
-              </div>
+            <div className="hidden md:flex flex-wrap gap-x-3 gap-y-2 items-end md:pe-8">
+              {/* Not optimal,  if list is expended then retracted, any option from expanded list is removed
+                Better to always render all options but hide them*/}
+              {genreList}
             </div>
           </div>
-          <div>
-            <FilterSeparator text={'Release year'} />
-            <label>
-              <div className="ms-4 me-1 mx-auto">
-                <Slider
-                  getAriaLabel={() => 'Release Date'}
-                  defaultValue={30}
-                  value={yearSlider}
-                  onChange={onYearChange}
-                  valueLabelDisplay="auto"
-                  shiftStep={30}
-                  step={5}
-                  marks={yearMarks}
-                  min={1970}
-                  max={2024}
-                  sx={{
-                    '& .MuiSlider-markLabel': {
-                      color: '#F6F1FF',
-                    },
-                    '& .MuiSlider-thumb': {
-                      color: '#8091be',
-                    },
-                    '& .MuiSlider-track': {
-                      color: '#8091be',
-                    },
-                    '& .MuiSlider-rail': {
-                      color: '#acc4e4',
-                    },
-                  }}
-                />
+          <div className="md:w-1/3 flex flex-1 flex-col md:gap-8 justify-evenly md:justify-normal">
+            {/* Language */}
+            <div>
+              <FilterSeparator text={'Language'} />
+              <div className="flex gap-6 items-center md:ps-6">
+                <p className="text-light text-nowrap text-sm">
+                  Select Language
+                </p>
+                <div className="">
+                  <select
+                    name="lanuage"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)} // Unknown?
+                    // onChange={(value) => setLanguage(value as unknown as string)} // Unknown?
+                    className="bg-secondaryDark border-0 rounded-xl text-light px-10 py-4 border-r-8 border-transparent"
+                  >
+                    <option value="en">English</option>
+                    <option value="de">German</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                  </select>
+                </div>
               </div>
-            </label>
+            </div>
+            {/* Year */}
+            <div className="md:col-end-4">
+              <FilterSeparator text={'Release year'} />
+              <label>
+                <div className="ms-4 me-1 mx-auto">
+                  <Slider
+                    getAriaLabel={() => 'Release Date'}
+                    defaultValue={30}
+                    value={yearSlider}
+                    onChange={onYearChange}
+                    valueLabelDisplay="auto"
+                    shiftStep={30}
+                    step={5}
+                    marks={yearMarks}
+                    min={1970}
+                    max={2024}
+                    sx={{
+                      '& .MuiSlider-markLabel': {
+                        color: '#F6F1FF',
+                      },
+                      '& .MuiSlider-thumb': {
+                        color: '#8091be',
+                      },
+                      '& .MuiSlider-track': {
+                        color: '#8091be',
+                      },
+                      '& .MuiSlider-rail': {
+                        color: '#acc4e4',
+                      },
+                    }}
+                  />
+                </div>
+              </label>
+            </div>
           </div>
-          <div>
-            <FilterSeparator text={'Select Round'} />
-            {/* <List className="flex-row gap-3 px-0">{roundList}</List> */}
+          </div>
+          {/* Round */}
+          <div className="md:col-span-3">
+            <FilterSeparator text={'Select Round'} justify={'justify-center'} />
             <div className="grid w-full grid-cols-3 gap-2 rounded-xl py-2 mx-auto">
-              {roundList}{' '}
+              {roundList}
             </div>
           </div>
-        </div>
-        <div className="flex flex-1 mx-auto py-3 items-center">
-          <Button
-            type="submit"
-            size="lg"
-            className="bg-secondary px-16 text-primary "
-          >
-            Start
-          </Button>
+          {/* Button */}
+          <div className="flex mx-auto py-3 items-center mb-10 md:mb-0 md:col-span-3">
+            <Button
+              type="submit"
+              size="lg"
+              className="bg-secondary px-16 text-primary "
+            >
+              Start
+            </Button>
+          </div>
         </div>
       </form>
     </div>
