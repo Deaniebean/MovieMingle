@@ -34,6 +34,9 @@ module.exports = withMT({
       screens: {
         betterhover: { raw: '(hover: hover)' },
       },
+      spacing: {
+        '128': '45rem',
+      }
     },
   },
   plugins: [],
