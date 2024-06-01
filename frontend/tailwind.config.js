@@ -36,6 +36,9 @@ module.exports = withMT({
       },
       spacing: {
         '128': '45rem',
+      },
+      borderRadius: {
+        'large': '15px'
       }
     },
   },
