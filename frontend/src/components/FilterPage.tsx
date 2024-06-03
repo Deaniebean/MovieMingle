@@ -18,6 +18,11 @@ import FilterSeparator from './innerComponents/FilterSeparator';
 import NavTemp from './innerComponents/NavTemp';
 import Slider from '@mui/material/Slider'; // Working despite 'cannot find module' error
 import Button from './innerComponents/Button';
+import RadioButton from './innerComponents/RadioButton';
+
+// Assets
+import CircleOutline from '../assets/circle-outline.svg';
+import CircleSelected from '../assets/circle-radio-filled.svg';
 
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
@@ -77,14 +82,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     setYearSlider(newValue as number[]);
   };
 
-  // const onChangeYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   // Setting decade range e.g 1970's = 1970-1979
-  //   const startYear = `${e.target.value}-01-01`;
-  //   const endYear = `${parseInt(e.target.value) + 9}-12-31`; // Possible use for a slider, manually select date range instead
-  //   setStartYear(startYear);
-  //   setEndYear(endYear.toString());
-  // };
-
   //  Defining genres
   const genreList = [
     { id: 28, label: 'Action' },
@@ -108,33 +105,39 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   ].map((genre, index) => {
     return (
       // Hover on desktop only, min -1024px
-      <ListItem
-        className="p-0 max-w-fit rounded-full border border-secondary py-1 px-2.5 hover:bg-primary active:bg-primary focus:bg-primary lg:hover:bg-violet-950"
-        key={index}
-      >
-        <label className="flex cursor-pointer items-center">
-          <ListItemPrefix className="mr-2">
-            <Checkbox
-              value={genre.id}
-              ripple={false}
-              color="indigo"
-              onChange={onGenreChange}
-              className="border-2 rounded-full border-secondary h-4 w-4 transition-all"
-              containerProps={{
-                className: 'p-0',
-              }}
-            />
-          </ListItemPrefix>
-          {/* <p className="font-medium pe-1">{genre.label}</p> */}
-          <Typography
-            color="blue-gray"
-            variant="small"
-            className="font-main pe-1 text-secondary font-semibold"
-          >
-            {genre.label}
-          </Typography>
-        </label>
-      </ListItem>
+      <input
+      type='checkbox'
+      value={genre.id}
+      onChange={onGenreChange}
+              className="border-2 rounded-full border-secondaryLight h-4 w-4 "
+      />
+      // <ListItem
+      //   className=" max-w-fit rounded-full border border-secondaryLight py-1 px-2.5 hover:bg-primary active:bg-primary md:active:bg-secondary focus:bg-blue md:focus:bg-primary md:hover:bg-violet-950"
+      //   key={index}
+      // >
+      //   <label className="flex cursor-pointer items-center">
+      //     <ListItemPrefix className="md:mr-2 hidden md:flex">
+      //       <Checkbox
+      //         value={genre.id}
+      //         ripple={false}
+      //         color="indigo"
+      //         onChange={onGenreChange}
+      //         className="border-2 rounded-full border-secondaryLight h-4 w-4 "
+      //         containerProps={{
+      //           className: 'p-0',
+      //         }}
+      //       />
+      //     </ListItemPrefix>
+      //     {/* <p className="font-medium pe-1">{genre.label}</p> */}
+      //     <Typography
+      //       color="blue-gray"
+      //       variant="small"
+      //       className="font-main md:text-base px-1 md:pe-1 text-secondary font-semibold"
+      //     >
+      //       {genre.label}
+      //     </Typography>
+      //   </label>
+      // </ListItem>
     );
   });
 
@@ -159,16 +162,19 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
               onChange={(e) => setRounds(e.target.value)}
             />
             {/* Checked or uncheck svg shown depending on status of input, peer class */}
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="3em"
-              height="3em"
-              viewBox="0 0 32 32"
-              className="w-22 mr-4 mt-auto peer-checked:hidden"
+              width="3rem"
+              height="3rem"
+              fill="none"
+              viewBox="0 0 24 24"
+              className="w-22 mr-4 mt-auto peer-checked:hidden text-secondary"
             >
               <path
-                fill="currentColor"
-                d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2m0 26a12 12 0 1 1 12-12a12 12 0 0 1-12 12"
+                d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="#4E5676"
+                stroke-width="1.5"
               />
             </svg>
             <svg
@@ -176,14 +182,11 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
               width="3em"
               height="3em"
               viewBox="0 0 24 24"
-              className="w-22 mr-4 mt-auto hidden peer-checked:inline "
+              className="w-22 mr-4 mt-auto hidden peer-checked:inline fill-current text-secondaryLight"
             >
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 18a8 8 0 1 1 8-8a8 8 0 0 1-8 8" />
               <path
-                fill="currentColor"
-                d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 18a8 8 0 1 1 8-8a8 8 0 0 1-8 8"
-              />
-              <path
-                fill="currentColor"
+                fill="white"
                 d="M12 7a5 5 0 1 0 5 5a5 5 0 0 0-5-5m0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3"
               />
             </svg>
@@ -231,96 +234,76 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
 
   return (
     <div className="text-secondary h-screen flex flex-col container mx-auto">
-      <div className="pb-3">
+      <div className="md:pb-3">
         <NavTemp />
       </div>
       <form
         onSubmit={queryParams}
-        className="flex flex-1 px-6 gap-10 md:pt-16 md:max-h-128"
+        className="flex h-screen mx-auto px-6 md:pt-16 md:max-h-128"
       >
-        <div className="flex flex-col md:gap-8 justify-between md:justify-between md:grid-cols-3 ">
-          <div className="md:flex md:gap-12 flex flex-1 md:flex-none flex-col md:flex-row md:gap-8 justify-evenly">
-            {/* Genre */}
-            <div className="md:col-span-2 md:w-2/3 md:pe-16">
-              {/* <div className="md:w-2/3 md:pe-16"> */}
-              <FilterSeparator text={'Genres'} />
-              {/* Map over all Genres */}
-              <div className="md:hidden flex flex-wrap gap-x-3 gap-y-2 items-end">
-                {/* Not optimal,  if list is expended then retracted, any option from expanded list is removed
-                Better to always render all options but hide them*/}
-                {showMore ? genreList : genreList.slice(0, 12)}
-                <p
-                  onClick={() => setShowMore(!showMore)}
-                  className="border-secondary text-secondary font-semibold"
+        <div className="flex flex-col md:grid justify-between md:grid-cols-3 ">
+          {/* Genre */}
+          <div className="flex flex-col md:flex-none md:col-span-2 md:pe-16 min-h-20 overflow-auto">
+            <FilterSeparator text={'Genres'} />
+            {/* Map over all Genres */}
+            <div className="flex flex-wrap gap-x-2 gap-y-2 items-end">
+              {genreList}
+            </div>
+          </div>
+          {/* Language */}
+          <div className="flex-none">
+            <FilterSeparator text={'Language'} />
+            <div className="flex gap-6 items-center md:ps-6">
+              <p className="text-light text-nowrap text-sm">Select Language</p>
+              <div className="">
+                <select
+                  name="lanuage"
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)} // Unknown?
+                  // onChange={(value) => setLanguage(value as unknown as string)} // Unknown?
+                  className="bg-secondaryDark border-0 rounded-xl text-light px-10 py-4 border-r-8 border-transparent"
                 >
-                  {showMore ? 'Show less' : 'Show more'}
-                </p>
-              </div>
-              <div className="hidden md:flex flex-wrap gap-x-3 gap-y-2 items-end md:pe-8">
-                {/* Not optimal,  if list is expended then retracted, any option from expanded list is removed
-                Better to always render all options but hide them*/}
-                {genreList}
+                  <option value="en">English</option>
+                  <option value="de">German</option>
+                  <option value="es">Spanish</option>
+                  <option value="fr">French</option>
+                </select>
               </div>
             </div>
-            <div className="md:w-1/3 flex flex-1 flex-col md:gap-8 justify-evenly md:justify-normal">
-              {/* Language */}
-              <div className='mb-8'>
-                <FilterSeparator text={'Language'} />
-                <div className="flex gap-6 items-center md:ps-6">
-                  <p className="text-light text-nowrap text-sm">
-                    Select Language
-                  </p>
-                  <div className="">
-                    <select
-                      name="lanuage"
-                      value={language}
-                      onChange={(e) => setLanguage(e.target.value)} // Unknown?
-                      // onChange={(value) => setLanguage(value as unknown as string)} // Unknown?
-                      className="bg-secondaryDark border-0 rounded-xl text-light px-10 py-4 border-r-8 border-transparent"
-                    >
-                      <option value="en">English</option>
-                      <option value="de">German</option>
-                      <option value="es">Spanish</option>
-                      <option value="fr">French</option>
-                    </select>
-                  </div>
-                </div>
+          </div>
+          {/* Year - negative margin b/c unknown bottom spacing in 'Generes' */}
+          <div className="md:col-end-4 md:-mt-10">
+            <FilterSeparator text={'Release year'} />
+            <label>
+              <div className="ms-4 me-1 mx-auto">
+                <Slider
+                  getAriaLabel={() => 'Release Date'}
+                  defaultValue={30}
+                  value={yearSlider}
+                  onChange={onYearChange}
+                  valueLabelDisplay="auto"
+                  shiftStep={30}
+                  step={5}
+                  marks={yearMarks}
+                  min={1970}
+                  max={2024}
+                  sx={{
+                    '& .MuiSlider-markLabel': {
+                      color: '#F6F1FF',
+                    },
+                    '& .MuiSlider-thumb': {
+                      color: '#8091be',
+                    },
+                    '& .MuiSlider-track': {
+                      color: '#8091be',
+                    },
+                    '& .MuiSlider-rail': {
+                      color: '#acc4e4',
+                    },
+                  }}
+                />
               </div>
-              {/* Year */}
-              <div className="md:col-end-4">
-                <FilterSeparator text={'Release year'} />
-                <label>
-                  <div className="ms-4 me-1 mx-auto">
-                    <Slider
-                      getAriaLabel={() => 'Release Date'}
-                      defaultValue={30}
-                      value={yearSlider}
-                      onChange={onYearChange}
-                      valueLabelDisplay="auto"
-                      shiftStep={30}
-                      step={5}
-                      marks={yearMarks}
-                      min={1970}
-                      max={2024}
-                      sx={{
-                        '& .MuiSlider-markLabel': {
-                          color: '#F6F1FF',
-                        },
-                        '& .MuiSlider-thumb': {
-                          color: '#8091be',
-                        },
-                        '& .MuiSlider-track': {
-                          color: '#8091be',
-                        },
-                        '& .MuiSlider-rail': {
-                          color: '#acc4e4',
-                        },
-                      }}
-                    />
-                  </div>
-                </label>
-              </div>
-            </div>
+            </label>
           </div>
           {/* Round */}
           <div className="md:col-span-3">
@@ -330,7 +313,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
             </div>
           </div>
           {/* Button */}
-          <div className="flex mx-auto py-3 items-center mb-10 md:mb-0 md:col-span-3">
+          <div className="flex mx-auto pb-6 items-center content-end md:col-span-3">
             <Button text={'Start'}></Button>
           </div>
         </div>
