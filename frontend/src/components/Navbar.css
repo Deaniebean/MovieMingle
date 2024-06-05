@@ -61,7 +61,7 @@
   }
   
   .logout {
-    
+    font-size: 10px;
   }
 
   .top-navbar {
@@ -84,7 +84,7 @@
     padding: 10px 20px 10px 20px;
     
   }
-  
+
   
 @media only screen and (min-width: 1024px) {
   .top-navbar-nav ul {

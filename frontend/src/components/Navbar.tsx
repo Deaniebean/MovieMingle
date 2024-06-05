@@ -53,17 +53,28 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
         </div>
         <nav className="sidebar-nav">
           <ul>
-            <li>Landingpage</li>
-            <li>This or That</li>
-            <li>Watch List</li>
-            <li>History</li>
-            <li>Search</li>
-            <li className="logout">Logout</li>
+          <li>Landingpage</li>
+          <li>This or That</li>
+          <li>Watch List</li>
+          <li>History</li>
+          <li>Search</li>
+          <li className="logout">Logout</li>
           </ul>
         </nav>
       </div>
     </>
   );
 };
+
+/**
+           <ul>
+          <li><Link to="/">Landingpage</Link></li>
+          <li><Link to="/this-or-that">This or That</Link></li>
+          <li><Link to="/watch-list">Watch List</Link></li>
+          <li><Link to="/history">History</Link></li>
+          <li><Link to="/search">Search</Link></li>
+          <li className="logout"><Link to="/logout">Logout</Link></li>
+          </ul>
+ */
 
 export default Navbar;
