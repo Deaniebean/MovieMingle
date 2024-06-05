@@ -77,16 +77,17 @@ const Login: React.FC<RegisterProps> = ({}) => {
       <div className="titlebar">
         <h1>MovieMingle</h1>
       </div>
-      <div className="textContainer">
+      <div className="text-container">
         <p className="description">Discover, decide, rate</p>
         <p className="description"> - your ultimate movie compass!</p>
       </div>
-      <div className="registerForm">
-        <h2 className="title">Log In</h2>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="dataInputWrapper">
+      <div className="register-form">
+        <h2 className="title-form">Log In</h2>
+        {/* temp adding class of 'formElement' on form instead of styling element directly */}
+        <form onSubmit={(e) => handleSubmit(e)} className="form-element">
+          <div className="data-input-wrapper">
             <input
-              className="dataInput"
+              className="data-input"
               type="text"
               placeholder="E-Mail or Username"
               name="username"
@@ -94,18 +95,18 @@ const Login: React.FC<RegisterProps> = ({}) => {
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
-              className="dataInput"
+              className="data-input"
               type="password"
               placeholder="Password"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <p className="forgotPassword">
+            <p className="forgot-password">
               <Link to="/reset-password">Forgot password?</Link>
             </p>
             {loading ? <div>Loading...</div> : null}
-            <div className="errorMessageContainer">
+            <div className="error-message-container">
               {loginClicked && !login ? (
                 <p className="error">{errorMessage}</p>
               ) : null}
@@ -114,9 +115,9 @@ const Login: React.FC<RegisterProps> = ({}) => {
           <button className="button" type="submit">
             Log In
           </button>
-          <p className="linkText">
+          <p className="link-text">
             Not registered yet?&nbsp;
-            <Link className="link" to="/">
+            <Link className="link-to" to="/">
               Create an account
             </Link>
           </p>

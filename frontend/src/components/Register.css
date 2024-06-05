@@ -18,7 +18,7 @@
     color: var(--text);
 }
 
-.textContainer {
+.text-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,7 +32,7 @@
     margin: 0;
 }
 
-.registerForm {
+.register-form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -45,31 +45,32 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
-.title {
+.title-form {
     display: flex;
     justify-content: center;
     font-size: 35px;
     font-weight: bold;
 }
 
-form {
+
+.form-element {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.dataInputWrapper {
+.data-input-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     width: 100%;
     margin-top: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
-.dataInputWrapper_resetPassword {
+.data-input-wrapper-reset-password {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -79,7 +80,7 @@ form {
     margin-bottom: 1rem;
 }
 
-.dataInput {
+.data-input {
     font-family: var(--font);
     border-radius: 1rem;
     margin: 0.5rem 0;
@@ -87,15 +88,15 @@ form {
     width: 100%;
 }
 
-.dataInput::placeholder {
+.data-input::placeholder {
     color: var(--text-darker);
 }
 
-.dataInput:hover {
+.data-input:hover {
     background-color: #dddddd87;
 }
 
-.forgotPassword {
+.forgot-password {
     margin: 0;
     color: var(--secondary);
     font-weight: 500;
@@ -105,13 +106,23 @@ form {
     cursor: pointer;
 }
 
-.forgotPassword:hover {
+.forgot-password:hover {
     font-weight: 600;
 }
 
-.errorMessageContainer {
+.error {
+    font-family: var(--font);
+    font-size: 12px;
+    color: var(--error);
+    margin-top: 1rem;
+}
+
+.error-message-container {
     height: 1.5em;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
 .button {
@@ -138,19 +149,13 @@ form {
     font-weight: 600;
 }
 
-p {
-    display: flex;
-    justify-content: center;
+.link-text {
+    margin-top: 1rem;
     font-size: 12px;
     color: var(--primary);
-    margin-top: 1rem;
 }
 
-.linkText {
-    margin-top: 1rem;
-}
-
-.link {
+.link-to {
     font-family: var(--font);
     font-size: 12px;
     font-weight: bold;
@@ -158,28 +163,21 @@ p {
     cursor: pointer;
 }
 
-.link:hover {
+.link-to:hover {
     font-weight: 800;
-  }
-
-.error {
-    font-family: var(--font);
-    font-size: 12px;
-    color: var(--error);
-    margin-top: 1rem;
 }
 
-.back {
-    font-family: var(--font);
-    font-size: 12px;
-    font-weight: bold;
-    color: var(--primary);
-    cursor: pointer;
+.go-back {
+font-family: var(--font);
+font-size: 12px;
+font-weight: bold;
+color: var(--primary);
+cursor: pointer;
 }
 
-.back:hover {
+.go-back:hover {
     font-weight: 800;
-  }
+}
 
 /* Media Query für Tablet-Version */
 @media (min-width: 550px) {
@@ -196,7 +194,7 @@ p {
       font-size: 40px;
     }
 
-    .textContainer {
+    .text-container {
         z-index: 10;
         margin-bottom: -2rem;
     }
@@ -206,7 +204,7 @@ p {
         font-weight: bold;
     }
   
-    .registerForm {
+    .register-form {
       width: 70%;
       position: absolute;
       height: 75%;
@@ -215,12 +213,12 @@ p {
       transition: all 1.0s ease;
     }
 
-    .dataInputWrapper {
+    .data-input-wrapper {
       width: 80%;
       transition: all 1.0s ease;
     } 
 
-    .dataInputWrapper_resetPassword {
+    .data-input-wrapper-reset-password {
         width: 80%;
         transition: all 1.0s ease;
       } 
@@ -228,7 +226,7 @@ p {
 
 /* Media Query für Desktop-Version */
 @media (min-width: 750px) {
-    .registerForm {
+    .register-form {
       width: 60%;
       transition: all 1.0s ease;
     }
@@ -237,7 +235,7 @@ p {
         margin-bottom: 24rem;
       }
 
-    .textContainer {
+    .textcontainer {
         flex-direction: row;
     }
 }
@@ -245,17 +243,17 @@ p {
 
 /* Media Query für Desktop-Version */
 @media (min-width: 1000px) {
-    .registerForm {
+    .register-form {
       width: 50%;
       transition: all 1.0s ease;
     }
 
-    .dataInputWrapper {
+    .data-input-wrapper {
       width: 70%;
       transition: all 1.0s ease;
     }
 
-    .dataInputWrapper_resetPassword {
+    .data-input-wrapper-reset-password {
         width: 70%;
         transition: all 1.0s ease;
       }
@@ -263,12 +261,12 @@ p {
 
 /* Media Query für Desktop-Version */
 @media (min-width: 1200px) {
-    .dataInputWrapper {
+    .data-input-wrapper {
       width: 60%;
       transition: all 1.0s ease;
     }
 
-    .dataInputWrapper_resetPassword {
+    .data-input-wrapper-reset-password {
         width: 60%;
         transition: all 1.0s ease;
       }
