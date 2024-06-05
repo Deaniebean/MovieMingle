@@ -11,10 +11,9 @@ import './Register.css';
 const cookies = new Cookies();
 
 interface RegisterProps {
-  setShowNavbar: (value: boolean) => void;
 }
 
-const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
+const Register: React.FC<RegisterProps> = ({ }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
@@ -22,9 +21,6 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
   const [register, setRegister] = React.useState(false);
   const [registerClicked, setRegisterClicked] = useState(false);
 
-  useLayoutEffect(() => {
-    setShowNavbar(false);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

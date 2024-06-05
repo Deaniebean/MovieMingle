@@ -20,27 +20,28 @@ function App() {
 
   return (
     <>
-      <Navbar isOpen={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />      
-      <div className="page-container">
+   
+    
         <Router>
+        <Navbar isOpen={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />   
           <Routes>
             <Route
               path="/"
-              element={<Register setShowNavbar={setShowNavbar} />}
+              element={<Register />}
             />
             <Route
               path="/login"
-              element={<Login setShowNavbar={setShowNavbar} />}
+              element={<Login />}
             />
             <Route
               path="/reset-password"
-              element={<ResetPassword setShowNavbar={setShowNavbar} />}
+              element={<ResetPassword  />}
             />
 
             <Route element={<ProtectedRoutes />}>
               <Route
                 path="/home"
-                element={<LandingPage setShowNavbar={setShowNavbar} />}
+                element={<LandingPage  />}
               />
               <Route
                 path="/select"
@@ -54,7 +55,6 @@ function App() {
             </Route>
           </Routes>
         </Router>
-      </div>
     </>
   );
 }

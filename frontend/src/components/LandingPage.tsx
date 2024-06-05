@@ -25,7 +25,6 @@ interface FeatureProps {
 }
 
 interface LandingPageProps {
-  setShowNavbar: (value: boolean) => void;
 
 }
 
@@ -55,12 +54,9 @@ const features: FeatureProps[] = [
   },
 ];
 
-const LandingPage: React.FC<LandingPageProps> = ({setShowNavbar}) => {
+const LandingPage: React.FC<LandingPageProps> = ({}) => {
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    setShowNavbar(true);
-  }, []);
 
   function nextPage() {
     navigate("/select");

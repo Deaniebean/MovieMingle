@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Navbar.css';
 import '../styles/globals.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
   isOpen: boolean;
@@ -10,6 +10,8 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleResize = () => {
@@ -26,6 +28,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
   const isLaptopScreen = screenWidth > 1024; // Example threshold for laptops
 
   return (
+    ['/login', '/'].includes(location.pathname) ? null :
     <>
       <div className="navbar">
         <div className={`burger-menu ${isLaptopScreen ? 'hidden' : ''}`} onClick={toggleNavbar}>
@@ -53,12 +56,11 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
         </div>
         <nav className="sidebar-nav">
           <ul>
-          <li>Landingpage</li>
-          <li>This or That</li>
-          <li>Watch List</li>
-          <li>History</li>
-          <li>Search</li>
-          <li className="logout">Logout</li>
+          <li onClick={() => navigate("/home")}>Landingpage</li>
+          <li onClick={() => navigate("/select")}>This or That</li>
+          <li onClick={() => navigate("/watchlist")}>Watch List</li>
+          <li onClick={() => navigate("/history")}>History</li>
+          <li className="logout" onClick={() => navigate("/login")}>Logout</li>
           </ul>
         </nav>
       </div>
@@ -66,15 +68,5 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
   );
 };
 
-/**
-           <ul>
-          <li><Link to="/">Landingpage</Link></li>
-          <li><Link to="/this-or-that">This or That</Link></li>
-          <li><Link to="/watch-list">Watch List</Link></li>
-          <li><Link to="/history">History</Link></li>
-          <li><Link to="/search">Search</Link></li>
-          <li className="logout"><Link to="/logout">Logout</Link></li>
-          </ul>
- */
 
 export default Navbar;
