@@ -8,6 +8,8 @@ import makeYourChoiceIcon from "../assets/MakeYourChoice.png";
 import enjoyYourChoiceIcon from "../assets/EnjoyYourChoice.png";
 import mobileImage from "../assets/MobileImage.png";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "@material-tailwind/react";
+import NavTemp from "./NavTemp";
 
 interface LogoProps {
   src: string;
@@ -65,9 +67,6 @@ const LandingPage: React.FC<LandingPageProps> = ({}) => {
   return (
     <div className="landing-page">
       <header className="header-container">
-        <div className="burger-menu">
-          <img src={hamburgerMenuIcon} alt="Hamburger Menu" />
-        </div>
         <h1 className="logo">MovieMingle</h1>
         <div className="app-logo">
           <Logo src="your-app-logo-src" alt="App Logo" />

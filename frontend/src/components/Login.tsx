@@ -74,6 +74,7 @@ const Login: React.FC<RegisterProps> = ({}) => {
 
   return (
     <div className="wrapper">
+      
       <div className="titlebar">
         <h1>MovieMingle</h1>
       </div>

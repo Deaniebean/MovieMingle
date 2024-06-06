@@ -11,13 +11,8 @@ import { useState } from 'react';
 import LandingPage from './components/LandingPage';
 import FilterPage from './components/FilterPage';
 import Winner from './components/Winner';
-<<<<<<< HEAD
-import Navbar from './components/Navbar';
-=======
-import NavTemp from './components/NavTemp';
 import MovieDetailView from './components/MovieDetailView';
->>>>>>> origin
-
+import Navbar from './components/Navbar';
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
 function App() {
@@ -29,7 +24,8 @@ function App() {
    
     
         <Router>
-        <Navbar isOpen={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />   
+        <Navbar isOpen={!showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />   
+        <div className='page-content'>
           <Routes>
             <Route
               path="/"
@@ -60,10 +56,11 @@ function App() {
               <Route path="/winner" element={<Winner />} />
               <Route
                 path="/movie-detail-view"
-                element={<MovieDetailView setShowNavbar={setShowNavbar} />}
+                element={<MovieDetailView />}
               />
             </Route>
           </Routes>
+          </div>
         </Router>
     </>
   );

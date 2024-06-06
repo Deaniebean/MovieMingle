@@ -258,7 +258,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   return (
     <div className="text-secondary h-screen flex flex-col">
       <div className="pb-3">
-        <NavTemp />
       </div>
       <form
         onSubmit={queryParams}
