@@ -21,7 +21,6 @@ function App() {
   // TODO @Fiona füge die Zeile mit deiner Navbar über dem div page-container ein : {showNavbar && <Navbar />}
   return (
     <>
-      <div className="page-container">
         <Router>
           <Routes>
             <Route
