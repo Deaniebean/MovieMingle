@@ -8,6 +8,7 @@ module.exports = withMT({
       colors: {
         primary: '#171a2c',
         secondary: '#8091be',
+        secondaryLight: '#4E5676',
         secondaryDark: '#32384F',
         tertiary: '#563d4f',
         light: '#F6F1FF',
@@ -34,6 +35,12 @@ module.exports = withMT({
       screens: {
         betterhover: { raw: '(hover: hover)' },
       },
+      spacing: {
+        '128': '45rem',
+      },
+      borderRadius: {
+        'large': '15px'
+      }
     },
   },
   plugins: [],

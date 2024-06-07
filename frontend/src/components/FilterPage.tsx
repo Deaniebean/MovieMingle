@@ -12,11 +12,17 @@ import {
   ListItem,
   ListItemPrefix,
   Typography,
-  Button,
+  // Button,
 } from '@material-tailwind/react';
-import FilterSeparator from './FilterSeparator';
-import NavTemp from './NavTemp';
+import FilterSeparator from './innerComponents/FilterSeparator';
+import NavTemp from './innerComponents/NavTemp';
 import Slider from '@mui/material/Slider'; // Working despite 'cannot find module' error
+import Button from './innerComponents/Button';
+import RadioButton from './innerComponents/RadioButton';
+
+// Assets
+import CircleOutline from '../assets/circle-outline.svg';
+import CircleSelected from '../assets/circle-radio-filled.svg';
 
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
@@ -76,14 +82,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     setYearSlider(newValue as number[]);
   };
 
-  // const onChangeYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   // Setting decade range e.g 1970's = 1970-1979
-  //   const startYear = `${e.target.value}-01-01`;
-  //   const endYear = `${parseInt(e.target.value) + 9}-12-31`; // Possible use for a slider, manually select date range instead
-  //   setStartYear(startYear);
-  //   setEndYear(endYear.toString());
-  // };
-
   //  Defining genres
   const genreList = [
     { id: 28, label: 'Action' },
@@ -107,18 +105,25 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   ].map((genre, index) => {
     return (
       // Hover on desktop only, min -1024px
+      // <input
+      // type='checkbox'
+      // value={genre.id}
+      // onChange={onGenreChange}
+      //         className="border-2 rounded-full border-secondaryLight h-4 w-4 "
+      // />
+
       <ListItem
-        className="p-0 max-w-fit rounded-full border border-secondary py-1 px-2.5 hover:bg-primary active:bg-primary focus:bg-primary lg:hover:bg-violet-950"
+        className=" max-w-fit rounded-full border border-secondaryLight py-1 px-2.5 hover:bg-primary active:bg-primary md:active:bg-secondary focus:bg-blue md:focus:bg-primary md:hover:bg-violet-950"
         key={index}
       >
         <label className="flex cursor-pointer items-center">
-          <ListItemPrefix className="mr-2">
+          <ListItemPrefix className=" mr-1 md:mr-2">
             <Checkbox
               value={genre.id}
               ripple={false}
               color="indigo"
               onChange={onGenreChange}
-              className="border-2 rounded-full border-secondary h-4 w-4 transition-all"
+              className="border-2 rounded-full border-secondaryLight h-4 w-4 "
               containerProps={{
                 className: 'p-0',
               }}
@@ -128,7 +133,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
           <Typography
             color="blue-gray"
             variant="small"
-            className="font-main pe-1 text-secondary font-semibold"
+            className="font-main md:text-base px-1 md:pe-1 text-secondary font-semibold"
           >
             {genre.label}
           </Typography>
@@ -146,27 +151,31 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
       <div key={i}>
         <label
           htmlFor={round.value}
-          className="block cursor-pointer select-none rounded-xl p-2 text-center md:text-left has-[:checked]:bg-secondaryDark has-[:checked]:font-bold has-[:checked]:text-white justify-content-center md:flex"
+          className="block cursor-pointer select-none rounded-xl p-2 text-center md:text-left has-[:checked]:bg-secondaryDark has-[:checked]:md:bg-primary has-[:checked]:font-bold has-[:checked]:text-white md:flex md:items-center md:justify-center"
         >
-          <input
-            type="radio"
-            name="rounds"
-            value={round.value}
-            id={round.value}
-            className="peer hidden"
-            onChange={(e) => setRounds(e.target.value)}
-          />
           <div className="hidden md:inline">
+            <input
+              type="radio"
+              name="rounds"
+              value={round.value}
+              id={round.value}
+              className="peer hidden"
+              onChange={(e) => setRounds(e.target.value)}
+            />
+            {/* Checked or uncheck svg shown depending on status of input, peer class */}
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="3em"
-              height="3em"
-              viewBox="0 0 32 32"
-              className="w-22 mr-4 mt-auto peer-checked:hidden"
+              width="3rem"
+              height="3rem"
+              fill="none"
+              viewBox="0 0 24 24"
+              className="w-22 mr-4 mt-auto peer-checked:hidden text-secondary"
             >
               <path
-                fill="currentColor"
-                d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2m0 26a12 12 0 1 1 12-12a12 12 0 0 1-12 12"
+                d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="#4E5676"
+                stroke-width="1.5"
               />
             </svg>
             <svg
@@ -174,23 +183,20 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
               width="3em"
               height="3em"
               viewBox="0 0 24 24"
-              className="w-22 mr-4 mt-auto hidden peer-checked:inline "
+              className="w-22 mr-4 mt-auto hidden peer-checked:inline fill-current text-secondaryLight"
             >
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 18a8 8 0 1 1 8-8a8 8 0 0 1-8 8" />
               <path
-                fill="currentColor"
-                d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 18a8 8 0 1 1 8-8a8 8 0 0 1-8 8"
-              />
-              <path
-                fill="currentColor"
+                fill="white"
                 d="M12 7a5 5 0 1 0 5 5a5 5 0 0 0-5-5m0 8a3 3 0 1 1 3-3a3 3 0 0 1-3 3"
               />
             </svg>
           </div>
           <div className="">
-            <Typography className="text-light font-medium text-xs md:text-xl">
+            <Typography className="text-light font-medium text-xs md:text-xl md:font-bold">
               {round.text}
             </Typography>
-            <Typography className="text-light font-bold text-sm md:text-xl">
+            <Typography className="text-light font-bold md:font-normal text-sm md:text-xl">
               {round.value} Movies
             </Typography>
           </div>
@@ -228,36 +234,26 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   ];
 
   return (
-    <div className="text-secondary h-screen flex flex-col">
-      <div className="pb-3">
-        <NavTemp />
-      </div>
+    <div className="text-secondary flex flex-col container mx-auto h-screen -mt-10 pt-8 md:-mt-28 md:pt-24">
       <form
         onSubmit={queryParams}
-        className="flex flex-col flex-1 justify-between px-6"
+        className="flex h-screen mx-auto px-6 md:pt-16 "
       >
-        <div className="flex flex-col flex-1">
-          <div>
+        <div className="flex flex-col md:grid justify-between md:grid-cols-3 ">
+          {/* Genre */}
+          <div className="flex flex-col md:flex-none md:col-span-2 md:pe-16 min-h-20 overflow-auto md:h-56">
             <FilterSeparator text={'Genres'} />
             {/* Map over all Genres */}
-            <div className="flex flex-wrap gap-x-3 gap-y-2 items-end">
-              {/* Not optimal,  if list is expended then retracted, any option from expanded list is removed
-              Better to always render all options but hide them*/}
-              {showMore ? genreList : genreList.slice(0, 12)}
-              <p
-                onClick={() => setShowMore(!showMore)}
-                className="border-secondary text-secondary font-semibold"
-              >
-                {showMore ? 'Show less' : 'Show more'}
-              </p>
+            <div className="flex flex-wrap gap-x-2 gap-y-2 items-end">
+              {genreList}
             </div>
-            <div className="flex justify-end"></div>
           </div>
-          <div>
+          {/* Language */}
+          <div className="flex-none md:flex md:flex-col">
             <FilterSeparator text={'Language'} />
-            <div className="flex gap-6 items-center">
+            <div className="flex gap-6 items-center md:ps-6">
               <p className="text-light text-nowrap text-sm">Select Language</p>
-              <div className="w-72">
+              <div className="">
                 <select
                   name="lanuage"
                   value={language}
@@ -273,7 +269,8 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
               </div>
             </div>
           </div>
-          <div>
+          {/* Year - negative margin b/c unknown bottom spacing in 'Generes' */}
+          <div className="md:col-end-4 md:-mt-36 h-fit">
             <FilterSeparator text={'Release year'} />
             <label>
               <div className="ms-4 me-1 mx-auto">
@@ -306,22 +303,17 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
               </div>
             </label>
           </div>
-          <div>
-            <FilterSeparator text={'Select Round'} />
-            {/* <List className="flex-row gap-3 px-0">{roundList}</List> */}
+          {/* Round */}
+          <div className="md:col-span-3">
+            <FilterSeparator text={'Select Round'} justify={'justify-center'} />
             <div className="grid w-full grid-cols-3 gap-2 rounded-xl py-2 mx-auto">
-              {roundList}{' '}
+              {roundList}
             </div>
           </div>
-        </div>
-        <div className="flex flex-1 mx-auto py-3 items-center">
-          <Button
-            type="submit"
-            size="lg"
-            className="bg-secondary px-16 text-primary "
-          >
-            Start
-          </Button>
+          {/* Button */}
+          <div className="flex mx-auto pb-6 items-center content-end md:col-span-3">
+            <Button text={'Start'}></Button>
+          </div>
         </div>
       </form>
     </div>

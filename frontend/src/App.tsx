@@ -11,15 +11,15 @@ import { useState } from 'react';
 import LandingPage from './components/LandingPage';
 import FilterPage from './components/FilterPage';
 import Winner from './components/Winner';
-import NavTemp from './components/NavTemp';
 import MovieDetailView from './components/MovieDetailView';
+import NavTemp from './components/innerComponents/NavTemp';
 
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [showNavbar, setShowNavbar] = useState(true);
-  // TODO @Fiona füge die Zeile mit deiner Navbar über dem div page-container ein : {showNavbar && <Navbar />} 
+  // TODO @Fiona füge die Zeile mit deiner Navbar über dem div page-container ein : {showNavbar && <Navbar />}
   return (
     <>
       <div className="page-container">
@@ -38,19 +38,28 @@ function App() {
               element={<ResetPassword setShowNavbar={setShowNavbar} />}
             />
 
+            <Route
+              path="/select"
+              element={<FilterPage setMovies={setMovies} />}
+            />
+            <Route
+              path="/this-or-that"
+              element={<ThisOrThat movies={movies} setMovies={setMovies} />}
+            />
+
+            <Route
+              path="/home"
+              element={<LandingPage setShowNavbar={setShowNavbar} />}
+            />
             <Route element={<ProtectedRoutes />}>
-              <Route
-                path="/home"
-                element={<LandingPage setShowNavbar={setShowNavbar} />}
-              />
-              <Route
+              {/* <Route
                 path="/select"
                 element={<FilterPage setMovies={setMovies} />}
               />
               <Route
                 path="/this-or-that"
                 element={<ThisOrThat movies={movies} setMovies={setMovies} />}
-              />
+              /> */}
               <Route path="/winner" element={<Winner />} />
               <Route
                 path="/movie-detail-view"
