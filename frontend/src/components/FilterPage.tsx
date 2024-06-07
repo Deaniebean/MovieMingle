@@ -105,39 +105,40 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   ].map((genre, index) => {
     return (
       // Hover on desktop only, min -1024px
-      <input
-      type='checkbox'
-      value={genre.id}
-      onChange={onGenreChange}
-              className="border-2 rounded-full border-secondaryLight h-4 w-4 "
-      />
-      // <ListItem
-      //   className=" max-w-fit rounded-full border border-secondaryLight py-1 px-2.5 hover:bg-primary active:bg-primary md:active:bg-secondary focus:bg-blue md:focus:bg-primary md:hover:bg-violet-950"
-      //   key={index}
-      // >
-      //   <label className="flex cursor-pointer items-center">
-      //     <ListItemPrefix className="md:mr-2 hidden md:flex">
-      //       <Checkbox
-      //         value={genre.id}
-      //         ripple={false}
-      //         color="indigo"
-      //         onChange={onGenreChange}
+      // <input
+      // type='checkbox'
+      // value={genre.id}
+      // onChange={onGenreChange}
       //         className="border-2 rounded-full border-secondaryLight h-4 w-4 "
-      //         containerProps={{
-      //           className: 'p-0',
-      //         }}
-      //       />
-      //     </ListItemPrefix>
-      //     {/* <p className="font-medium pe-1">{genre.label}</p> */}
-      //     <Typography
-      //       color="blue-gray"
-      //       variant="small"
-      //       className="font-main md:text-base px-1 md:pe-1 text-secondary font-semibold"
-      //     >
-      //       {genre.label}
-      //     </Typography>
-      //   </label>
-      // </ListItem>
+      // />
+
+      <ListItem
+        className=" max-w-fit rounded-full border border-secondaryLight py-1 px-2.5 hover:bg-primary active:bg-primary md:active:bg-secondary focus:bg-blue md:focus:bg-primary md:hover:bg-violet-950"
+        key={index}
+      >
+        <label className="flex cursor-pointer items-center">
+          <ListItemPrefix className=" mr-1 md:mr-2">
+            <Checkbox
+              value={genre.id}
+              ripple={false}
+              color="indigo"
+              onChange={onGenreChange}
+              className="border-2 rounded-full border-secondaryLight h-4 w-4 "
+              containerProps={{
+                className: 'p-0',
+              }}
+            />
+          </ListItemPrefix>
+          {/* <p className="font-medium pe-1">{genre.label}</p> */}
+          <Typography
+            color="blue-gray"
+            variant="small"
+            className="font-main md:text-base px-1 md:pe-1 text-secondary font-semibold"
+          >
+            {genre.label}
+          </Typography>
+        </label>
+      </ListItem>
     );
   });
 
@@ -233,17 +234,14 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   ];
 
   return (
-    <div className="text-secondary h-screen flex flex-col container mx-auto">
-      <div className="md:pb-3">
-        <NavTemp />
-      </div>
+    <div className="text-secondary flex flex-col container mx-auto h-screen -mt-10 pt-8 md:-mt-28 md:pt-24">
       <form
         onSubmit={queryParams}
-        className="flex h-screen mx-auto px-6 md:pt-16 md:max-h-128"
+        className="flex h-screen mx-auto px-6 md:pt-16 "
       >
         <div className="flex flex-col md:grid justify-between md:grid-cols-3 ">
           {/* Genre */}
-          <div className="flex flex-col md:flex-none md:col-span-2 md:pe-16 min-h-20 overflow-auto">
+          <div className="flex flex-col md:flex-none md:col-span-2 md:pe-16 min-h-20 overflow-auto md:h-56">
             <FilterSeparator text={'Genres'} />
             {/* Map over all Genres */}
             <div className="flex flex-wrap gap-x-2 gap-y-2 items-end">
@@ -251,7 +249,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
             </div>
           </div>
           {/* Language */}
-          <div className="flex-none">
+          <div className="flex-none md:flex md:flex-col">
             <FilterSeparator text={'Language'} />
             <div className="flex gap-6 items-center md:ps-6">
               <p className="text-light text-nowrap text-sm">Select Language</p>
@@ -272,7 +270,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
             </div>
           </div>
           {/* Year - negative margin b/c unknown bottom spacing in 'Generes' */}
-          <div className="md:col-end-4 md:-mt-10">
+          <div className="md:col-end-4 md:-mt-36 h-fit">
             <FilterSeparator text={'Release year'} />
             <label>
               <div className="ms-4 me-1 mx-auto">
