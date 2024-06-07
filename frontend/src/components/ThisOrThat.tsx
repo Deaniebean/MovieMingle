@@ -9,7 +9,6 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
 // Components
-import NavTemp from './NavTemp';
 import ThreeSixtyIcon from '@mui/icons-material/ThreeSixty';
 import { Typography } from '@material-tailwind/react';
 
@@ -187,7 +186,7 @@ const ThisOrThat: React.FC<Props> = ({
   return (
     <div className="h-screen flex flex-col">
       {/* Nest NavBar */}
-      <NavTemp />
+  
       <div className="flex-1">
         <div className="this">
           {movies[index1] && (
