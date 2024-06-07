@@ -14,7 +14,6 @@ import Winner from './components/Winner';
 import MovieDetailView from './components/MovieDetailView';
 import NavTemp from './components/innerComponents/NavTemp';
 
-// <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
