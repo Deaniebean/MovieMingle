@@ -15,6 +15,8 @@ interface Movie {
   vote_count?: number;
   videos: Video[];
   date: Date;
+  trailer?: string; 
+
 }
 
 export type { Movie };
