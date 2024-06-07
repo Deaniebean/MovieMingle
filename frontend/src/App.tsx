@@ -14,6 +14,7 @@ import Winner from './components/Winner';
 import MovieDetailView from './components/MovieDetailView';
 import NavTemp from './components/innerComponents/NavTemp';
 
+// <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -21,6 +22,7 @@ function App() {
   // TODO @Fiona füge die Zeile mit deiner Navbar über dem div page-container ein : {showNavbar && <Navbar />}
   return (
     <>
+      <div className="page-container">
         <Router>
           <Routes>
             <Route
