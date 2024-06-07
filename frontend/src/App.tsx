@@ -5,12 +5,13 @@ import Register from './components/Register';
 import Login from './components/Login';
 import ProtectedRoutes from './ProtectedRoutes';
 import ResetPassword from './components/ResetPassword';
-import ThisOrThat from './pratice/ThisOrThat';
+import ThisOrThat from './components/ThisOrThat';
 import { Movie } from './types/MovieType';
 import { useState } from 'react';
 import LandingPage from './components/LandingPage';
 import FilterPage from './components/FilterPage';
 import Winner from './components/Winner';
+import MovieDetailView from './components/MovieDetailView';
 import NavTemp from './components/innerComponents/NavTemp';
 
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
@@ -60,6 +61,10 @@ function App() {
                 element={<ThisOrThat movies={movies} setMovies={setMovies} />}
               /> */}
               <Route path="/winner" element={<Winner />} />
+              <Route
+                path="/movie-detail-view"
+                element={<MovieDetailView setShowNavbar={setShowNavbar} />}
+              />
             </Route>
           </Routes>
         </Router>
