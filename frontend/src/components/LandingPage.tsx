@@ -66,12 +66,13 @@ const LandingPage: React.FC<LandingPageProps> = ({}) => {
 
   return (
     <div className="landing-page">
-      <header className="header-container">
+      {/* Commented out for testing navbar component */}
+      {/* <header className="header-container">
         <h1 className="logo">MovieMingle</h1>
         <div className="app-logo">
           <Logo src="your-app-logo-src" alt="App Logo" />
         </div>
-      </header>
+      </header> */}
       <p className="text">
         Whether you're in the mood for action or comedy, drama or romance, the unique<span className="font-semibold">'This or That' feature</span> helps you find the perfect pick for your next movie night!
       </p>

@@ -12,6 +12,7 @@ body {
     background-color: var(--primary);
     color: var(--text);
     padding: 20px;
+    /* vh no longer working well now that navbar is seperate component */
     min-height: 100vh;
     box-sizing: border-box;
 }
