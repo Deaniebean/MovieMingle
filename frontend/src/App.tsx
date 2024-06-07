@@ -13,6 +13,7 @@ import FilterPage from './components/FilterPage';
 import Winner from './components/Winner';
 import MovieDetailView from './components/MovieDetailView';
 import Navbar from './components/Navbar';
+import NavTemp from './components/NavTemp';
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
 function App() {
@@ -21,30 +22,21 @@ function App() {
 
   return (
     <>
-   
-    
-        <Router>
-        <Navbar isOpen={!showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />   
-        <div className='page-content'>
+      <Router>
+        {/* <NavTemp/> */}
+        <Navbar
+          isOpen={!showNavbar}
+          toggleNavbar={() => setShowNavbar(!showNavbar)}
+        />
+        {/* <div className=""> */}
+        {/* <div className="page-content"> */}
           <Routes>
-            <Route
-              path="/"
-              element={<Register />}
-            />
-            <Route
-              path="/login"
-              element={<Login />}
-            />
-            <Route
-              path="/reset-password"
-              element={<ResetPassword  />}
-            />
+            <Route path="/" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             <Route element={<ProtectedRoutes />}>
-              <Route
-                path="/home"
-                element={<LandingPage  />}
-              />
+              <Route path="/home" element={<LandingPage />} />
               <Route
                 path="/select"
                 element={<FilterPage setMovies={setMovies} />}
@@ -54,14 +46,11 @@ function App() {
                 element={<ThisOrThat movies={movies} setMovies={setMovies} />}
               />
               <Route path="/winner" element={<Winner />} />
-              <Route
-                path="/movie-detail-view"
-                element={<MovieDetailView />}
-              />
+              <Route path="/movie-detail-view" element={<MovieDetailView />} />
             </Route>
           </Routes>
-          </div>
-        </Router>
+        {/* </div> */}
+      </Router>
     </>
   );
 }

@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 body {
-    padding-top: 60px; /* adjust this value to the height of your navbar */
+    /* padding-top: 60px;  */
+    /* adjust this value to the height of your navbar */
   }

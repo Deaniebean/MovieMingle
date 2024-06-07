@@ -3,13 +3,17 @@ import './Navbar.css';
 import '../styles/globals.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+// Components
+import MenuIcon from '@mui/icons-material/Menu';
+
 interface LogoProps {
   src: string;
   alt: string;
 }
 
 const Logo: React.FC<LogoProps> = ({ src, alt }) => (
-  <img loading="lazy" src={src} alt={alt} />
+  // Max height and width added to image and object: contain
+  <img loading="lazy" src={src} alt={alt} className='w-14 h-14 object-contain'/>
 );
 
 interface NavbarProps {
@@ -56,11 +60,14 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
           <div className="top-navbar" ref={navbarRef}>
             <div className="top-navbar-content">
               <div className="burger-menu" onClick={toggleNavbar}>
+                {/* <div className="burger-bar"></div>
                 <div className="burger-bar"></div>
-                <div className="burger-bar"></div>
-                <div className="burger-bar"></div>
+                <div className="burger-bar"></div> */}
+                
+                {/* Replaced 'burger-bar' items with an icon for easier positioning */}
+                <MenuIcon fontSize='large'/>
               </div>
-              <h1 className="logo">MovieMingle</h1>
+              <h1 className="logo mt-3">MovieMingle</h1>
               <Logo src="https://via.placeholder.com/150" alt="Logo" />  
             </div>
           </div>
