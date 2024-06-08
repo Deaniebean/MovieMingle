@@ -1,7 +1,7 @@
 import React from "react";
 import hamburgerMenuIcon from "../assets/solar_hamburger-menu-linear.png";
-import './Watchlist.css';
-import MovieTemplate from './MovieTemplate.tsx';
+import './History.css';
+import MovieTemplate from './HistoryTemplate.tsx';
 
 interface LogoProps {
   src: string;
@@ -12,13 +12,13 @@ const Logo: React.FC<LogoProps> = ({ src, alt }) => (
   <img loading="lazy" src={src} alt={alt} />
 );
 
-const Watchlist: React.FC = () => {
-  const navigateToWatchlist = () => {
-    // Add navigation logic to watchlist
-  };
+const History: React.FC = () => {
+    const navigateToWatchlist = () => {
+        window.location.href = "/watchlist";
+      };
 
   const navigateToHistory = () => {
-      window.location.href = "/history"; 
+    // Add navigation logic to history
   };
 
   return (
@@ -36,11 +36,11 @@ const Watchlist: React.FC = () => {
 
       <div className="section">
         <div className="spacer"></div>
-        <div className="watchlist-text" onClick={navigateToWatchlist}>
+        <div className="watchlist-text1" onClick={navigateToWatchlist}>
           Your watchlist
         </div>
         <div className="separator"></div>
-        <div className="history-text" onClick={navigateToHistory}>
+        <div className="history-text1" onClick={navigateToHistory}>
           Your history
         </div>
       </div>
@@ -62,4 +62,4 @@ const Watchlist: React.FC = () => {
   );
 };
 
-export default Watchlist;
+export default History;

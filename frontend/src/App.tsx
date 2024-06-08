@@ -12,6 +12,7 @@ import LandingPage from './components/LandingPage';
 import FilterPage from './components/FilterPage';
 import Winner from './components/Winner';
 import Watchlist from './components/Watchlist';
+import History from './components/History';
 import NavTemp from './components/NavTemp';
 
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
@@ -52,10 +53,8 @@ function App() {
                 element={<ThisOrThat movies={movies} setMovies={setMovies} />}
               />
               <Route path="/winner" element={<Winner />} />
-              <Route
-                path="/watchlist"
-                element={<Watchlist />}
-              />
+              <Route path="/watchlist" element={<Watchlist />} />
+              <Route path="/history" element={<History />} />
             </Route>
           </Routes>
         </Router>

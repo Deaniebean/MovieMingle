@@ -47,7 +47,7 @@
     margin-top: 70px;
 }
 
-.watchlist-text {
+.history-text1 {
     cursor: pointer;
     padding: 10px;
     font-family: var(--font);
@@ -57,11 +57,11 @@
     transition: color 0.3s;
 }
 
-.watchlist-text:hover {
+.history-text1:hover {
     color: var(--text);
 }
 
-.history-text {
+.watchlist-text1 {
     cursor: pointer;
     padding: 10px;
     font-family: var(--font);
@@ -71,7 +71,7 @@
     transition: color 0.3s;
 }
 
-.history-text:hover {
+.watchlist-text1:hover {
     color: var(--secondary);
 }
 

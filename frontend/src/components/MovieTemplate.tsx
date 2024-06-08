@@ -1,5 +1,15 @@
 import "./MovieTemplate.css";
 
+const handleTrailerClick = () => {
+  // Add logic to handle clicking the trailer button
+};
+
+const handleDetailsClick = () => {
+  //const navigateToDetails = () => {
+    //window.location.href = "/details";
+  //};
+};
+
 const MovieTemplate = () => {
   return (
     <div className="movie">
@@ -11,8 +21,12 @@ const MovieTemplate = () => {
         alt="Movie Poster"
       />
       <p className="dateAdded">Added on: 18.04.24</p>
-      <button className="buttonTrailer">Watch trailer now</button>
-      <button className="buttonDetails">More details</button>
+      <button className="buttonTrailer" onClick={handleTrailerClick}>
+        Watch trailer now
+      </button>
+      <button className="buttonDetails" onClick={handleDetailsClick}>
+        More details
+      </button>
     </div>
   );
 };
