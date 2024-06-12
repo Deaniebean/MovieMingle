@@ -1,4 +1,5 @@
 interface MovieType {
+    _id: string;
     id: number;
     backdrop_path?: string;
     genre_ids: number[];
