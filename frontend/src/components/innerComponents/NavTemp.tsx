@@ -81,7 +81,7 @@ export function NavTemp() {
   }, []);
 
   return (
-    <Navbar className="mx-auto px-6 py-3 rounded-none bg-white border-secondary">
+    <Navbar className="mx-auto px-6 py-3 rounded-none bg-white border-secondary h-14">
       <div className="flex items-center justify-between text-text">
         <Typography
           as="a"

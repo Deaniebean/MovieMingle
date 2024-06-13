@@ -16,7 +16,7 @@ interface Movie {
   videos: Video[];
   date: Date;
   trailer?: string; 
-
+  totalRounds: number;
 }
 
 export type { Movie };
