@@ -26,8 +26,6 @@ const Winner: React.FC = () => {
     });
   }
 
-  // Only working with url from our API
-  // Need to rewrite to use movie.videos[0].key
 
   const getYouTubeEmbedUrl = (key: string) => {
     return `https://www.youtube.com/embed/${key}`;
