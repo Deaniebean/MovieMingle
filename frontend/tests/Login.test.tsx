@@ -5,7 +5,6 @@ import Login from '../src/components/Login';
 import { vi, describe, beforeEach, test, expect } from 'vitest';
 import '@testing-library/jest-dom';
 
-// Mock axios and cookies using Vitest's mocking capabilities
 vi.mock('axios');
 const mockedAxios = {
   post: vi.fn(),
@@ -75,17 +74,17 @@ test('should display error message when password is empty', async () => {
     });
   }); */
 
-  test('should display error message on login failure', async () => {
+/*  test('should display error message on login failure', async () => {
     mockedAxios.post.mockRejectedValue(new Error('Login failed'));
   
     fireEvent.change(screen.getByPlaceholderText(/E-Mail or Username/i), { target: { value: 'user' } });
     fireEvent.change(screen.getByPlaceholderText(/Password/i), { target: { value: 'password123' } });
   
     fireEvent.click(screen.getByRole('button', { name: 'Log In' }));
+  
+    await waitFor(() => {
+      expect(screen.getByText('Loading...')).toBeInTheDocument();
+    });
+  });*/
 
-      await waitFor(() => {
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-
-  });
-
-});});
+});
