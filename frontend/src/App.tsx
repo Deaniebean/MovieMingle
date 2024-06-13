@@ -67,10 +67,13 @@ function App() {
                 element={<ThisOrThat movies={movies} setMovies={setMovies} />}
               /> */}
               <Route path="/winner" element={<Winner />} />
-              <Route
+              { <Route
                 path="/movie-detail-view"
                 element={<MovieDetailView setShowNavbar={setShowNavbar} />}
-              />
+              /> }
+              <Route path="/movie/:id" element={<MovieDetailView setShowNavbar={setShowNavbar} key={location.pathname} />} />
+
+
             </Route>
           </Routes>
         </Router>

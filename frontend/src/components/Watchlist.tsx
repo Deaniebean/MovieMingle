@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom"; // Import Link from React Router
 import Cookies from 'universal-cookie';
 import hamburgerMenuIcon from "../assets/solar_hamburger-menu-linear.png";
 import './Watchlist.css';
@@ -91,9 +90,7 @@ const Watchlist: React.FC = () => {
           <p>No movies in your watchlist.</p>
         ) : (
           watchlist.map((movie) => (
-            <Link to={`/movie/${movie._id}`} key={movie._id}>
-              <MovieTemplate movie={movie} />
-            </Link>
+            <MovieTemplate key={movie._id} movie={movie} />
           ))
         )}
       </div>
@@ -102,3 +99,4 @@ const Watchlist: React.FC = () => {
 };
 
 export default Watchlist;
+

@@ -36,3 +36,4 @@ const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
 
 export default MovieTemplate;
 
+
