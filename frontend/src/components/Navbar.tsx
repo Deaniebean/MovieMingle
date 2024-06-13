@@ -5,16 +5,20 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 // Components
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoImage from './innerComponents/Logo';
 
-interface LogoProps {
-  src: string;
-  alt: string;
-}
+// Assets
+import Logo from '../../public/logo.png'
 
-const Logo: React.FC<LogoProps> = ({ src, alt }) => (
-  // Max height and width added to image and object: contain
-  <img loading="lazy" src={src} alt={alt} className='w-14 h-14 object-contain'/>
-);
+// interface LogoProps {
+//   src: string;
+//   alt: string;
+// }
+
+// const Logo: React.FC<LogoProps> = ({ src, alt }) => (
+//   // Max height and width added to image and object: contain
+//   <img loading="lazy" src={src} alt={alt} className='w-14 h-14 object-contain'/>
+// );
 
 interface NavbarProps {
   isOpen: boolean;
@@ -25,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   
   const navbarRef = useRef<HTMLDivElement>(null);
-  const [navbarHeight, setNavbarHeight] = useState(window.innerWidth > 1024 ? 60 : 0);
+  const [navbarHeight, setNavbarHeight] = useState(window.innerWidth > 767 ? 60 : 0);
 
   useEffect(() => {
     console.log("navbar height:" + navbarHeight);
@@ -64,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
                <MenuIcon fontSize='large'/>
               </div>
               <h1 className="logo mt-3">MovieMingle</h1>
-              <Logo src="https://via.placeholder.com/150" alt="Logo" />  
+              <LogoImage src={Logo} alt="Logo" />  
             </div>
           </div>
         ) : (
