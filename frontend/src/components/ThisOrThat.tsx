@@ -31,7 +31,7 @@ const ThisOrThat: React.FC<Props> = ({
     // Access the totalRounds from the first movie object
     const totalRounds = movies[0].totalRounds;
 
-    return `Round ${totalChoices + 1}/${totalRounds - 1}`;
+    return `Round ${totalChoices + 1}/${totalRounds}`;
   };
 
   function getGenreNames(genreIds: number[]): string[] {
