@@ -111,9 +111,9 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
               <Link to="/reset-password">Forgot password?</Link>
             </p>
             {loading ? <div>Loading...</div> : null}
-            <div className="error-message-container">
+            <div className="error-message-container" data-testid="error-message">
               {loginClicked && !login ? (
-                <p className="error">{errorMessage}</p>
+                <p data-testid="loginClicked" className="error">{errorMessage}</p>
               ) : null}
             </div>
           </div>
