@@ -1,10 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import StarRating from '../src/components/StarRating'; // Adjust the import path based on your actual file structure
+import StarRating from '../src/components/StarRating'; 
 import { vi, describe, beforeEach, test, expect } from 'vitest';
 
-// Mock the icon components
 vi.mock('@mui/icons-material/StarOutlineRounded', () => ({
   __esModule: true,
   default: () => <span data-testid="star-outline">★</span>,

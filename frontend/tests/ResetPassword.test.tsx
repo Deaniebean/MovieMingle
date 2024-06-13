@@ -1,11 +1,10 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import ResetPassword from '../src/components/ResetPassword'; // Adjust the import path based on your actual file structure
+import ResetPassword from '../src/components/ResetPassword';
 import { vi, describe, beforeEach, test, expect } from 'vitest';
 import '@testing-library/jest-dom';
 
-// Mock axios and cookies using Vitest's mocking capabilities
 vi.mock('axios');
 const mockedAxios = {
   put: vi.fn(),
@@ -136,5 +135,4 @@ describe('ResetPassword Component', () => {
     });
   });*/
   
-
 });
