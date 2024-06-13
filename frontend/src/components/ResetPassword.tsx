@@ -12,20 +12,15 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 const cookies = new Cookies();
 
 interface ResetPasswordProps {
-  setShowNavbar: (value: boolean) => void;
 }
 
-const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
+const ResetPassword: React.FC<ResetPasswordProps> = ({ }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [resetPassword, setResetPassword] = React.useState(false);
   const [resetPasswordClicked, setResetPasswordClicked] = useState(false);
-
-  React.useEffect(() => {
-    setShowNavbar(false);
-  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

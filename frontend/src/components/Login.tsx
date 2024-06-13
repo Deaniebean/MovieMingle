@@ -8,11 +8,10 @@ import './Register.css';
 const cookies = new Cookies();
 
 interface RegisterProps { 
-  setShowNavbar: (value: boolean) => void; 
 
 }
 
-const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
+const Login: React.FC<RegisterProps> = ({}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -20,10 +19,6 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
   const [loginClicked, setLoginClicked] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
-    useLayoutEffect(() => {
-      setShowNavbar(false);
-    }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,6 +74,7 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
 
   return (
     <div className="wrapper">
+      
       <div className="titlebar">
         <h1>MovieMingle</h1>
       </div>

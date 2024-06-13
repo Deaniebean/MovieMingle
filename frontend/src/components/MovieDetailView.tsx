@@ -26,10 +26,9 @@ const Logo: React.FC<LogoProps> = ({ src, alt }) => (
 );
 
 interface MovieDetailViewProps {
-  setShowNavbar: (value: boolean) => void;
 }
 
-const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
+const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
   const { id } = useParams<{ id: string }>(); // Extracting movieID from route params
   const [movie, setMovie] = useState<any>(null);
   const [loadingIcon, setLoadingIcon] = useState<boolean>(true);
@@ -37,7 +36,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
 
 
   useEffect(() => {
-    setShowNavbar(true);
+
 
     // Fetching movie data based on the ID
     axios
