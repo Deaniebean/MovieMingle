@@ -8,6 +8,7 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
+
   server:
     build:
       context: .
@@ -26,7 +27,6 @@ services:
   db:
     image: mongo:latest
     restart: always
-
     volumes:
       - db-data:/data/db
     environment:
