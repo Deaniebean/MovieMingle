@@ -1,0 +1,8 @@
+- 1 Test per Route
+- could use validation öibraries to for output serialization
+- maintainable tests (helper classes)
+- unit tests of 1 Create Read Update Delete Entity full coverage -> write in teh readme (ideal one entity with every operation)
+- E2E 1 Entity with all operation
+
+-frontend mock api calls (mocks backend)-> every thing that goes to localhost:8082 return this instead (do this in the tests)
+- unittest thisthat function

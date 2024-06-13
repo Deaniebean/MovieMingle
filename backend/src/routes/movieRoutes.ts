@@ -3,6 +3,7 @@ import { discoverMovies } from "../controllers/movieController";
 import Movie from "../models/mongooseMovies";
 import { MovieType } from "../types/Movie";
 import { User } from "../models/mongooseUsers";
+import { ObjectId } from "mongodb";
 
 const router = express.Router();
 let movies: MovieType[] = [];
@@ -102,6 +103,31 @@ router.put("/update/movie-rating", async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "An error occurred" });
+  }
+});
+
+router.get("/get/watchlist/:userUUID", async (req: Request, res: Response) => {
+  const { userUUID } = req.params;
+
+  try {
+    const user = await User.findOne({ uuid: userUUID });
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    const moviePromises = user.watch_list.map(async (movieId) => {
+      return await Movie.findById(movieId);
+    });
+
+    const movies = await Promise.all(moviePromises);
+
+    res.json(movies);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Can't get watchlist" });
   }
 });
 

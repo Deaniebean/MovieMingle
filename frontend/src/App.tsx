@@ -11,55 +11,62 @@ import { useState } from 'react';
 import LandingPage from './components/LandingPage';
 import FilterPage from './components/FilterPage';
 import Winner from './components/Winner';
-import NavTemp from './components/NavTemp';
 import MovieDetailView from './components/MovieDetailView';
-
+import Watchlist from './components/Watchlist';
+import History from './components/History';
+import Navbar from './components/Navbar';
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [showNavbar, setShowNavbar] = useState(true);
-  // TODO @Fiona füge die Zeile mit deiner Navbar über dem div page-container ein : {showNavbar && <Navbar />} 
+
   return (
     <>
-      <div className="page-container">
-        <Router>
+      <Router>
+        <Navbar
+          isOpen={!showNavbar}
+          toggleNavbar={() => setShowNavbar(!showNavbar)}
+        />
+        {/* <div className=""> */}
+        {/* <div className="page-content"> */}
           <Routes>
+            <Route path="/" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+
             <Route
-              path="/"
-              element={<Register setShowNavbar={setShowNavbar} />}
+              path="/select"
+              element={<FilterPage setMovies={setMovies} />}
             />
             <Route
-              path="/login"
-              element={<Login setShowNavbar={setShowNavbar} />}
-            />
-            <Route
-              path="/reset-password"
-              element={<ResetPassword setShowNavbar={setShowNavbar} />}
+              path="/this-or-that"
+              element={<ThisOrThat movies={movies} setMovies={setMovies} />}
             />
 
+            <Route
+              path="/home"
+              element={<LandingPage />}
+              // element={<LandingPage setShowNavbar={setShowNavbar} />}
+            />
+
+      <Route path="/watchlist" element={<Watchlist />} />
+              <Route path="/history" element={<History />} />
             <Route element={<ProtectedRoutes />}>
-              <Route
-                path="/home"
-                element={<LandingPage setShowNavbar={setShowNavbar} />}
-              />
-              <Route
+              {/* <Route
                 path="/select"
                 element={<FilterPage setMovies={setMovies} />}
               />
               <Route
                 path="/this-or-that"
                 element={<ThisOrThat movies={movies} setMovies={setMovies} />}
-              />
+              /> */}
               <Route path="/winner" element={<Winner />} />
-              <Route
-                path="/movie-detail-view"
-                element={<MovieDetailView setShowNavbar={setShowNavbar} />}
-              />
+              <Route path="/movie-detail-view" element={<MovieDetailView />} />
             </Route>
           </Routes>
-        </Router>
-      </div>
+        {/* </div> */}
+      </Router>
     </>
   );
 }

@@ -12,20 +12,15 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 const cookies = new Cookies();
 
 interface ResetPasswordProps {
-  setShowNavbar: (value: boolean) => void;
 }
 
-const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
+const ResetPassword: React.FC<ResetPasswordProps> = ({ }) => {
   const [username, setUsername] = React.useState('');
-  const [newPassword, setNewPassword] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [resetPassword, setResetPassword] = React.useState(false);
   const [resetPasswordClicked, setResetPasswordClicked] = useState(false);
-
-  React.useEffect(() => {
-    setShowNavbar(false);
-  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +32,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
     }
 
     // Check password is empty
-    if (!newPassword) {
+    if (!password) {
       setErrorMessage('Please enter a new password');
       return;
     }
@@ -49,7 +44,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
     }
 
     // Check whether passwords match
-    if (newPassword !== verifyPassword) {
+    if (password !== verifyPassword) {
       setErrorMessage('Passwords do not match');
       return;
     }
@@ -60,7 +55,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
       url: 'http://localhost:8082/authenticate/reset-password',
       data: {
         username,
-        newPassword,
+        password,
       },
     };
     axios(configuration)
@@ -121,8 +116,8 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ setShowNavbar }) => {
               type="password"
               placeholder="New Password"
               name="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <input
               className="data-input"

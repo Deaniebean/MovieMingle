@@ -8,6 +8,8 @@ import makeYourChoiceIcon from "../assets/MakeYourChoice.png";
 import enjoyYourChoiceIcon from "../assets/EnjoyYourChoice.png";
 import mobileImage from "../assets/MobileImage.png";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "@material-tailwind/react";
+// import NavTemp from "./NavTemp";
 
 interface LogoProps {
   src: string;
@@ -25,7 +27,6 @@ interface FeatureProps {
 }
 
 interface LandingPageProps {
-  setShowNavbar: (value: boolean) => void;
 
 }
 
@@ -55,12 +56,9 @@ const features: FeatureProps[] = [
   },
 ];
 
-const LandingPage: React.FC<LandingPageProps> = ({setShowNavbar}) => {
+const LandingPage: React.FC<LandingPageProps> = ({}) => {
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    setShowNavbar(true);
-  }, []);
 
   function nextPage() {
     navigate("/select");
@@ -68,15 +66,13 @@ const LandingPage: React.FC<LandingPageProps> = ({setShowNavbar}) => {
 
   return (
     <div className="landing-page">
-      <header className="header-container">
-        <div className="burger-menu">
-          <img src={hamburgerMenuIcon} alt="Hamburger Menu" />
-        </div>
+      {/* Commented out for testing navbar component */}
+      {/* <header className="header-container">
         <h1 className="logo">MovieMingle</h1>
         <div className="app-logo">
           <Logo src="your-app-logo-src" alt="App Logo" />
         </div>
-      </header>
+      </header> */}
       <p className="text">
         Whether you're in the mood for action or comedy, drama or romance, the unique<span className="font-semibold">'This or That' feature</span> helps you find the perfect pick for your next movie night!
       </p>
