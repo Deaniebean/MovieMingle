@@ -16,14 +16,6 @@ import HourglassBottomRoundedIcon from '@mui/icons-material/HourglassBottomRound
 import '../styles/globals.css';
 import './MovieDetailView.css';
 
-interface LogoProps {
-  src: string;
-  alt: string;
-}
-
-const Logo: React.FC<LogoProps> = ({ src, alt }) => (
-  <img loading="lazy" src={src} alt={alt} />
-);
 
 interface MovieDetailViewProps {
 }
@@ -192,15 +184,6 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
 
   return (
     <div className="mx-auto px-4 pb-8 movie-detail-wrapper">
-      <header className="movie-detail-header">
-        <div className="movie-detail-burger-menu">
-          <img src={hamburgerMenuIcon} alt="Hamburger Menu" />
-        </div>
-        <h1 className="movie-detail-header-title">MovieMingle</h1>
-        <div className="app-logo">
-          <Logo src="your-app-logo-src" alt="App Logo" />
-        </div>
-      </header>
       <div className="grid grid-cols-1 md:grid-cols-2 pt-20">
         <div className="flex justify-center items-start">
           <img
