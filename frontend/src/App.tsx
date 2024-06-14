@@ -14,7 +14,6 @@ import Winner from './components/Winner';
 import MovieDetailView from './components/MovieDetailView';
 import NavTemp from './components/innerComponents/NavTemp';
 import Watchlist from './components/Watchlist';
-import History from './components/History';
 
 
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
@@ -56,7 +55,6 @@ function App() {
             />
 
       <Route path="/watchlist" element={<Watchlist />} />
-              <Route path="/history" element={<History />} />
             <Route element={<ProtectedRoutes />}>
               {/* <Route
                 path="/select"

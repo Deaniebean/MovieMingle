@@ -64,10 +64,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowNavbar }) => {
     navigate("/select");
   }
 
-  function navigateToWatchlist() {
-    navigate("/watchlist");
-  }
-
   return (
     <div className="landing-page">
       <header className="header-container">
@@ -93,10 +89,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowNavbar }) => {
 
       <button className="buttonStart" onClick={nextPage}>
         Find your match now!
-      </button>
-
-      <button className="buttonWatchlist" onClick={navigateToWatchlist}>
-        Go to Watchlist
       </button>
     </div>
   );

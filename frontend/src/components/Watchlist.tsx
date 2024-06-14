@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from 'universal-cookie';
 import hamburgerMenuIcon from "../assets/solar_hamburger-menu-linear.png";
 import './Watchlist.css';
-import MovieTemplate from './MovieTemplate.tsx';
+import MovieTemplate from './MovieTemplate';
 
 interface LogoProps {
   src: string;
@@ -15,7 +15,7 @@ interface Movie {
   original_title: string;
   poster_path: string;
   release_date: string;
-  trailer?: string;
+  rating?: number; // Add rating here
 }
 
 const cookies = new Cookies();
@@ -47,14 +47,6 @@ const Watchlist: React.FC = () => {
       });
   }, [userUUID]);
 
-  const navigateToWatchlist = () => {
-    // Add navigation logic to watchlist
-  };
-
-  const navigateToHistory = () => {
-    window.location.href = "/history";
-  };
-
   return (
     <div className="landing-page">
       {/* Header */}
@@ -70,12 +62,8 @@ const Watchlist: React.FC = () => {
 
       <div className="section">
         <div className="spacer"></div>
-        <div className="watchlist-text" onClick={navigateToWatchlist}>
+        <div className="watchlist-text">
           Your watchlist
-        </div>
-        <div className="separator"></div>
-        <div className="history-text" onClick={navigateToHistory}>
-          Your history
         </div>
       </div>
 
@@ -99,4 +87,3 @@ const Watchlist: React.FC = () => {
 };
 
 export default Watchlist;
-
