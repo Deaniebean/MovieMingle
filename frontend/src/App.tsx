@@ -13,7 +13,6 @@ import FilterPage from './components/FilterPage';
 import Winner from './components/Winner';
 import MovieDetailView from './components/MovieDetailView';
 import Watchlist from './components/Watchlist';
-import History from './components/History';
 import Navbar from './components/Navbar';
 // <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
 
@@ -62,6 +61,7 @@ function App() {
               /> */}
               <Route path="/winner" element={<Winner />} />
               <Route path="/movie-detail-view" element={<MovieDetailView />} />
+              <Route path="/movie/:id" element={<MovieDetailView key={location.pathname} />} />
             </Route>
           </Routes>
         {/* </div> */}
