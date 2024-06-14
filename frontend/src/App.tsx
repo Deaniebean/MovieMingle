@@ -51,7 +51,6 @@ function App() {
             />
 
       <Route path="/watchlist" element={<Watchlist />} />
-              <Route path="/history" element={<History />} />
             <Route element={<ProtectedRoutes />}>
               {/* <Route
                 path="/select"

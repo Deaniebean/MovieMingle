@@ -26,22 +26,23 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
   const [loadingIcon, setLoadingIcon] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState(false);
 
-
   useEffect(() => {
 
 
     // Fetching movie data based on the ID
-    axios
-      .get(`http://localhost:8082/movie/${id}`)
-      .then((response: AxiosResponse) => {
+    const fetchMovie = async () => {
+      try {
+        const response: AxiosResponse = await axios.get(`http://localhost:8082/movie/${id}?_=${Date.now()}`);
         setMovie(response.data);
         console.log('Gesendete Anfrage:', `http://localhost:8082/movie/${id}`);
         console.log('Empfangene Antwort:', response.data);
-      })
-      .catch((error: AxiosError) => {
+      } catch (error: any) {
         console.error('Error fetching movie data:', error);
-      });
-  }, [id]);
+      }
+    };
+
+    fetchMovie();
+  }, [id, setShowNavbar]);
 
   useEffect(() => {
     // Toggle loading icon every 500ms
@@ -169,16 +170,10 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
 
     axios(configuration)
       .then((result: AxiosResponse) => {
-        console.log(
-          'Film erfolgreich von der Watchlist entfernt:',
-          result.data
-        );
+        console.log('Film erfolgreich von der Watchlist entfernt:', result.data);
       })
       .catch((error: AxiosError) => {
-        console.error(
-          'Fehler beim Entfernen des Films von der Watchlist:',
-          error
-        );
+        console.error('Fehler beim Entfernen des Films von der Watchlist:', error);
       });
   };
 
@@ -266,7 +261,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
           </button>
           <br />
           <br />
-          <Link to="/home" className="movie-detail-back-button">
+          <Link to="/watchlist" className="movie-detail-back-button">
             <span>
               <ArrowBackRoundedIcon /> Back to Watchlist
             </span>

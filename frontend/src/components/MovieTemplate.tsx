@@ -1,32 +1,63 @@
-import "./MovieTemplate.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './MovieTemplate.css';
+import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
+import IconActive from "../assets/DocumentaryActive.png";
+import IconNotActive from "../assets/DocumentaryNotActive.png";
 
-const handleTrailerClick = () => {
-  // Add logic to handle clicking the trailer button
-};
+interface MovieProps {
+  movie: {
+    _id: string;
+    original_title: string;
+    poster_path: string;
+    release_date: string;
+    trailer?: string;
+    rating?: number; // Optional rating
+  };
+}
 
-const handleDetailsClick = () => {
-  //const navigateToDetails = () => {
-    //window.location.href = "/details";
-  //};
-};
+const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
+  const renderRating = () => {
+    if (movie.rating === undefined || movie.rating === null || movie.rating === 0) {
+      return <p className="no-rating">You did not rate the film yet.</p>;
+    }
 
-const MovieTemplate = () => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <img
+          key={i}
+          src={i <= movie.rating ? IconActive : IconNotActive}
+          alt={`Star ${i}`}
+          className="rating-icon"
+        />
+      );
+    }
+    return <div className="rating-icons">{stars}</div>;
+  };
+
   return (
     <div className="movie">
-      <h1 className="TitleOfMovie">The Hangover The Hangover</h1>
+      <h1 className="TitleOfMovie">{movie.original_title}</h1>
       <img
         loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/0e782bf0639fe32d1df0b8ed2c6a3c63dde681d5fe8de10db503b916487e2f5d?apiKey=7cf5fe238a5d469bbe141104f97b5fe0&"
+        src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
         className="moviePoster"
         alt="Movie Poster"
       />
-      <p className="dateAdded">Added on: 18.04.24</p>
-      <button className="buttonTrailer" onClick={handleTrailerClick}>
-        Watch trailer now
-      </button>
-      <button className="buttonDetails" onClick={handleDetailsClick}>
+      <div className="rating-section">
+        <p className="rating-label">Your rating:</p>
+        {renderRating()}
+      </div>
+      {movie.trailer && (
+        <button className="buttonTrailer" onClick={() => window.open(movie.trailer, '_blank')}>
+          <PlayArrowRoundedIcon />
+          Trailer
+        </button>
+      )}
+      <Link to={`/movie/${movie._id}`} className="buttonDetails">
         More details
-      </button>
+      </Link>
     </div>
   );
 };

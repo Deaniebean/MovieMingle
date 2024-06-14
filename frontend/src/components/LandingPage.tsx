@@ -30,7 +30,6 @@ interface LandingPageProps {
 
 }
 
-
 const Feature: React.FC<FeatureProps> = ({ src, alt, text }) => (
   <div className="feature">
     <img loading="lazy" src={src} alt={alt} />
@@ -74,17 +73,17 @@ const LandingPage: React.FC<LandingPageProps> = ({}) => {
         </div>
       </header> */}
       <p className="text">
-        Whether you're in the mood for action or comedy, drama or romance, the unique<span className="font-semibold">'This or That' feature</span> helps you find the perfect pick for your next movie night!
+        Whether you're in the mood for action or comedy, drama or romance, the unique <span className="font-semibold">'This or That' feature</span> helps you find the perfect pick for your next movie night!
       </p>
-      
+
       <section className="features">
         {features.map((feature) => (
           <Feature key={feature.text} {...feature} />
         ))}
       </section>
-      
+
       <img src={mobileImage} alt="Mobile Image" className="mobile-image" />
-      
+
       <button className="buttonStart" onClick={nextPage}>
         Find your match now!
       </button>

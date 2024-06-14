@@ -71,7 +71,7 @@ router.get("/movie/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const movie = await Movie.findOne({ movieId: id });
+    const movie = await Movie.findById(id);
 
     if (!movie) {
       res.status(404).json({ message: "Movie not found" });
@@ -118,6 +118,7 @@ router.get("/get/watchlist/:userUUID", async (req: Request, res: Response) => {
     }
 
     const moviePromises = user.watch_list.map(async (movieId) => {
+      console.log(user.watch_list);
       return await Movie.findById(movieId);
     });
 
