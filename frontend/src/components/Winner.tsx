@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import genreData from '../genre.json';
 import axios from 'axios';
 
-import './MovieDetailView.css';
+import './Winner.css';
+
 
 const Winner: React.FC = () => {
   const location = useLocation();
@@ -25,36 +26,31 @@ const Winner: React.FC = () => {
     });
   }
 
-  // Only working with url from our API
-  // Need to rewrite to use movie.videos[0].key
-  const getYouTubeEmbedUrl = (url: string) => {
-    const videoId = url.split('v=')[1];
-    const ampersandPosition = videoId.indexOf('&');
-    if (ampersandPosition !== -1) {
-      return `https://www.youtube.com/embed/${videoId.substring(0, ampersandPosition)}`;
-    }
-    return `https://www.youtube.com/embed/${videoId}`;
+
+  const getYouTubeEmbedUrl = (key: string) => {
+    return `https://www.youtube.com/embed/${key}`;
   };
 
   const openTrailer = () => {
-    if (movie.videos[0]) {
+    if (movie.videos && movie.videos[0]) {
       setModalOpen(true);
-    } else {
-      console.error('No trailer URL available');
+    } 
+    else {
+      console.error('No trailer available');
     }
   };
+
 
   async function addToWatchList() {
     // const movie = movies[index];
     const poster_path = movie.poster_path
       ? 'https://image.tmdb.org/t/p/original' + movie.poster_path
       : 'default poster';
-    const trailer = movie.videos
+    const trailer = movie.videos && movie.videos[0]
       ? 'www.youtube.com/watch?v=' + movie.videos[0]?.key
       : null;
     const date = new Date(Date.now()).toISOString().slice(0, 10);
     const rating = 0;
-    console.log(userUUID);
 
     const movieData = {
       id: movie.id,
@@ -104,7 +100,7 @@ const Winner: React.FC = () => {
       <h1 className="p-6 border">nav</h1>
       <div className="px-14 mt-14 grid justify-items-center md:container mx-auto">
         <p className="mb-1 md:text-xl">The winner is...</p>
-        <p className="text-3xl md:text-6xl font-bold mb-4">{movie.original_title}</p>
+        <p className="text-3xl md:text-6xl font-bold mb-4 text-center">{movie.original_title}</p>
 
         <div className="md:flex md:mt-10">
           {movie.poster_path ? (
@@ -117,21 +113,23 @@ const Winner: React.FC = () => {
           )}
           <div className='ps-10'>
               <p className="hidden md:block md:text-lg">{movie.overview}</p>
-              <button
+              {movie.videos && movie.videos[0] && (
+                <>
+                   <button
                 className="movie-detail-trailer-button"
                 type="submit"
                 onClick={openTrailer}
-              >
-                open trailer Trailer
+              > Open Trailer
               </button>
-              {modalOpen && (
+
+             {modalOpen && (
                 <div className="modal">
                   <div className="modal-content">
                     <button
-                      className="close-button"
+                      className="close-button " 
                       onClick={() => setModalOpen(false)}
                     >
-                      open trailer
+                      Close Trailer
                     </button>
                     <iframe
                       width="560"
@@ -144,24 +142,28 @@ const Winner: React.FC = () => {
                   </div>
                 </div>
               )}
+              </>
+            )}
+
               <button
-                className="movie-detail-remove-button"
+                className="movie-detail-addtolist"
                 type="submit"
                 onClick={addToWatchList}
               >
-                add to watchlist
+                Add to watchlist
               </button>
               <p
-                className="movie-detail-remove-button"
+                className="movie-detail-select"
                 onClick={() => navigate('/select')}
               >
-                go to select filter
+                Go to select filter
               </p>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}; 
 
 export default Winner;
+              

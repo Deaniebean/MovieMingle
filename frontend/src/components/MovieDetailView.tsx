@@ -16,27 +16,18 @@ import HourglassBottomRoundedIcon from '@mui/icons-material/HourglassBottomRound
 import '../styles/globals.css';
 import './MovieDetailView.css';
 
-interface LogoProps {
-  src: string;
-  alt: string;
-}
-
-const Logo: React.FC<LogoProps> = ({ src, alt }) => (
-  <img loading="lazy" src={src} alt={alt} />
-);
 
 interface MovieDetailViewProps {
-  setShowNavbar: (value: boolean) => void;
 }
 
-const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
+const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
   const { id } = useParams<{ id: string }>(); // Extracting movieID from route params
   const [movie, setMovie] = useState<any>(null);
   const [loadingIcon, setLoadingIcon] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    setShowNavbar(true);
+
 
     // Fetching movie data based on the ID
     const fetchMovie = async () => {
@@ -188,15 +179,6 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
 
   return (
     <div className="mx-auto px-4 pb-8 movie-detail-wrapper">
-      <header className="movie-detail-header">
-        <div className="movie-detail-burger-menu">
-          <img src={hamburgerMenuIcon} alt="Hamburger Menu" />
-        </div>
-        <h1 className="movie-detail-header-title">MovieMingle</h1>
-        <div className="app-logo">
-          <Logo src="your-app-logo-src" alt="App Logo" />
-        </div>
-      </header>
       <div className="grid grid-cols-1 md:grid-cols-2 pt-20">
         <div className="flex justify-center items-start">
           <img

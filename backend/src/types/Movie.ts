@@ -15,6 +15,7 @@ interface MovieType {
     vote_count?: number;
     videos?: string[];
     trailer?: string;
+    totalRounds?: number;
   }
 
   export type { MovieType };
