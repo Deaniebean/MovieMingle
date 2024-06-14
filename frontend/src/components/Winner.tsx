@@ -7,12 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import genreData from '../genre.json';
 import axios from 'axios';
 
-<<<<<<< HEAD
 import './Winner.css';
 
-=======
-import './MovieDetailView.css';
->>>>>>> 08db324b06a9b57d8f1db37a03643c96fa78fec1
 
 const Winner: React.FC = () => {
   const location = useLocation();
@@ -30,7 +26,6 @@ const Winner: React.FC = () => {
     });
   }
 
-<<<<<<< HEAD
 
   const getYouTubeEmbedUrl = (key: string) => {
     return `https://www.youtube.com/embed/${key}`;
@@ -46,46 +41,16 @@ const Winner: React.FC = () => {
   };
 
 
-=======
-  // Only working with url from our API
-  // Need to rewrite to use movie.videos[0].key
-  const getYouTubeEmbedUrl = (url: string) => {
-    const videoId = url.split('v=')[1];
-    const ampersandPosition = videoId.indexOf('&');
-    if (ampersandPosition !== -1) {
-      return `https://www.youtube.com/embed/${videoId.substring(0, ampersandPosition)}`;
-    }
-    return `https://www.youtube.com/embed/${videoId}`;
-  };
-
-  const openTrailer = () => {
-    if (movie.videos[0]) {
-      setModalOpen(true);
-    } else {
-      console.error('No trailer URL available');
-    }
-  };
-
->>>>>>> 08db324b06a9b57d8f1db37a03643c96fa78fec1
   async function addToWatchList() {
     // const movie = movies[index];
     const poster_path = movie.poster_path
       ? 'https://image.tmdb.org/t/p/original' + movie.poster_path
       : 'default poster';
-<<<<<<< HEAD
     const trailer = movie.videos && movie.videos[0]
-=======
-    const trailer = movie.videos
->>>>>>> 08db324b06a9b57d8f1db37a03643c96fa78fec1
       ? 'www.youtube.com/watch?v=' + movie.videos[0]?.key
       : null;
     const date = new Date(Date.now()).toISOString().slice(0, 10);
     const rating = 0;
-<<<<<<< HEAD
-
-=======
-    console.log(userUUID);
->>>>>>> 08db324b06a9b57d8f1db37a03643c96fa78fec1
 
     const movieData = {
       id: movie.id,
@@ -135,11 +100,7 @@ const Winner: React.FC = () => {
       <h1 className="p-6 border">nav</h1>
       <div className="px-14 mt-14 grid justify-items-center md:container mx-auto">
         <p className="mb-1 md:text-xl">The winner is...</p>
-<<<<<<< HEAD
         <p className="text-3xl md:text-6xl font-bold mb-4 text-center">{movie.original_title}</p>
-=======
-        <p className="text-3xl md:text-6xl font-bold mb-4">{movie.original_title}</p>
->>>>>>> 08db324b06a9b57d8f1db37a03643c96fa78fec1
 
         <div className="md:flex md:mt-10">
           {movie.poster_path ? (
@@ -152,7 +113,6 @@ const Winner: React.FC = () => {
           )}
           <div className='ps-10'>
               <p className="hidden md:block md:text-lg">{movie.overview}</p>
-<<<<<<< HEAD
               {movie.videos && movie.videos[0] && (
                 <>
                    <button
@@ -170,23 +130,6 @@ const Winner: React.FC = () => {
                       onClick={() => setModalOpen(false)}
                     >
                       Close Trailer
-=======
-              <button
-                className="movie-detail-trailer-button"
-                type="submit"
-                onClick={openTrailer}
-              >
-                open trailer Trailer
-              </button>
-              {modalOpen && (
-                <div className="modal">
-                  <div className="modal-content">
-                    <button
-                      className="close-button"
-                      onClick={() => setModalOpen(false)}
-                    >
-                      open trailer
->>>>>>> 08db324b06a9b57d8f1db37a03643c96fa78fec1
                     </button>
                     <iframe
                       width="560"
@@ -199,7 +142,6 @@ const Winner: React.FC = () => {
                   </div>
                 </div>
               )}
-<<<<<<< HEAD
               </>
             )}
 
@@ -215,33 +157,13 @@ const Winner: React.FC = () => {
                 onClick={() => navigate('/select')}
               >
                 Go to select filter
-=======
-              <button
-                className="movie-detail-remove-button"
-                type="submit"
-                onClick={addToWatchList}
-              >
-                add to watchlist
-              </button>
-              <p
-                className="movie-detail-remove-button"
-                onClick={() => navigate('/select')}
-              >
-                go to select filter
->>>>>>> 08db324b06a9b57d8f1db37a03643c96fa78fec1
               </p>
           </div>
         </div>
       </div>
     </div>
   );
-<<<<<<< HEAD
 }; 
 
 export default Winner;
               
-=======
-};
-
-export default Winner;
->>>>>>> 08db324b06a9b57d8f1db37a03643c96fa78fec1
