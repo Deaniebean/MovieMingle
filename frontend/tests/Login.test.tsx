@@ -49,8 +49,8 @@ test('should display error message when password is empty', async () => {
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 });
-/*
-  test('should make a login request and set cookies on successful login', async () => {
+
+ /* test('should make a login request and set cookies on successful login', async () => {
     mockedAxios.post.mockResolvedValue({
       data: {
         token: 'test-token',

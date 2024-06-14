@@ -35,17 +35,6 @@ describe('StarRating Component', () => {
     expect(filledStars.length).toBe(initialRating);
   });
 
- /* test('should highlight stars on hover', () => {
-    render(<StarRating maxStars={maxStars} onSubmitRating={onSubmitRating} />);
-    const stars = screen.getAllByTestId('star-outline');
-    fireEvent.mouseEnter(stars[2]);
-    const highlightedStars = screen.getAllByTestId('star-rounded');
-    expect(highlightedStars.length).toBe(3);
-    fireEvent.mouseLeave(stars[2]);
-    const resetStars = screen.getAllByTestId('star-rounded');
-    expect(resetStars.length).toBe(0);
-  });*/
-
   test('should set rating on star click and call onSubmitRating', () => {
     render(<StarRating maxStars={maxStars} onSubmitRating={onSubmitRating} />);
     const stars = screen.getAllByTestId('star-outline');
@@ -54,4 +43,16 @@ describe('StarRating Component', () => {
     expect(filledStars.length).toBe(4);
     expect(onSubmitRating).toHaveBeenCalledWith(4);
   });
+
+  test('should highlight stars on hover', () => {
+    render(<StarRating maxStars={maxStars} onSubmitRating={onSubmitRating} />);
+    const stars = screen.getAllByTestId('star-outline');
+    fireEvent.mouseEnter(stars[2]);
+    const highlightedStars = screen.getAllByTestId('star-rounded');
+    expect(highlightedStars.length).toBe(3);
+    fireEvent.mouseLeave(stars[2]);
+    const resetStars = screen.getAllByTestId('star-rounded');
+    expect(resetStars.length).toBe(3);
+  });
+
 });
