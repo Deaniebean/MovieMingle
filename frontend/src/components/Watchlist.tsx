@@ -1,28 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from 'universal-cookie';
-import hamburgerMenuIcon from "../assets/solar_hamburger-menu-linear.png";
 import './Watchlist.css';
 import MovieTemplate from './MovieTemplate';
 
-interface LogoProps {
-  src: string;
-  alt: string;
-}
 
 interface Movie {
   _id: string;
   original_title: string;
   poster_path: string;
   release_date: string;
-  rating?: number; // Add rating here
+  rating?: number;
 }
 
 const cookies = new Cookies();
-
-const Logo: React.FC<LogoProps> = ({ src, alt }) => (
-  <img loading="lazy" src={src} alt={alt} />
-);
 
 const Watchlist: React.FC = () => {
   const [watchlist, setWatchlist] = useState<Movie[]>([]);
@@ -49,16 +40,6 @@ const Watchlist: React.FC = () => {
 
   return (
     <div className="landing-page">
-      {/* Header */}
-      <header className="header-container">
-        <div className="burger-menu">
-          <img src={hamburgerMenuIcon} alt="Hamburger Menu" />
-        </div>
-        <h1 className="logo">MovieMingle</h1>
-        <div className="app-logo">
-          <Logo src="your-app-logo-src" alt="App Logo" />
-        </div>
-      </header>
 
       <div className="section">
         <div className="spacer"></div>

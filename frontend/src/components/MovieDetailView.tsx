@@ -4,7 +4,6 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
 // Assets
-import hamburgerMenuIcon from '../assets/solar_hamburger-menu-linear.png';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -42,7 +41,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
     };
 
     fetchMovie();
-  }, [id, setShowNavbar]);
+  }, [id]);
 
   useEffect(() => {
     // Toggle loading icon every 500ms

@@ -12,7 +12,7 @@
 
 .movie .TitleOfMovie {
   color: var(--text);
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 10px;
   width: 200px;
   height: 60px;
@@ -23,13 +23,6 @@
 .moviePoster {
   width: 200px;
   height: auto;
-  margin-bottom: 10px;
-}
-
-.movie .dateAdded {
-  color: var(--text);
-  font-size: 14px;
-  text-align: center;
   margin-bottom: 10px;
 }
 
