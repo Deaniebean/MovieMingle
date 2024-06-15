@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import {User } from "../models/mongooseUsers";
+import { User } from "../models/mongooseUsers";
 import express from "express";
 import UserModel from "../models/userModel";
 import { v4 as uuidv4 } from "uuid";
@@ -9,13 +9,12 @@ import dotenv from "dotenv";
 import { Output, object, parse, string } from "valibot";
 
 dotenv.config();
-const secretKey = process.env.JWT_SECRET
-
+const secretKey = process.env.JWT_SECRET;
 
 // Valibot Schema for input validation
 const UserSchema = object({
   username: string(),
-  password: string()
+  password: string(),
 });
 type UserData = Output<typeof UserSchema>;
 
@@ -38,6 +37,11 @@ export const register = async (
   }
 
   try {
+    const existingUser = await User.findOne({ username: data.username });
+    if (existingUser) {
+      response.status(400).send({ message: "Username already exists" });
+      return;
+    }
     // hash the password
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
@@ -53,7 +57,7 @@ export const register = async (
 
     const userTokenValues = {
       uuid: userModel.uuid,
-      username: userModel.username
+      username: userModel.username,
     };
 
     const token = jwt.sign(userTokenValues, secretKey);
@@ -64,18 +68,14 @@ export const register = async (
     });
   } catch (error) {
     console.log(error);
-    next(new Error("Error creating user"))
+    next(new Error("Error creating user"));
   }
 };
-
-
-
 
 export const login = async (
   request: express.Request,
   response: express.Response,
   next: express.NextFunction
-
 ): Promise<void> => {
   let data: UserData;
   try {
@@ -93,10 +93,7 @@ export const login = async (
       return;
     }
 
-    const passwordCheck = await bcrypt.compare(
-      data.password,
-      user.password
-    );
+    const passwordCheck = await bcrypt.compare(data.password, user.password);
     if (!passwordCheck) {
       response.status(400).send({
         message: "Password is incorrect",
@@ -108,8 +105,8 @@ export const login = async (
       { uuid: user.uuid, username: user.username },
       "RANDOM-TOKEN"
     );
-    console.log("user", user.username)
-    console.log("uuid", user.uuid)
+    console.log("user", user.username);
+    console.log("uuid", user.uuid);
     response.status(200).send({
       message: "Login Successful",
       token,
@@ -117,7 +114,7 @@ export const login = async (
     });
   } catch (error) {
     console.log(error);
-    next(new Error("Error during login"))
+    next(new Error("Error during login"));
   }
 };
 
@@ -127,7 +124,6 @@ export const resetPassword = async (
   next: express.NextFunction
 ) => {
   try {
-
     let data: UserData;
     try {
       data = parse(UserSchema, req.body);
@@ -151,6 +147,6 @@ export const resetPassword = async (
     res.status(200).send({ message: "Password reset successful" });
   } catch (error) {
     console.error(error);
-    next(new Error("An error occurred with password reset"))
+    next(new Error("An error occurred with password reset"));
   }
 };
