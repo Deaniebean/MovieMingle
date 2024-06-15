@@ -59,7 +59,7 @@ const Watchlist: React.FC = () => {
           <p>No movies in your watchlist.</p>
         ) : (
           watchlist.map((movie) => (
-            <MovieTemplate key={movie._id} movie={movie} />
+            movie && <MovieTemplate key={movie._id} movie={movie} />
           ))
         )}
       </div>

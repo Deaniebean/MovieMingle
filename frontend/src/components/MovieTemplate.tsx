@@ -18,6 +18,10 @@ interface MovieProps {
 }
 
 const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
+  if (!movie) { 
+    return null; 
+  }
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const openTrailer = () => {
