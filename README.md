@@ -7,6 +7,7 @@ install docker locally and then start the application with:
 (sudo) docker compose up
 --could work without sudo
 
+
 ## Integrate with your tools
 
 - [ ] [Set up project integrations](https://gitlab.mi.hdm-stuttgart.de/mwa/ss24/currently-no-topic/-/settings/integrations)
