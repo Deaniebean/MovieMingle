@@ -11,6 +11,13 @@ const port = process.env.PORT || 8082;
 
 connectDB();
 const app: Express = express();
+
+//need a root for docker container
+app.get('/', (req, res) => {
+  res.send('Hello, world!');
+});
+
+
 app.use(express.json());
 app.use(corsMiddleware);
 app.use(urlencoded({ extended: true }));

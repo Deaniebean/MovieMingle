@@ -6,7 +6,7 @@
 
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-ARG NODE_VERSION=21.7.1
+ARG NODE_VERSION=18
 
 FROM node:${NODE_VERSION}-alpine
 
@@ -15,22 +15,30 @@ FROM node:${NODE_VERSION}-alpine
 
 WORKDIR /usr/src/app
 
+
+# Change ownership of the /usr/src/app directory to the node user
+RUN chown -R node:node /usr/src/app
+
+USER node
+
+# Set npm's cache directory to a directory that the node user has write access to
+ENV npm_config_cache=/home/node/.npm
+
 # Copy package.json and package-lock.json into the image
-COPY package*.json ./
+COPY --chown=node:node frontend/package*.json ./
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.npm to speed up subsequent builds.
-RUN --mount=type=cache,target=/root/.npm \
-    npm install 
-
-# Run the application as a non-root user.
-USER node
+RUN npm install 
 
 # Copy the rest of the source files into the image.
-COPY . .
+COPY --chown=node:node frontend/ .
+
+
 
 # Expose the port that the application listens on.
-EXPOSE 8082
+EXPOSE 5173
+
 
 # Run the application.
-CMD npm start
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
