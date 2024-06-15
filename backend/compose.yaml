@@ -9,23 +9,19 @@
 # https://github.com/docker/awesome-compose
 services:
 
-  backend:
+  server:
     build:
       context: .
-      dockerfile: Dockerfile.backend
     environment:
       NODE_ENV: production
     env_file:
-      - ./backend/.env
+      - .env
     ports:
       - 8082:8082
     depends_on:
       - db
-    healthcheck:
-      test: curl --fail http://localhost:8082/healthcheck || exit 1
-      interval: 5s
-      retries: 10
-      timeout: 3s
+
+
 
 # dockerize mongodb
   db:
@@ -34,12 +30,12 @@ services:
     volumes:
       - db-data:/data/db
     environment:
-       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=username
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      # - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      # - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     expose:
       - 27017
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
 
   mongo-express:
     image: mongo-express
@@ -49,9 +45,10 @@ services:
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - ME_CONFIG_MONGODB_URL=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@db:27017/
+      - ME_CONFIG_MONGODB_URL=mongodb://username:password@db:27017/
       - ME_CONFIG_BASICAUTH=false
 
 volumes:
   db-data:
+
 

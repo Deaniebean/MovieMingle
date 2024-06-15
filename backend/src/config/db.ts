@@ -1,19 +1,16 @@
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-dotenv.config();
-
-const db: string = process.env.DB_CONNECTION_STRING
-
-mongoose.set("strictQuery", true);
+import mongoose from 'mongoose';
+dotenv.config({ path: '../.env' });
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db);
-    console.log("MongoDB is Connected...");
-  } catch (err) {
-    console.error(err.message);
-    process.exit(1);
+    console.log(process.env.MONGO_INITDB_ROOT_USERNAME, process.env.MONGO_INITDB_ROOT_PASSWORD)
+    const url = `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@db:27017/moviemingle?authSource=admin`;
+    await mongoose.connect(url);
+    console.log('connected to database moviemingle ...');
+  } catch (error) {
+    console.error(`Failed to connect to the database. Error: ${error}`);
   }
-};
-export default connectDB;
+}
 
+export default connectDB;
