@@ -7,11 +7,11 @@ import '../styles/globals.css';
 import './Register.css';
 const cookies = new Cookies();
 
-interface RegisterProps { 
-
+interface RegisterProps {
+  setShowNavbar: (value: boolean) => void;
 }
 
-const Login: React.FC<RegisterProps> = ({}) => {
+const Login: React.FC<RegisterProps> = ({ setShowNavbar }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -19,11 +19,15 @@ const Login: React.FC<RegisterProps> = ({}) => {
   const [loginClicked, setLoginClicked] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  useLayoutEffect(() => {
+    setShowNavbar(false);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setLoading(true);
+    setLoading(false);
+    setLoginClicked(true);
 
     // Check username is empty
     if (!username) {
@@ -61,14 +65,17 @@ const Login: React.FC<RegisterProps> = ({}) => {
         setLogin(true);
         getCookie('UUID');
       })
-      .catch((error: Error) => {
+      .catch((error: AxiosError) => {
         console.log(error);
         setLogin(false);
-        setErrorMessage('Log In failed');
+        if (error.response && error.response.status === 400) {
+          setErrorMessage('Invalid username or password');
+        } else {
+          setErrorMessage('Password or username is incorrect');
+        }
       })
       .finally(() => {
         setLoginClicked(true);
-        setLoading(false);
       });
   };
 

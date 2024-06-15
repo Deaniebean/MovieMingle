@@ -7,7 +7,6 @@ import axios from 'axios';
 import '../styles/globals.css';
 import './Register.css';
 
-
 const cookies = new Cookies();
 
 interface RegisterProps {
@@ -73,7 +72,14 @@ const Register: React.FC<RegisterProps> = ({ }) => {
           console.log('Error response data:', error.response.data);
           console.log('Error response status:', error.response.status);
           console.log('Error response headers:', error.response.headers);
-          setErrorMessage('This username already exists');
+          if (
+            error.response.data.code === 11000 ||
+            error.response.data.code === 11001
+          ) {
+            setErrorMessage('This username already exists');
+          } else {
+            setErrorMessage('An error occurred');
+          }
         } else if (error.request) {
           // The request was made but no response was received
           console.log('Error request:', error.request);
