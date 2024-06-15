@@ -3,8 +3,9 @@
 ## Installation
 
 install docker locally and then start the application with:
-
-sudo docker compose up
+(sudo) docker build
+(sudo) docker compose up
+--could work without sudo
 
 ## Integrate with your tools
 
