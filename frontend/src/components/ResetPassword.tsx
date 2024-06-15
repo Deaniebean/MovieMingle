@@ -14,7 +14,7 @@ const cookies = new Cookies();
 interface ResetPasswordProps {
 }
 
-const ResetPassword: React.FC<ResetPasswordProps> = ({ }) => {
+const ResetPassword: React.FC<ResetPasswordProps> = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');

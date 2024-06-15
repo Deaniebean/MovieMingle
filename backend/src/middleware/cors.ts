@@ -15,6 +15,12 @@ const corsMiddleware = (
     "Access-Control-Allow-Methods",
     "GET, POST, PATCH, DELETE, OPTIONS, PUT"
   );
+
+  // Handle preflight requests
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
   next();
 };
 
