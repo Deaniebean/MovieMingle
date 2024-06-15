@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -12,7 +12,7 @@ const cookies = new Cookies();
 interface RegisterProps {
 }
 
-const Register: React.FC<RegisterProps> = ({ }) => {
+const Register: React.FC<RegisterProps> = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
