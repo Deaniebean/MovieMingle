@@ -55,4 +55,32 @@ describe('StarRating Component', () => {
     expect(resetStars.length).toBe(3);
   });
 
+  test('should not render any stars if maxStars is zero', () => {
+    render(<StarRating maxStars={0} onSubmitRating={onSubmitRating} />);
+    const stars = screen.queryAllByTestId('star-outline');
+    expect(stars.length).toBe(0);
+  });
+  
+  test('should handle initial rating greater than maxStars', () => {
+    render(<StarRating maxStars={5} initialRating={10} onSubmitRating={onSubmitRating} />);
+    const filledStars = screen.getAllByTestId('star-rounded');
+    expect(filledStars.length).toBe(5);
+  });
+  
+/*  test('should not change rating when component is not read-only', () => {
+    const { rerender } = render(
+      <StarRating maxStars={5} initialRating={3} onSubmitRating={onSubmitRating} />
+    );
+  
+    const stars = screen.getAllByTestId('star-outline');
+    expect(stars.length).toBe(5);
+  
+    const filledStars = screen.getAllByTestId('star-rounded');
+    expect(filledStars.length).toBe(3);
+  
+    fireEvent.click(stars[1]);
+    const filledStarsAfterClick = screen.getAllByTestId('star-rounded');
+    expect(filledStarsAfterClick.length).toBe(2);
+  });*/
+  
 });
