@@ -1,4 +1,4 @@
-import {discoverMovies} from "./movieController";
+import {discoverMovies} from "../controllers/movieController";
 
 
 test("dummy test", () => {

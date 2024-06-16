@@ -1,0 +1,34 @@
+stages:
+  - test
+
+frontend-test:
+  image: node:latest
+  stage: test
+  before_script:
+    - cd frontend
+    - npm install
+  script:
+    - npm run test
+  artifacts:
+    paths:
+      - coverage/
+    when: always
+    reports:
+      junit:
+        - junit.xml
+
+backend-test:
+  image: node:latest
+  stage: test
+  before_script:
+    - cd backend
+    - npm install
+  script:
+    - npm run test:ci
+  artifacts:
+    paths:
+      - coverage/
+    when: always
+    reports:
+      junit:
+        - junit.xml

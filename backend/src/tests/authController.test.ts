@@ -3,10 +3,10 @@ import { mock, MockProxy } from "jest-mock-extended";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
-import { saveUserInDb } from "./saveUserInDb";
+import { saveUserInDb } from "../controllers/saveUserInDb";
 import UserModel from "../models/userModel";
-import { register } from "./authController";
-import { login } from "./authController";
+import { register } from "../controllers/authController";
+import { login } from "../controllers/authController";
 import {User} from "../models/mongooseUsers";
 
 // SETUP
