@@ -146,4 +146,33 @@ router.get("/get/watchlist/:userUUID", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/search/watchlist", async (req: Request, res: Response) => {
+  const { query, userUUID } = req.query;
+
+  if (typeof userUUID !== 'string') {
+    res.status(400).json({ message: "Invalid userUUID" });
+    return;
+  }
+  
+  try {
+    const user = await User.findOne({ uuid: userUUID });
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    // Fetch the movies in the user's watchlist
+    const movies = await Movie.find({
+      _id: { $in: user.watch_list },
+      original_title: new RegExp(String(query), 'i') // case-insensitive search
+    });
+
+    res.json(movies);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred" });
+  }
+});
+
 export default router;
