@@ -8,6 +8,7 @@ import genreData from '../genre.json';
 import axios from 'axios';
 
 import './Winner.css';
+import NoImage from '../assets/No-Image-Placeholder.svg';
 
 const Winner: React.FC = () => {
   const location = useLocation();
@@ -16,6 +17,8 @@ const Winner: React.FC = () => {
   const [cookies] = useCookies(['UUID']);
   const [modalOpen, setModalOpen] = useState(false);
   const userUUID = cookies.UUID;
+  const defaultSrc = NoImage;
+  const imageSrc = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
 
   function getGenreNames(genreIds: number[]): string[] {
     return genreIds.map((id) => {
@@ -100,14 +103,10 @@ const Winner: React.FC = () => {
         </p>
 
         <div className="md:flex md:mt-10">
-          {movie.poster_path ? (
-            <img
-              src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-              className="object-cover w-80"
-            />
-          ) : (
-            <img src="path/to/default/image.jpg" />
-          )}
+          <img
+            src={imageSrc || defaultSrc}
+            className="object-cover w-80"
+          />
           <div className="pt-5 md:ps-10">
             <p className="hidden md:block md:text-lg">{movie.overview}</p>
             {movie.videos && movie.videos[0] && (
@@ -121,19 +120,6 @@ const Winner: React.FC = () => {
                     {' '}
                     Open Trailer
                   </button>
-                  <button
-                    className="movie-detail-addtolist mx-auto md:ms-0"
-                    type="submit"
-                    onClick={addToWatchList}
-                  >
-                    Add to watchlist
-                  </button>
-                  <p
-                    className="movie-detail-select mx-auto md:ms-0"
-                    onClick={() => navigate('/select')}
-                  >
-                    Go to select filter
-                  </p>
                 </div>
 
                 {modalOpen && (
@@ -158,6 +144,20 @@ const Winner: React.FC = () => {
                 )}
               </>
             )}
+
+            <button
+              className="movie-detail-addtolist mx-auto md:ms-0"
+              type="submit"
+              onClick={addToWatchList}
+            >
+              Add to watchlist
+            </button>
+            <p
+              className="movie-detail-select mx-auto md:ms-0"
+              onClick={() => navigate('/select')}
+            >
+              Go to select filter
+            </p>
           </div>
         </div>
       </div>

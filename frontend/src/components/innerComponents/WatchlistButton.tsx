@@ -1,5 +1,5 @@
 // AddRemoveButton.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useCookies } from 'react-cookie';
 import { Movie } from '../../types/MovieType';
@@ -27,16 +27,19 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
   const [isAddMode, setIsAddMode] = useState<boolean>(initialMode === 'add');
   const [cookies] = useCookies(['UUID']);
   const userUUID = cookies.UUID;
+    
+  useEffect(() => {
+    // Reset the button state when the movie changes
+    setIsAddMode(initialMode === 'add');
+  }, [movie, initialMode]); // Ensure initialMode is also considered in the dependency array
 
   const handleButtonClick = (): void => {
     if (isAddMode) {
-      // Placeholder for add function
-      console.log('Add item');
       addToWatchList();
+      console.log('movie added')
     } else {
-      // Placeholder for remove function
-      console.log('Remove item');
       removeFromWatchlist();
+      console.log('movie added')
     }
     setIsAddMode(!isAddMode);
   };

@@ -5,6 +5,8 @@ import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import IconActive from "../assets/DocumentaryActive.png";
 import IconNotActive from "../assets/DocumentaryNotActive.png";
+import NoImage from '../assets/No-Image-Placeholder.svg';
+
 
 interface MovieProps {
   movie: {
@@ -23,6 +25,9 @@ const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
   }
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const defaultSrc = NoImage;
+  const imageSrc = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
+
 
   const openTrailer = () => {
     if (movie.trailer) {
@@ -69,7 +74,7 @@ const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
       <h1 className="TitleOfMovie">{movie.original_title}</h1>
       <img
         loading="lazy"
-        src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+        src={imageSrc || defaultSrc}
         className="moviePoster"
         alt="Movie Poster"
       />
