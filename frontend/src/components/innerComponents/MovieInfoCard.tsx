@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 // Components
@@ -36,6 +36,12 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
   const [isCardFlipped, setIsCardFlipped] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [videoKey, setVideoKey] = useState('');
+
+  
+useEffect(() => {
+  setIsCardFlipped(false)
+}, [movies.length]); // Ensure initialMode is also considered in the dependency array
+
 
   // Function to handle card flip directly in the parent component
   const handleCardFlip = () => {
@@ -109,7 +115,7 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
                 className={`${isPrimary ? 'ms-auto md:ms-0' : 'order-last '} `}
               />
               <div
-                className={`${isPrimary ? 'flex flex-col ps-6' : 'flex flex-col text-right md:text-left text-primary pe-6'} `}
+                className={`${isPrimary ? 'flex flex-col ps-6' : 'flex flex-col text-right md:text-left text-primary pe-6'} text-left`}
               >
                 <h2
                   className={`${isPrimary ? 'text-text' : 'text-primary'} text-xl md:text-4xl pb-3 font-bold mb-2 line-clamp-2`}

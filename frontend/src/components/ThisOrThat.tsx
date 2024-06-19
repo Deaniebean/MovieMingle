@@ -5,6 +5,7 @@ import './ThisOrThat.css';
 import genreData from '../genre.json';
 // import tempMovies from './tempMovies.json';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 // Components
 import MovieInfoCard from './innerComponents/MovieInfoCard';
@@ -22,7 +23,9 @@ const ThisOrThat: React.FC<Props> = ({
   movies,
   setMovies,
 }): React.ReactNode => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+  const [cookies] = useCookies(['UUID']);
+  const userUUID = cookies.UUID; // Retrieve the userUUID from cookies
   const [index1, setIndex1] = useState(0);
   const [index2, setIndex2] = useState(1);
   const [totalChoices, setTotalChoices] = useState(0);
@@ -32,47 +35,6 @@ const ThisOrThat: React.FC<Props> = ({
     const totalRounds = movies[0].totalRounds;
 
     return `Round ${totalChoices + 1}/${totalRounds}`;
-  };
-
-  function getGenreNames(genreIds: number[]): string[] {
-    return genreIds.map((id) => {
-      const genre = genreData.genres.find((genre: Genre) => genre.id === id);
-      console.log(genre ? genre.name : '');
-      return genre ? genre.name : '';
-    });
-  }
-
-  // Renders genres for indexed movie
-  const renderFilmGenres = (index: number, isFirst: boolean): JSX.Element => {
-    if (index < 0 || index >= movies.length) {
-      return <p>No genres</p>;
-    }
-
-    const movie = movies[index];
-    const genres = getGenreNames(movie.genre_ids);
-
-    // max no. of genres displayed? 2-3?
-    return (
-      <div className={`flex flex-wrap gap-1 ${isFirst ? '' : 'justify-end'}`}>
-        {genres.map((genre, i) => (
-          <span
-            className={`border rounded-md px-3 py-1 text-xs ${
-              isFirst ? 'border-white' : 'border-primary'
-            }`}
-            key={i}
-          >
-            {genre}
-          </span>
-        ))}
-      </div>
-    );
-  };
-
-  const renderRating = (index: number): string => {
-    let rating = movies[index].vote_average
-      ? Math.round(movies[index].vote_average! * 10) / 10 + '/10'
-      : '-'; // If no rating return empty string
-    return rating;
   };
 
   const chooseMovie = (chosenIndex: number) => {
