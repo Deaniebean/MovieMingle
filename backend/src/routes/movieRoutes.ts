@@ -22,15 +22,29 @@ router.post("/save/watchlist", async (req: Request, res: Response) => {
   const { movieData, userUUID } = req.body;
   console.log("movieData:", movieData);
 
-  const movie = new Movie(movieData);
+  // Check if the movie already exists in the database
+  let movie = await Movie.findOne(movieData);
+
+  // If the movie doesn't exist, create a new one
+  if (!movie) {
+    movie = new Movie(movieData);
+    await movie.save();
+  }
 
   try {
-    await movie.save();
-
     const user = await User.findOne({ uuid: userUUID });
 
     if (!user) {
       res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    // Convert the movie's _id to a string
+    const movieIdString = movie._id.toString();
+
+    // Check if the movie is already in the user's watchlist
+    if (user.watch_list.map(id => id.toString()).includes(movieIdString)) {
+      res.status(400).json({ message: "Movie already in watchlist" });
       return;
     }
 
@@ -71,7 +85,7 @@ router.get("/movie/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const movie = await Movie.findOne({ movieId: id });
+    const movie = await Movie.findById(id);
 
     if (!movie) {
       res.status(404).json({ message: "Movie not found" });
@@ -118,6 +132,7 @@ router.get("/get/watchlist/:userUUID", async (req: Request, res: Response) => {
     }
 
     const moviePromises = user.watch_list.map(async (movieId) => {
+      console.log(user.watch_list);
       return await Movie.findById(movieId);
     });
 
@@ -128,6 +143,35 @@ router.get("/get/watchlist/:userUUID", async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Can't get watchlist" });
+  }
+});
+
+router.get("/search/watchlist", async (req: Request, res: Response) => {
+  const { query, userUUID } = req.query;
+
+  if (typeof userUUID !== 'string') {
+    res.status(400).json({ message: "Invalid userUUID" });
+    return;
+  }
+  
+  try {
+    const user = await User.findOne({ uuid: userUUID });
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    // Fetch the movies in the user's watchlist
+    const movies = await Movie.find({
+      _id: { $in: user.watch_list },
+      original_title: new RegExp(String(query), 'i') // case-insensitive search
+    });
+
+    res.json(movies);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred" });
   }
 });
 

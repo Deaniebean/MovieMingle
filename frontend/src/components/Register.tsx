@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -7,14 +7,12 @@ import axios from 'axios';
 import '../styles/globals.css';
 import './Register.css';
 
-
 const cookies = new Cookies();
 
 interface RegisterProps {
-  setShowNavbar: (value: boolean) => void;
 }
 
-const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
+const Register: React.FC<RegisterProps> = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
@@ -22,9 +20,6 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
   const [register, setRegister] = React.useState(false);
   const [registerClicked, setRegisterClicked] = useState(false);
 
-  useLayoutEffect(() => {
-    setShowNavbar(false);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,7 +72,14 @@ const Register: React.FC<RegisterProps> = ({ setShowNavbar }) => {
           console.log('Error response data:', error.response.data);
           console.log('Error response status:', error.response.status);
           console.log('Error response headers:', error.response.headers);
-          setErrorMessage('This username already exists');
+          if (
+            error.response.data.code === 11000 ||
+            error.response.data.code === 11001
+          ) {
+            setErrorMessage('This username already exists');
+          } else {
+            setErrorMessage('An error occurred');
+          }
         } else if (error.request) {
           // The request was made but no response was received
           console.log('Error request:', error.request);

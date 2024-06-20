@@ -4,7 +4,6 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
 // Assets
-import hamburgerMenuIcon from '../assets/solar_hamburger-menu-linear.png';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -16,40 +15,32 @@ import HourglassBottomRoundedIcon from '@mui/icons-material/HourglassBottomRound
 import '../styles/globals.css';
 import './MovieDetailView.css';
 
-interface LogoProps {
-  src: string;
-  alt: string;
-}
-
-const Logo: React.FC<LogoProps> = ({ src, alt }) => (
-  <img loading="lazy" src={src} alt={alt} />
-);
 
 interface MovieDetailViewProps {
-  setShowNavbar: (value: boolean) => void;
 }
 
-const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
+const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
   const { id } = useParams<{ id: string }>(); // Extracting movieID from route params
   const [movie, setMovie] = useState<any>(null);
   const [loadingIcon, setLoadingIcon] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState(false);
 
-
   useEffect(() => {
-    setShowNavbar(true);
+
 
     // Fetching movie data based on the ID
-    axios
-      .get(`http://localhost:8082/movie/${id}`)
-      .then((response: AxiosResponse) => {
+    const fetchMovie = async () => {
+      try {
+        const response: AxiosResponse = await axios.get(`http://localhost:8082/movie/${id}?_=${Date.now()}`);
         setMovie(response.data);
         console.log('Gesendete Anfrage:', `http://localhost:8082/movie/${id}`);
         console.log('Empfangene Antwort:', response.data);
-      })
-      .catch((error: AxiosError) => {
+      } catch (error: any) {
         console.error('Error fetching movie data:', error);
-      });
+      }
+    };
+
+    fetchMovie();
   }, [id]);
 
   useEffect(() => {
@@ -178,30 +169,15 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
 
     axios(configuration)
       .then((result: AxiosResponse) => {
-        console.log(
-          'Film erfolgreich von der Watchlist entfernt:',
-          result.data
-        );
+        console.log('Film erfolgreich von der Watchlist entfernt:', result.data);
       })
       .catch((error: AxiosError) => {
-        console.error(
-          'Fehler beim Entfernen des Films von der Watchlist:',
-          error
-        );
+        console.error('Fehler beim Entfernen des Films von der Watchlist:', error);
       });
   };
 
   return (
     <div className="mx-auto px-4 pb-8 movie-detail-wrapper">
-      <header className="movie-detail-header">
-        <div className="movie-detail-burger-menu">
-          <img src={hamburgerMenuIcon} alt="Hamburger Menu" />
-        </div>
-        <h1 className="movie-detail-header-title">MovieMingle</h1>
-        <div className="app-logo">
-          <Logo src="your-app-logo-src" alt="App Logo" />
-        </div>
-      </header>
       <div className="grid grid-cols-1 md:grid-cols-2 pt-20">
         <div className="flex justify-center items-start">
           <img
@@ -284,7 +260,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ setShowNavbar }) => {
           </button>
           <br />
           <br />
-          <Link to="/home" className="movie-detail-back-button">
+          <Link to="/watchlist" className="movie-detail-back-button">
             <span>
               <ArrowBackRoundedIcon /> Back to Watchlist
             </span>

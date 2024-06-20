@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write ./src",
-    "test": "vitest"
+    "test": "nyc vitest"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -20,9 +20,11 @@
     "axios": "^1.6.8",
     "node": "^18.20.2",
     "react": "^18.2.0",
+    "react-card-flip": "^1.2.3",
     "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
     "react-range-slider-input": "^3.0.7",
+    "react-responsive": "^10.0.0",
     "react-router-dom": "^6.22.3",
     "universal-cookie": "^7.1.4"
   },

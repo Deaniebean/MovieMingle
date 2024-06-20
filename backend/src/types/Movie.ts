@@ -1,4 +1,5 @@
 interface MovieType {
+    _id: string;
     id: number;
     backdrop_path?: string;
     genre_ids: number[];
@@ -14,6 +15,7 @@ interface MovieType {
     vote_count?: number;
     videos?: string[];
     trailer?: string;
+    totalRounds?: number;
   }
 
   export type { MovieType };

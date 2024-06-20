@@ -1,18 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import '../styles/globals.css';
 import './Register.css';
 const cookies = new Cookies();
 
-interface RegisterProps { 
-  setShowNavbar: (value: boolean) => void; 
+interface RegisterProps {}
 
-}
-
-const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
+const Login: React.FC<RegisterProps> = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -20,15 +17,11 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
   const [loginClicked, setLoginClicked] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
-    useLayoutEffect(() => {
-      setShowNavbar(false);
-    }, []);
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setLoading(true);
+    setLoading(false);
+    setLoginClicked(true);
 
     // Check username is empty
     if (!username) {
@@ -64,16 +57,19 @@ const Login: React.FC<RegisterProps> = ({setShowNavbar}) => {
         });
         window.location.href = '/home';
         setLogin(true);
-        getCookie('UUID');
+        cookies.get('UUID');
       })
-      .catch((error: Error) => {
+      .catch((error: AxiosError) => {
         console.log(error);
         setLogin(false);
-        setErrorMessage('Log In failed');
+        if (error.response && error.response.status === 400) {
+          setErrorMessage('Invalid username or password');
+        } else {
+          setErrorMessage('Password or username is incorrect');
+        }
       })
       .finally(() => {
         setLoginClicked(true);
-        setLoading(false);
       });
   };
 
