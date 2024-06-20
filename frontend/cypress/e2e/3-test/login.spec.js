@@ -30,6 +30,15 @@ describe('Register and Login Flow', () => {
       cy.url().should('eq', 'http://localhost:5173/home', {
         timeout: 30000, 
       });
+      
+      // Click on the "Find your match now!" button
+      cy.get('button.buttonStart').click();
+
+      // Wait for the URL to change     
+      cy.url().should('eq', 'http://localhost:5173/select', {
+        timeout: 30000, 
     });
+
   });
+});
 });
