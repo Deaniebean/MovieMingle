@@ -1,4 +1,4 @@
-.wrapper {
+.form-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -181,7 +181,7 @@ cursor: pointer;
 
 /* Media Query für Tablet-Version */
 @media (min-width: 550px) {
-    .wrapper {
+    .form-wrapper {
       justify-content: center; 
       align-items: center; 
     }

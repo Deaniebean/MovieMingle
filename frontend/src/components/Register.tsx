@@ -78,7 +78,7 @@ const Register: React.FC<RegisterProps> = () => {
           ) {
             setErrorMessage('This username already exists');
           } else {
-            setErrorMessage('An error occurred');
+            setErrorMessage('This username already exists');
           }
         } else if (error.request) {
           // The request was made but no response was received
@@ -96,7 +96,7 @@ const Register: React.FC<RegisterProps> = () => {
     }
   };
   return (
-    <div className="wrapper">
+    <div className="form-wrapper">
       <div className="titlebar">
         <h1>MovieMingle</h1>
       </div>
