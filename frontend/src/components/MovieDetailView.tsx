@@ -255,7 +255,11 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
             {' '}
             Your Rating
             <div>
-              <StarRating maxStars={5} onSubmitRating={submitRating} />
+              <StarRating
+                maxStars={5}
+                initialRating={movie.rating || 0}
+                onSubmitRating={submitRating}
+              />
             </div>
           </div>
           <button

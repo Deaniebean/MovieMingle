@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
-import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import React, { useState, useEffect } from 'react';
+import IconActive from '../assets/DocumentaryActive.png';
+import IconNotActive from '../assets/DocumentaryNotActive.png';
+import './MovieDetailView.css';
 import '../styles/globals.css';
 
 interface StarRatingProps {
@@ -9,17 +10,25 @@ interface StarRatingProps {
   onSubmitRating: (rating: number) => void;
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ maxStars, initialRating = 0, onSubmitRating }) => {
+const StarRating: React.FC<StarRatingProps> = ({
+  maxStars,
+  initialRating = 0,
+  onSubmitRating,
+}) => {
   const [rating, setRating] = useState<number>(initialRating);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
 
+  useEffect(() => {
+    setRating(initialRating);
+  }, [initialRating]);
+
   const handleStarClick = (selectedRating: number) => {
     setRating(selectedRating);
-    onSubmitRating(selectedRating); 
+    onSubmitRating(selectedRating);
   };
 
   return (
-    <div>
+    <div className="movie-detail-rating-icon">
       {[...Array(maxStars)].map((_, index) => {
         const isActive = hoverRating ? index < hoverRating : index < rating;
         return (
@@ -30,12 +39,15 @@ const StarRating: React.FC<StarRatingProps> = ({ maxStars, initialRating = 0, on
             onMouseLeave={() => setHoverRating(null)}
             onClick={() => handleStarClick(index + 1)}
           >
-            {isActive ? <StarRoundedIcon /> : <StarOutlineRoundedIcon />}
+            <img
+              src={isActive ? IconActive : IconNotActive}
+              alt="star icon"
+            />
           </span>
         );
       })}
     </div>
   );
-}
+};
 
 export default StarRating;

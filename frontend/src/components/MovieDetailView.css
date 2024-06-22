@@ -97,6 +97,13 @@
   font-weight: 600;
 }
 
+.movie-detail-rating-icon {
+  display: flex;
+  margin-top: 5px;
+  gap: 7px;
+  max-width: 200px;
+}
+
 .movie-detail-remove-button {
   display: flex;
   justify-content: center;
