@@ -4,7 +4,7 @@ import ReactCardFlip from 'react-card-flip';
 interface FlippableCardProps {
   children: [ReactNode, ReactNode]; // Expecting exactly two children, one for the front and one for the back
   onClick: () => void; // Corrected prop name
-  isFlipped: boolean; // Declare isFlipped as a prop
+  isFlipped: boolean;
   className?: string;
 }
 

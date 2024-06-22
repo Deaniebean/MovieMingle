@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import MovieImage from '../src/components/innerComponents/MovieImage';
-import NoImage from '../assets/No-Image-Placeholder.svg'; // Jest doesn't recognise svg, test still runs
+import NoImage from '../src/assets/No-Image-Placeholder.svg'; // Jest doesn't recognise svg, test still runs
 
 describe('MovieImage Component', () => {
   test('renders with provided src and alt', () => {

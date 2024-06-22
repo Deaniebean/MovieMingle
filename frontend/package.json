@@ -9,7 +9,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write ./src",
-    "test": "nyc vitest"
+    "test": "nyc vitest",
+    "test:flippable": "vitest run tests/FlippableCard.test.tsx"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
