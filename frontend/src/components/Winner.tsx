@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Movie } from '../types/MovieType';
 import { Genre } from '../types/GenreType';
-import { useCookies } from 'react-cookie';
+import Cookies from 'universal-cookie';
+
 import { useNavigate } from 'react-router-dom';
 import genreData from '../genre.json';
 import axios from 'axios';
@@ -10,13 +11,17 @@ import axios from 'axios';
 import './Winner.css';
 import NoImage from '../assets/No-Image-Placeholder.svg';
 
+const cookies = new Cookies();
+
 const Winner: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const movie: Movie = location.state?.movie;
-  const [cookies] = useCookies(['UUID']);
+  // const [cookies] = useCookies(['UUID']);
+  // const userUUID = cookies.UUID;
+  const userUUID = cookies.get('UUID');
+
   const [modalOpen, setModalOpen] = useState(false);
-  const userUUID = cookies.UUID;
   const defaultSrc = NoImage;
   const imageSrc = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
 

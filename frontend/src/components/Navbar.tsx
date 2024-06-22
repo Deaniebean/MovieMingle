@@ -2,23 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Navbar.css';
 import '../styles/globals.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 // Components
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoImage from './innerComponents/Logo';
 
 // Assets
-import Logo from '../../public/logo.png'
-
-// interface LogoProps {
-//   src: string;
-//   alt: string;
-// }
-
-// const Logo: React.FC<LogoProps> = ({ src, alt }) => (
-//   // Max height and width added to image and object: contain
-//   <img loading="lazy" src={src} alt={alt} className='w-14 h-14 object-contain'/>
-// );
+import Logo from '/logo.png'
 
 interface NavbarProps {
   isOpen: boolean;
@@ -27,10 +18,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  
   const navbarRef = useRef<HTMLDivElement>(null);
   const [navbarHeight, setNavbarHeight] = useState(window.innerWidth > 767 ? 60 : 0);
-
+  const cookies = new Cookies();
   useEffect(() => {
     console.log("navbar height:" + navbarHeight);
   }, [navbarHeight]);
@@ -92,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
               <li onClick={() => handleNavigation("/select")}>This or That</li>
               <li onClick={() => handleNavigation("/watchlist")}>Watch List</li>
               <li onClick={() => handleNavigation("/history")}>History</li>
-          <li className="logout" onClick={() => navigate("/login")}>Logout</li>
+              <li className="logout" onClick={() => handleNavigation("/login")}>Logout</li>
           </ul>
         </nav>
       </div>

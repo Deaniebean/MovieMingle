@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Movie } from '../types/MovieType';
-import { Genre } from '../types/GenreType';
 import './ThisOrThat.css';
-import genreData from '../genre.json';
 // import tempMovies from './tempMovies.json';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 
 // Components
 import MovieInfoCard from './innerComponents/MovieInfoCard';
-
-// Assets
-// import cardFlipIcon from '../assets/cardFlipIcon.svg';
 
 interface Props {
   movies: Movie[];
@@ -24,12 +18,11 @@ const ThisOrThat: React.FC<Props> = ({
   setMovies,
 }): React.ReactNode => {
   const navigate = useNavigate(); 
-  const [cookies] = useCookies(['UUID']);
-  const userUUID = cookies.UUID; // Retrieve the userUUID from cookies
   const [index1, setIndex1] = useState(0);
   const [index2, setIndex2] = useState(1);
   const [totalChoices, setTotalChoices] = useState(0);
 
+  // console.log(userUUID);
   const getRoundInfo = () => {
     // Access the totalRounds from the first movie object
     const totalRounds = movies[0].totalRounds;
