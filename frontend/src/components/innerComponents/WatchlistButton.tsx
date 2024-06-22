@@ -1,7 +1,7 @@
 // AddRemoveButton.tsx
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { useCookies } from 'react-cookie';
+import Cookies from 'universal-cookie';
 import { Movie } from '../../types/MovieType';
 
 // Assets
@@ -17,6 +17,8 @@ interface WatchlistButtonProps {
   className?: string;
 }
 
+const cookies = new Cookies();
+
 const WatchlistButton: React.FC<WatchlistButtonProps> = ({
   initialMode = 'add',
   movie,
@@ -25,9 +27,15 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
   className,
 }) => {
   const [isAddMode, setIsAddMode] = useState<boolean>(initialMode === 'add');
-  const [cookies] = useCookies(['UUID']);
-  const userUUID = cookies.UUID;
-    
+  const userUUID = cookies.get('UUID');
+
+
+  // Debugging log to check if UUID is correctly retrieved
+  useEffect(() => {
+    console.log('Cookies:', cookies); // Log all cookies
+    console.log('userUUID from cookies:', userUUID); // Log the UUID specifically
+  }, [cookies, userUUID]);
+
   useEffect(() => {
     // Reset the button state when the movie changes
     setIsAddMode(initialMode === 'add');
@@ -36,10 +44,10 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
   const handleButtonClick = (): void => {
     if (isAddMode) {
       addToWatchList();
-      console.log('movie added')
+      console.log('movie added');
     } else {
       removeFromWatchlist();
-      console.log('movie added')
+      console.log('movie added');
     }
     setIsAddMode(!isAddMode);
   };
@@ -141,12 +149,12 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
           <>
             <div className="">
               <div className="flex items-center justify-center w-24 md:group-hover:hidden">
-                  <DownloadDoneIcon className="me-2" />
-                  <span className="">Added</span>
+                <DownloadDoneIcon className="me-2" />
+                <span className="">Added</span>
               </div>
               <div className="flex items-center justify-center w-24 hidden md:group-hover:inline-block">
-                  <ClearIcon className="me-2" fontSize='small'/>
-                  <span className="">Remove</span>
+                <ClearIcon className="me-2" fontSize="small" />
+                <span className="">Remove</span>
               </div>
             </div>
           </>

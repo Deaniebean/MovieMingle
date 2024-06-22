@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import '../styles/globals.css';
@@ -8,7 +8,6 @@ import './Register.css';
 const cookies = new Cookies();
 
 interface RegisterProps {}
-
 const Login: React.FC<RegisterProps> = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +16,10 @@ const Login: React.FC<RegisterProps> = () => {
   const [loginClicked, setLoginClicked] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    
     e.preventDefault();
 
     setLoading(false);
@@ -50,12 +52,16 @@ const Login: React.FC<RegisterProps> = () => {
 
         cookies.set('TOKEN', result.data.token, {
           path: '/',
+          secure: true,
+          httpOnly: false,
         });
         // Set another cookie with the user's MongoDB ID
         cookies.set('UUID', result.data.uuid, {
           path: '/',
+          secure: true,
+          httpOnly: false,
         });
-        window.location.href = '/home';
+        navigate("/home")
         setLogin(true);
         cookies.get('UUID');
       })
