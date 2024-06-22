@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import StarRating from './StarRating';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 // Assets
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
@@ -15,23 +15,22 @@ import HourglassBottomRoundedIcon from '@mui/icons-material/HourglassBottomRound
 import '../styles/globals.css';
 import './MovieDetailView.css';
 
+interface MovieDetailViewProps {}
 
-interface MovieDetailViewProps {
-}
-
-const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
+const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
   const { id } = useParams<{ id: string }>(); // Extracting movieID from route params
   const [movie, setMovie] = useState<any>(null);
   const [loadingIcon, setLoadingIcon] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-
-
     // Fetching movie data based on the ID
     const fetchMovie = async () => {
       try {
-        const response: AxiosResponse = await axios.get(`http://localhost:8082/movie/${id}?_=${Date.now()}`);
+        const response: AxiosResponse = await axios.get(
+          `http://localhost:8082/movie/${id}?_=${Date.now()}`
+        );
         setMovie(response.data);
         console.log('Gesendete Anfrage:', `http://localhost:8082/movie/${id}`);
         console.log('Empfangene Antwort:', response.data);
@@ -169,10 +168,17 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
 
     axios(configuration)
       .then((result: AxiosResponse) => {
-        console.log('Film erfolgreich von der Watchlist entfernt:', result.data);
+        console.log(
+          'Film erfolgreich von der Watchlist entfernt:',
+          result.data
+        );
+        navigate('/watchlist');
       })
       .catch((error: AxiosError) => {
-        console.error('Fehler beim Entfernen des Films von der Watchlist:', error);
+        console.error(
+          'Fehler beim Entfernen des Films von der Watchlist:',
+          error
+        );
       });
   };
 
@@ -215,15 +221,17 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({ }) => {
             Overview <br />
             <span className="movie-detail-overview">{movie.overview}</span>
           </p>
-          <button
-            className="movie-detail-trailer-button"
-            type="submit"
-            onClick={openTrailer}
-          >
-            <PlayArrowRoundedIcon />
-            Trailer
-          </button>
-          {modalOpen && (
+          {movie.trailer && (
+            <button
+              className="movie-detail-trailer-button"
+              type="submit"
+              onClick={openTrailer}
+            >
+              <PlayArrowRoundedIcon />
+              Trailer
+            </button>
+          )}
+          {modalOpen && movie.trailer && (
             <div className="modal">
               <div className="modal-content">
                 <button
