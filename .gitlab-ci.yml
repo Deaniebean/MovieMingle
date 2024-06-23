@@ -1,5 +1,6 @@
 stages:
   - test
+  - build
 
 frontend-test:
   image: node:latest
@@ -32,3 +33,29 @@ backend-test:
     reports:
       junit:
         - junit.xml
+
+frontend-build:
+  image: node:latest
+  stage: build
+  before_script:
+    - cd frontend
+    - npm install
+  script:
+    - npm run dev
+  artifacts:
+    paths:
+      - build/
+    when: always
+
+backend-build:
+  image: node:latest
+  stage: build
+  before_script:
+    - cd backend
+    - npm install
+  script:
+    - npm run start
+  artifacts:
+    paths:
+      - build/
+    when: always

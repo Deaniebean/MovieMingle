@@ -8,34 +8,38 @@ function logSearchParams(
   years: string[],
   rounds: number,
   language: string,
-  totalPages: number
+  totalPages: number,
+  vote_average: number
 ) {
   console.log("Total pages:", totalPages);
   console.log("Genre:", genre);
   console.log("Years:", years);
   console.log("Rounds:", rounds);
   console.log("Language:", language);
+  console.log("Vote average:", vote_average);
 }
 
 // Fetch movies based on the search parameters and include trailers
-// need to fetch movies with parameter page 1 to get total_pages which are then used in discoverRandomMovies to select random page
+// need to fetch movies witpage: number, genre: string[], years: string[], rounds: number, language: string, vote_average: number, vote_average: numbers to select random page
 export async function discoverMovies(
   genre: string[],
   years: string[],
   rounds: number,
-  language: string
+  language: string,
+  vote_average: number
 ) {
-  const options = createOptionsDiscover(1, genre, years, rounds, language);
+  const options = createOptionsDiscover(1, genre, years, rounds, language, vote_average);
   try {
     const response = await axios.request(options);
-    logSearchParams(genre, years, rounds, language, response.data.total_pages);
+    logSearchParams(genre, years, rounds, language, vote_average, response.data.total_pages);
 
     const movies = await discoverRandomMovies(
       response.data.total_pages,
       genre,
       years,
       rounds,
-      language
+      language,
+      vote_average
     );
 
     // Fetch trailers for each movie
@@ -70,7 +74,8 @@ export async function discoverRandomMovies(
   genre: string[],
   years: string[],
   rounds: number,
-  language: string
+  language: string,
+  vote_average: number
 ) {
   const maxPage = Math.min(totalPages > 1000 ? 1000 : totalPages, 500);
   const randomPage = Math.floor(Math.random() * maxPage) + 1;
@@ -79,7 +84,8 @@ export async function discoverRandomMovies(
     genre,
     years,
     rounds,
-    language
+    language,
+    vote_average
   );
 
   try {

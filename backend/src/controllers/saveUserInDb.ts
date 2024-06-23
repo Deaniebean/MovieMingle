@@ -4,7 +4,7 @@ import UserModel from "../models/userModel";
 type DbStoreFunction = (userModel: UserModel) => void;
 
 export const saveUserInDb = async (userModel:  UserModel): Promise<void> => {
-    // create a new user instance and collect the data
+
     console.log("saveUserInMongo");
     const user = new User({
       username: userModel.username,
