@@ -21,7 +21,7 @@ if (!API_KEY) {
 
 
 // function for api request with params to avoid duplication
-function createOptionsDiscover(page: number, genre: string[], years: string[], rounds: number, language: string) {
+function createOptionsDiscover(page: number, genre: string[], years: string[], rounds: number, language: string, vote_average: number) {
   const options = {
     method: 'GET',
     url: `https://api.themoviedb.org/3/discover/movie`,
@@ -30,6 +30,7 @@ function createOptionsDiscover(page: number, genre: string[], years: string[], r
       include_video: false,
       with_genres: genre ? genre.join(','):undefined,
       with_original_language: language ? language.toLowerCase() : undefined,
+      'vote_average.gte': vote_average ? vote_average : undefined,
       page,
       sort_by: 'popularity.desc',
       'primary_release_date.gte':  years && years.length > 0 ? years[0] : undefined,

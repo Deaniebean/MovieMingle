@@ -8,13 +8,14 @@ import { ObjectId } from "mongodb";
 const router = express.Router();
 let movies: MovieType[] = [];
 router.post("/discover/movies", async (req, res) => {
-  const { genre, years, rounds, language } = req.body;
+  const { genre, years, rounds, language, vote_average } = req.body;
   console.log("genre:", genre);
   console.log("years:", years);
   console.log("rounds:", rounds);
   console.log("language:", language);
+  console.log("vote_average:", vote_average);
 
-  movies = await discoverMovies(genre, years, rounds, language);
+  movies = await discoverMovies(genre, years, rounds, language, vote_average);
   res.json(movies);
 });
 
