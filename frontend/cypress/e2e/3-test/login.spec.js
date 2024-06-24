@@ -22,7 +22,7 @@ describe('Moviemingle Test', () => {
         timeout: 30000, 
       });
 
-      // Fill out the login form
+      // Fill out form
       cy.get('input[name=username]').type('testuser');
       cy.get('input[name=password]').type('testpassword');
 
@@ -32,7 +32,7 @@ describe('Moviemingle Test', () => {
         timeout: 30000, 
       });
       
-      // Click on the "Find your match now!" button
+      // Change to Filterpage
       cy.get('button.buttonStart').click();
 
       cy.url().should('eq', 'http://localhost:5173/select', {
@@ -47,7 +47,11 @@ describe('Moviemingle Test', () => {
     cy.get('input[type="checkbox"][value="35"]').click(); // Comedy
     cy.get('input[type="checkbox"][value="12"]').click(); // Fantasy
 
-    // Verify the checkbox is checked
+    // Select the option for 12 movies
+    cy.get('input[type="radio"][value="12"]').click({ force: true });
+    cy.get('input[type="radio"][value="12"]').should('be.checked');
+
+    // Verify Filterpage
     cy.get('input[type="checkbox"][value="28"]').should('be.checked');
     cy.get('input[type="checkbox"][value="10751"]').should('be.checked');
     cy.get('input[type="checkbox"][value="80"]').should('be.checked');
@@ -55,24 +59,21 @@ describe('Moviemingle Test', () => {
     cy.get('input[type="checkbox"][value="35"]').should('be.checked');
     cy.get('input[type="checkbox"][value="12"]').should('be.checked');
 
-    // Check if the language is set to "English"
     cy.get('select[name="lanuage"]').should('have.value', 'en');
     
-    // Verify the slider values are correctly set
     cy.get('input[type="range"]').invoke('val').should('eq', '1990');
 
-    // Select the option for 12 movies
     cy.get('input[type="radio"][value="12"]').click({ force: true });
     cy.get('input[type="radio"][value="12"]').should('be.checked');
 
-     // Click on the "Start" button
-     cy.get('button:contains("Start")').click();
+    // Change to this-or-that
+    cy.get('button:contains("Start")').click();
 
      cy.url().should('eq', 'http://localhost:5173/this-or-that', {
        timeout: 30000, 
      });
 
-   // Function to simulate clicking on This or That until a winner is determined
+   // Simulate clicking on This or That until a winner is determined
    const clickThisOrThatUntilWinner = () => {
     cy.get('.text-center').then(($roundInfo) => {
       const roundInfo = $roundInfo.text();
@@ -103,10 +104,9 @@ clickThisOrThatUntilWinner();
     timeout: 30000, 
   });
 
-    // Click on the "Add to watchlist" button
     cy.contains('Add to watchlist').click();
 
-    // Click on the sidebar link to navigate to the watchlist
+      // Change to Watchlist
     cy.get('.burger-menu').click(); 
     cy.get('li:contains("Watch List")').click();
 
