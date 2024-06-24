@@ -81,7 +81,6 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
           <li onClick={() => handleNavigation("/home")}>Landingpage</li>
               <li onClick={() => handleNavigation("/select")}>This or That</li>
               <li onClick={() => handleNavigation("/watchlist")}>Watch List</li>
-              <li onClick={() => handleNavigation("/history")}>History</li>
               <li className="logout" onClick={() => handleNavigation("/login")}>Logout</li>
           </ul>
         </nav>
