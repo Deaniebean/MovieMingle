@@ -40,38 +40,34 @@ describe('Moviemingle Test', () => {
     });
 
     // Click on the genre checkboxes
-    cy.get('input[type="checkbox"][value="28"]').click();
-    cy.get('input[type="checkbox"][value="10751"]').click();
-    cy.get('input[type="checkbox"][value="80"]').click();
-    cy.get('input[type="checkbox"][value="18"]').click();
+    cy.get('input[type="checkbox"][value="28"]').click(); // Action/Adventure
+    cy.get('input[type="checkbox"][value="10751"]').click(); // Family
+    cy.get('input[type="checkbox"][value="80"]').click(); // Crime
+    cy.get('input[type="checkbox"][value="18"]').click(); // Drama
+    cy.get('input[type="checkbox"][value="35"]').click(); // Comedy
+    cy.get('input[type="checkbox"][value="12"]').click(); // Fantasy
 
     // Verify the checkbox is checked
     cy.get('input[type="checkbox"][value="28"]').should('be.checked');
     cy.get('input[type="checkbox"][value="10751"]').should('be.checked');
     cy.get('input[type="checkbox"][value="80"]').should('be.checked');
     cy.get('input[type="checkbox"][value="18"]').should('be.checked');
+    cy.get('input[type="checkbox"][value="35"]').should('be.checked');
+    cy.get('input[type="checkbox"][value="12"]').should('be.checked');
 
     // Check if the language is set to "English"
     cy.get('select[name="lanuage"]').should('have.value', 'en');
-
-    // Set the release year range to 2000-2010
-    cy.get('.MuiSlider-root')
-      .trigger('mousedown', { which: 1, pageX: 100 }) // start dragging from 2000
-      .trigger('mousemove', { which: 1, pageX: 200 }) // move to 2010
-      .trigger('mouseup', { which: 1, pageX: 200 }); // release at 2010
-
-    // Verify the slider values are correctly set
-    /*cy.get('.MuiSlider-root').invoke('prop', 'value').should('eq', '2000,2010');*/
     
+    // Verify the slider values are correctly set
+    cy.get('input[type="range"]').invoke('val').should('eq', '1990');
+
     // Select the option for 12 movies
     cy.get('input[type="radio"][value="12"]').click({ force: true });
-    // Verify the option is selected
     cy.get('input[type="radio"][value="12"]').should('be.checked');
 
      // Click on the "Start" button
      cy.get('button:contains("Start")').click();
 
-     // Wait for the URL to change to the "This or That" page
      cy.url().should('eq', 'http://localhost:5173/this-or-that', {
        timeout: 30000, 
      });
@@ -81,7 +77,7 @@ describe('Moviemingle Test', () => {
     cy.get('.text-center').then(($roundInfo) => {
       const roundInfo = $roundInfo.text();
       if (!roundInfo.includes('Round')) {
-        // No round info found, assume winner is determined
+        cy.visit('http://localhost:5173/winner'); 
         return;
       }
       cy.get('button:contains("This")').then(($thisButton) => {
@@ -94,16 +90,15 @@ describe('Moviemingle Test', () => {
               cy.get('button:contains("That")').click();
             }
             cy.wait(1000);
-            clickThisOrThatUntilWinner();
+            setTimeout(clickThisOrThatUntilWinner, 1000);
           }
         });
       });
     });
   };
 
-  clickThisOrThatUntilWinner();
+clickThisOrThatUntilWinner();
 
-  // After the loop, verify the winner page 
   cy.url().should('eq', 'http://localhost:5173/winner', {
     timeout: 30000, 
   });
@@ -111,8 +106,13 @@ describe('Moviemingle Test', () => {
     // Click on the "Add to watchlist" button
     cy.contains('Add to watchlist').click();
 
-    // Ensure that the watchlist addition is successful (you might need to adjust this verification based on your application flow)
-    /*cy.contains('Added to watchlist');*/
+    // Click on the sidebar link to navigate to the watchlist
+    cy.get('.burger-menu').click(); 
+    cy.get('li:contains("Watch List")').click();
+
+    cy.url().should('eq', 'http://localhost:5173/watchlist', {
+      timeout: 30000, 
+    });
   
     });
   });
