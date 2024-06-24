@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/filterSlider.css';
 import '../styles/globals.css';
-
 import { Movie } from '../types/MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
 
 // Components
@@ -15,14 +14,8 @@ import {
   // Button,
 } from '@material-tailwind/react';
 import FilterSeparator from './innerComponents/FilterSeparator';
-import NavTemp from './innerComponents/NavTemp';
 import Slider from '@mui/material/Slider'; // Working despite 'cannot find module' error
 import Button from './innerComponents/Button';
-import RadioButton from './innerComponents/RadioButton';
-
-// Assets
-import CircleOutline from '../assets/circle-outline.svg';
-import CircleSelected from '../assets/circle-radio-filled.svg';
 
 interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
@@ -30,26 +23,25 @@ interface Props {
 
 const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   const [genre, setGenre] = useState<string[]>([]);
-  const [showMore, setShowMore] = useState(false);
-  const [startYear, setStartYear] = useState('');
-  const [endYear, setEndYear] = useState('');
   const [yearSlider, setYearSlider] = useState<number[]>([1990, 2024]);
   const [rounds, setRounds] = useState('6');
   const [language, setLanguage] = useState('en');
+  const [vote_average, setVote_average] = useState<number>(7);
   const navigate = useNavigate();
 
   const queryParams = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const genreParams = genre; //Array with genres
-    // const yearsParams = [startYear, endYear]; // Array[start_year, end_year]
     const yearsParams = [`${yearSlider[0]}-01-01`, `${yearSlider[1]}-12-31`]; // Array[start_year, end_year]
     const roundsParams = parseInt(rounds); //Number of rounds
     const languageParams = language;
+    const vote_averageParams = vote_average;
     console.log('genre:', genreParams);
     console.log('years:', yearsParams);
     console.log('rounds:', roundsParams);
     console.log('language:', languageParams);
+    console.log('vote_average:', vote_averageParams);
 
     try {
       const response = await axios.post(
@@ -57,8 +49,9 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
         {
           genre: genreParams,
           years: yearsParams,
-          language: languageParams,
           rounds: roundsParams,
+          language: languageParams,
+          vote_average: vote_averageParams,
         }
       );
 
@@ -71,8 +64,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   };
 
   const onGenreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // What type to define e as?
-    // Add new genre to array, remove if unselected
     e.target.checked
       ? setGenre((genre) => [...genre, e.target.value])
       : setGenre((genre) => genre.filter((genre) => genre !== e.target.value));
@@ -104,14 +95,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     { id: 37, label: 'Western' },
   ].map((genre, index) => {
     return (
-      // Hover on desktop only, min -1024px
-      // <input
-      // type='checkbox'
-      // value={genre.id}
-      // onChange={onGenreChange}
-      //         className="border-2 rounded-full border-secondaryLight h-4 w-4 "
-      // />
-
       <ListItem
         className=" max-w-fit rounded-full border border-secondaryLight py-1 px-2.5 hover:bg-primary active:bg-primary md:active:bg-secondary focus:bg-blue md:focus:bg-primary md:hover:bg-violet-950"
         key={index}
@@ -129,7 +112,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
               }}
             />
           </ListItemPrefix>
-          {/* <p className="font-medium pe-1">{genre.label}</p> */}
           <Typography
             color="blue-gray"
             variant="small"
@@ -233,6 +215,54 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     },
   ];
 
+  const voteMarks = [
+    {
+      value: 1,
+      label: '1',
+    },
+    {
+      value: 2,
+      label: '2',
+    },
+    {
+      value: 3,
+      label: '3',
+    },
+    {
+      value: 4,
+      label: '4',
+    },
+    {
+      value: 5,
+      label: '5',
+    },
+    {
+      value: 6,
+      label: '6',
+    },
+    {
+      value: 7,
+      label: '7',
+    },
+    {
+      value: 8,
+      label: '8',
+    },
+    {
+      value: 9,
+      label: '9',
+    },
+    {
+      value: 10,
+      label: '10',
+    },
+  ]
+
+  const onVoteAverageChange = (e: Event, newValue: number | number[]) => {
+    setVote_average(newValue as number);
+    // setVote_average(parseInt(e.target.value));
+  };
+
   return (
     <div className="text-secondary flex flex-col container mx-auto h-screen -mt-10 pt-8 md:-mt-28 md:pt-24">
       <form
@@ -258,7 +288,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
                   name="lanuage"
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)} // Unknown?
-                  // onChange={(value) => setLanguage(value as unknown as string)} // Unknown?
                   className="bg-secondaryDark border-0 rounded-xl text-light px-10 py-4 border-r-8 border-transparent"
                 >
                   <option value="en">English</option>
@@ -285,6 +314,36 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
                   marks={yearMarks}
                   min={1970}
                   max={2024}
+                  sx={{
+                    '& .MuiSlider-markLabel': {
+                      color: '#F6F1FF',
+                    },
+                    '& .MuiSlider-thumb': {
+                      color: '#8091be',
+                    },
+                    '& .MuiSlider-track': {
+                      color: '#8091be',
+                    },
+                    '& .MuiSlider-rail': {
+                      color: '#acc4e4',
+                    },
+                  }}
+                />
+              </div>
+            </label>
+            <FilterSeparator text={'Min Rating'} />
+            <label>
+              <div className="ms-4 me-1 mx-auto">
+                <Slider
+                  getAriaLabel={() => 'Min Rating'}
+                  value={vote_average}
+                  onChange={onVoteAverageChange}
+                  valueLabelDisplay="auto"
+                  shiftStep={1}
+                  step={1}
+                  marks={voteMarks}
+                  min={1}
+                  max={10}
                   sx={{
                     '& .MuiSlider-markLabel': {
                       color: '#F6F1FF',

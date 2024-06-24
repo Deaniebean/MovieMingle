@@ -37,11 +37,9 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [videoKey, setVideoKey] = useState('');
 
-  
-useEffect(() => {
-  setIsCardFlipped(false)
-}, [movies.length]); // Ensure initialMode is also considered in the dependency array
-
+  useEffect(() => {
+    setIsCardFlipped(false);
+  }, [movies.length]); // Ensure initialMode is also considered in the dependency array
 
   // Function to handle card flip directly in the parent component
   const handleCardFlip = () => {
@@ -61,7 +59,7 @@ useEffect(() => {
 
     return (
       <div
-        className={`flex flex-wrap gap-1 ${isPrimary ? '' : 'justify-end md:justify-start'}`}
+        className={`flex flex-wrap gap-1  ${isPrimary ? '' : 'justify-end md:justify-start'}`}
       >
         {genres
           .map((genre, i) => (
@@ -73,9 +71,10 @@ useEffect(() => {
             >
               {genre}
             </span>
-            // Display only 2 if mobile, all on above breakpoints
           ))
-          .slice(0, isMobile ? 2 : genres.length)}
+          // Display only 2 if mobile, 4 on above breakpoints
+          .slice(0, isMobile ? 2 : 4)}
+        {/* .slice(0, isMobile ? 2 : genres.length)} */}
       </div>
     );
   };
@@ -95,7 +94,7 @@ useEffect(() => {
 
   return (
     <div
-      className={`${isPrimary ? 'bg-primary text-white' : 'bg-white'} thisOrthat ${className}`}
+      className={`${isPrimary ? 'bg-primary text-white' : 'bg-white'} thisOrthat ${className}  ps-3`}
     >
       <div>
         {movie && (
@@ -118,7 +117,7 @@ useEffect(() => {
                 className={`${isPrimary ? 'flex flex-col ps-6' : 'flex flex-col text-right md:text-left text-primary pe-6'} text-left`}
               >
                 <h2
-                  className={`${isPrimary ? 'text-text' : 'text-primary'} text-xl md:text-4xl pb-3 font-bold mb-2 line-clamp-2`}
+                  className={`${isPrimary ? 'text-text' : 'text-primary'} text-xl md:text-3xl pb-3 font-bold mb-2 line-clamp-2 md:line-clamp-none`}
                 >
                   {movie.original_title}
                 </h2>
@@ -133,7 +132,7 @@ useEffect(() => {
                         </p>
                         {renderFilmGenres(movie.genre_ids)}
                       </div>
-                      <div className='md:flex md:items-center md:gap-1'>
+                      <div className="md:flex md:items-center md:gap-1">
                         <p
                           className={`${isPrimary ? 'text-sm' : 'text-sm text-primary'}`}
                         >
@@ -156,7 +155,7 @@ useEffect(() => {
                       </div>
                     </div>
                     <p
-                    className={`${isPrimary ? 'text-white ' : 'text-primary'} text-sm max-h-40 overflow-auto hidden md:inline`}
+                      className={`${isPrimary ? 'text-white ' : 'text-primary'} text-sm max-h-40 overflow-auto hidden md:inline`}
                     >
                       {movie.overview}
                     </p>
