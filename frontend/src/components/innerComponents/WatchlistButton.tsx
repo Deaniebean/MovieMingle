@@ -31,10 +31,10 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
 
 
   // Debugging log to check if UUID is correctly retrieved
-  useEffect(() => {
-    console.log('Cookies:', cookies); // Log all cookies
-    console.log('userUUID from cookies:', userUUID); // Log the UUID specifically
-  }, [cookies, userUUID]);
+  // useEffect(() => {
+  //   console.log('Cookies:', cookies); // Log all cookies
+  //   console.log('userUUID from cookies:', userUUID); // Log the UUID specifically
+  // }, [cookies, userUUID]);
 
   useEffect(() => {
     // Reset the button state when the movie changes

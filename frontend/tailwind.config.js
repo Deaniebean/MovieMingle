@@ -36,7 +36,7 @@ module.exports = withMT({
         betterhover: { raw: '(hover: hover)' },
       },
       spacing: {
-        '128': '45rem',
+        '128': '48rem',
       },
       borderRadius: {
         'large': '15px'
