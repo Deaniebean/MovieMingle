@@ -56,6 +56,11 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
   
   const isLaptopScreen = screenWidth > 767; // Example threshold for laptops
 
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    toggleNavbar(); 
+  };
+
   return (
     ['/login', '/'].includes(location.pathname) ? null :
     <>
@@ -83,10 +88,10 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
         </div>
         <nav className="sidebar-nav">
           <ul>
-          <li onClick={() => navigate("/home")}>Landingpage</li>
-          <li onClick={() => navigate("/select")}>This or That</li>
-          <li onClick={() => navigate("/watchlist")}>Watch List</li>
-          <li onClick={() => navigate("/history")}>History</li>
+          <li onClick={() => handleNavigation("/home")}>Landingpage</li>
+              <li onClick={() => handleNavigation("/select")}>This or That</li>
+              <li onClick={() => handleNavigation("/watchlist")}>Watch List</li>
+              <li onClick={() => handleNavigation("/history")}>History</li>
           <li className="logout" onClick={() => navigate("/login")}>Logout</li>
           </ul>
         </nav>
