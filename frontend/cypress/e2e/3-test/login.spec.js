@@ -5,10 +5,10 @@ describe('Moviemingle Test', () => {
 
     cy.exec('docker-compose up -d');
 
-    cy.exec('docker-compose ps -q | find /c /v ""').then(result => {
-      expect(result.stdout.trim()).to.not.be.empty;
+    cy.exec('docker-compose ps -q').then(result => {
+      const lines = result.stdout.split('\n').filter(line => line.trim() !== '').length;
+      expect(lines).to.be.greaterThan(0); 
     }).then(() => {
-
       // Wait for the server to become available
       cy.visit('http://localhost:5173/', {
         retryOnStatusCodeFailure: true,

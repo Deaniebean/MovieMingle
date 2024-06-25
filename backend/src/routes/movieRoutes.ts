@@ -23,6 +23,7 @@ router.post("/save/watchlist", async (req: Request, res: Response) => {
   const { movieData, userUUID } = req.body;
   console.log("movieData:", movieData);
 
+
   // Check if the movie already exists in the database
   let movie = await Movie.findOne(movieData);
 
