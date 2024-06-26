@@ -2,8 +2,10 @@ import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import Movie from "../models/mongooseMovies";
 import {User} from "../models/mongooseUsers";
+import connectDB from "../config/db";
 
 const router = express.Router();
+
 
 // Function to add a movie _id to a user's watchlist
 async function addToWatchlist(username: string, movieId: mongoose.Types.ObjectId) {
@@ -26,20 +28,25 @@ async function addToWatchlist(username: string, movieId: mongoose.Types.ObjectId
 }
 
 async function seedDatabase() {
+  try {
+    await connectDB();
+  } catch (error) {
+    console.error("Failed to connect to the database", error);
+  }
   const movies = [
     {
-      "_id": Object("66712deb867ab00c41aa5ef6"),
-      "id": 394122,
-      "original_title": "Nature Morte",
-      "original_language": "fr",
-      "overview": "AUGUSTINE and MARTIN. No need of more protagonists; like Adam and Eve …",
-      "genre": "Romance",
-      "release_date": "2014-11-24",
-      "poster_path": "default poster",
-      "vote_average": 0,
-      "vote_count": 0,
+      "_id":"667c4594bb2a17ecfd62ae95",
+      "id": 1109527,
+      "original_title": "Heroes of the Golden Masks",
+      "original_language": "en",
+      "overview": "Charlie, a wise-cracking, homeless, American orphan is magically transported to the ancient Chinese kingdom of Sanxingdui, where a colorful team of superheroes need his help to defend the city from a brutal conqueror. Charlie joins the heroes, and secretly schemes to steal the priceless golden masks that grant them their powers.",
+      "genre": ["Animation", "Comedy", "Adventure"],
+      "release_date": "2023-07-13",
+      "poster_path": "https://image.tmdb.org/t/p/original/cFzHd71e1d82VYrhx0m0bxE9lrL.jpg",
+      "vote_average": 7.6,
+      "vote_count": 6,
       "trailer": "www.youtube.com/watch?v=undefined",
-      "date": "2024-06-18T00:00:00.000+00:00",
+      "date": "2024-06-26T00:00:00.000+00:00",
       "rating": 0,
       "__v": 0
     }
@@ -47,15 +54,20 @@ async function seedDatabase() {
 
   try {
     for (const movie of movies) {
-      const existingMovie = await Movie.findOne({ id: movie.id });
+      const existingMovie = await Movie.findOne({ id: movie.id.toString() });
       if (!existingMovie) {
         const newMovie = new Movie(movie);
         await newMovie.save();
-        console.log(`Movie with _id: ${movie._id} added to the database.`);
-        // Add the movie _id to a specific user's watchlist after adding it to the database
-        await addToWatchlist("testuser", movie._id); // Replace "testuser" with the actual username
+        console.log(`Movie with _id: ${movie.id} added to the database.`);
+        // Assuming addToWatchlist expects an ObjectId for the movie ID
+        const movieObjectId = new mongoose.Types.ObjectId(movie._id);
+        await addToWatchlist("testuser", movieObjectId);
+        console.log(`Movie with _id: ${movie.id} added to testuser's watchlist.`);
       } else {
-        console.log(`Movie with _id: ${movie._id} already exists. Skipping.`);
+        // If the movie exists, ensure you're also converting the ID to ObjectId before adding to the watchlist
+        const movieObjectId = new mongoose.Types.ObjectId(movie._id);
+        await addToWatchlist("testuser", movieObjectId);
+        console.log(`Movie with _id: ${movie.id} already exists. Skipping.`);
       }
     }
     console.log('Database seeding completed.');
