@@ -1,4 +1,4 @@
-/* Ensure the modal covers the entire viewport */
+
 .modal {
   position: fixed;
   top: 0;
@@ -9,19 +9,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10000; /* Ensure the modal is on top of everything */
+  z-index: 10000; 
 }
 
-/* Ensure the modal content is centered and above the overlay */
 .modal-content {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
   position: relative;
-  z-index: 10001; /* Ensure the modal content is on top of the overlay */
+  z-index: 10001; 
 }
 
-/* Style for the close button */
+
 .close-button {
   position: absolute;
   top: 10px;
@@ -31,18 +30,17 @@
   cursor: pointer;
 }
 
-/* Disable pointer events for inactive button */
+
 .buttonTrailer.inactive {
   background-color: gray;
   cursor: not-allowed;
 }
 
 .buttonTrailer.inactive:hover {
-  background-color: gray; /* Ensure the background color does not change on hover */
-  transform: none; /* Ensure there is no transform effect on hover */
+  background-color: gray; 
+  transform: none; 
 }
 
-/* Other existing styles */
 .movie {
   display: flex;
   flex-direction: column;
@@ -60,11 +58,11 @@
   font-size: 18px;
   margin-bottom: 10px;
   width: 200px;
-  height: 60px; /* Adjust height to fit two lines of text */
+  height: 60px; 
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
