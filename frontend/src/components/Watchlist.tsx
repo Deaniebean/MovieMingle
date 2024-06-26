@@ -4,7 +4,6 @@ import Cookies from 'universal-cookie';
 import './Watchlist.css';
 import MovieTemplate from './MovieTemplate';
 
-
 interface Movie {
   _id: string;
   original_title: string;
@@ -18,6 +17,7 @@ const cookies = new Cookies();
 const Watchlist: React.FC = () => {
   const [watchlist, setWatchlist] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const userUUID = cookies.get('UUID');
 
   useEffect(() => {
@@ -26,6 +26,11 @@ const Watchlist: React.FC = () => {
       return;
     }
 
+    fetchWatchlist();
+  }, [userUUID]);
+
+  const fetchWatchlist = (query = '') => {
+    setLoading(true);
     axios
       .get(`http://localhost:8082/get/watchlist/${userUUID}`)
       .then((response) => {
@@ -36,11 +41,37 @@ const Watchlist: React.FC = () => {
         console.error('Error fetching watchlist:', error);
         setLoading(false);
       });
-  }, [userUUID]);
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.trim() === '') {
+      // If the search query is empty, fetch the original watchlist
+      fetchWatchlist();
+    } else {
+      // Otherwise, fetch the filtered watchlist
+      axios
+        .get(`http://localhost:8082/search/watchlist`, {
+          params: {
+            query,
+            userUUID
+          }
+        })
+        .then((response) => {
+          setWatchlist(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error searching watchlist:', error);
+          setLoading(false);
+        });
+    }
+  };
 
   return (
     <div className="landing-page">
-
       <div className="section">
         <div className="spacer"></div>
         <div className="watchlist-text">
@@ -49,7 +80,13 @@ const Watchlist: React.FC = () => {
       </div>
 
       <div className="searchbar">
-        <input type="text" className="search-input" placeholder="Search" />
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search"
+          value={searchQuery}
+          onChange={handleSearch}
+        />
       </div>
 
       <div className="movie-container">

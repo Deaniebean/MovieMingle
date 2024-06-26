@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import './MovieTemplate.css';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -6,7 +7,6 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import IconActive from "../assets/DocumentaryActive.png";
 import IconNotActive from "../assets/DocumentaryNotActive.png";
 import NoImage from '../assets/No-Image-Placeholder.svg';
-
 
 interface MovieProps {
   movie: {
@@ -27,7 +27,6 @@ const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const defaultSrc = NoImage;
   const imageSrc = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
-
 
   const openTrailer = () => {
     if (movie.trailer) {
@@ -82,14 +81,14 @@ const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
         <p className="rating-label">Your rating:</p>
         {renderRating()}
       </div>
-      <button className="buttonTrailer" onClick={openTrailer}>
+      <button className={`buttonTrailer ${!movie.trailer ? 'inactive' : ''}`} onClick={openTrailer} disabled={!movie.trailer}>
         <PlayArrowRoundedIcon />
         Trailer
       </button>
       <Link to={`/movie/${movie._id}`} className="buttonDetails">
         More details
       </Link>
-      {modalOpen && (
+      {modalOpen && createPortal(
         <div className="modal">
           <div className="modal-content">
             <button className="close-button" onClick={closeModal}>
@@ -104,7 +103,8 @@ const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
               allowFullScreen
             ></iframe>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
