@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import '../styles/globals.css';
 import './Register.css';
-const cookies = new Cookies();
+let cookies = new Cookies();
 
 interface RegisterProps {}
 const Login: React.FC<RegisterProps> = () => {
@@ -15,6 +15,24 @@ const Login: React.FC<RegisterProps> = () => {
   const [login, setLogin] = useState(false);
   const [loginClicked, setLoginClicked] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    // Function to clear the UUID cookie if user logs out or navigates to login
+    const clearAllCookies = () => {
+      cookies.remove('UUID');
+      cookies.remove('TOKEN');
+      console.log("removed cookie")
+      console.log(cookies)
+    };
+
+    if (location.pathname === '/login') {
+      clearAllCookies();
+      
+    }
+  }, [location.pathname]);
+
 
   const navigate = useNavigate();
 
@@ -53,13 +71,12 @@ const Login: React.FC<RegisterProps> = () => {
         cookies.set('TOKEN', result.data.token, {
           path: '/',
           secure: true,
-          httpOnly: false,
+          
         });
         // Set another cookie with the user's MongoDB ID
         cookies.set('UUID', result.data.uuid, {
           path: '/',
           secure: true,
-          httpOnly: false,
         });
         navigate("/home")
         setLogin(true);
