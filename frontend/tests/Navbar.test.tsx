@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../src/components/Navbar';
 import { vi, describe, beforeEach, test, expect } from 'vitest';
+import { act } from '@testing-library/react';
 
 const mockNavigate = vi.fn();
 
@@ -17,7 +18,6 @@ vi.mock('react-router-dom', async (importOriginal) => {
 
 describe('Navbar Component', () => {
   const toggleNavbar = vi.fn();
-
   beforeEach(() => {
     toggleNavbar.mockClear();
     mockNavigate.mockClear();
@@ -59,19 +59,18 @@ describe('Navbar Component', () => {
     expect(screen.getByText('MovieMingle')).toBeInTheDocument();
   });
 
-/*  test('should render the burger menu on small screens', () => {
+  test('should render the burger menu on small screens', () => {
     global.innerWidth = 500;
     global.dispatchEvent(new Event('resize'));
-
+  
     render(
       <MemoryRouter>
         <Navbar isOpen={false} toggleNavbar={toggleNavbar} />
       </MemoryRouter>
     );
-
-    expect(screen.getByTestId('burger-menu')).toBeInTheDocument();
-  });*/
-
+  
+    expect(screen.getByTestId('MenuIcon')).toBeInTheDocument();
+  });
   test('should render the top navbar on large screens', () => {
     global.innerWidth = 1024;
     global.dispatchEvent(new Event('resize'));
@@ -85,19 +84,19 @@ describe('Navbar Component', () => {
     expect(screen.getByText('MovieMingle')).toBeInTheDocument();
   });
 
-/*  test('should call toggleNavbar when burger menu is clicked', () => {
+  test('should call toggleNavbar when burger menu is clicked', () => {
     global.innerWidth = 500;
     global.dispatchEvent(new Event('resize'));
-
+  
     render(
       <MemoryRouter>
         <Navbar isOpen={false} toggleNavbar={toggleNavbar} />
       </MemoryRouter>
     );
-
-    fireEvent.click(screen.getByTestId('burger-menu'));
+  
+    fireEvent.click(screen.getByTestId('MenuIcon'));
     expect(toggleNavbar).toHaveBeenCalled();
-  });*/
+  });
 
   test('should call navigate when a sidebar link is clicked', () => {
     vi.mocked(useLocation).mockReturnValue({
@@ -137,7 +136,7 @@ describe('Navbar Component', () => {
     expect(toggleNavbar).toHaveBeenCalled();
   });
 
-/*  test('should update navbar height on window resize', () => {
+  test('should update navbar height on window resize', () => {
     vi.mocked(useLocation).mockReturnValue({
       pathname: '/home',
       state: undefined,
@@ -145,17 +144,19 @@ describe('Navbar Component', () => {
       search: '',
       hash: ''
     });
-
     render(
       <MemoryRouter>
         <Navbar isOpen={false} toggleNavbar={toggleNavbar} />
       </MemoryRouter>
     );
-
+  
     global.innerWidth = 800;
+  
     global.dispatchEvent(new Event('resize'));
-
-    const topNavbar = screen.getByText('MovieMingle').parentElement;
+    act(() => {
+      global.dispatchEvent(new Event('resize'));
+    });
+    const topNavbar = screen.getByText('MovieMingle');
     expect(topNavbar).toBeInTheDocument();
-  });*/
+  });
 });
