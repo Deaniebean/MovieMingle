@@ -12,8 +12,24 @@ async function addToWatchlist(username: string, movieId: mongoose.Types.ObjectId
   try {
     const user = await User.findOne({ username: username });
     if (!user) {
-      console.log("User not found.");
-      return;
+      console.log("User not found. Creating user...");
+      const newUser = new User({
+        _id: "667c6c85164819c51688fd04", // Assuming _id is handled by MongoDB, you might not need to set this manually
+        uuid: "3f170a97-2b27-4569-b3fc-0a7a275a3cfd",
+        username: "testuser",
+        password: "$2a$10$S/Xu42Mm/qoA.xL3w661zO/MPSdOqaJ5HvmkWcmn3Ob53k6ytPcLe" // Password should be hashed as shown
+      });
+    
+      newUser.save()
+        .then(savedUser => {
+          console.log("User created successfully:", savedUser);
+        })
+        .catch(error => {
+          console.error("Error creating user:", error);
+        });
+    }
+    if (!user.watch_list) {
+      user.watch_list = [];
     }
     if (!user.watch_list.includes(movieId)) {
       user.watch_list.push(movieId);
