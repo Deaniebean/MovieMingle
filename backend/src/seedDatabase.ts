@@ -1,7 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import Movie from "./models/mongooseMovies";
+import express from 'express';
+
+const router = express.Router();
 
 async function seedDatabase() {
+
   const movies = [
     {
       "_id": "66712deb867ab00c41aa5ef6",
@@ -9,7 +13,7 @@ async function seedDatabase() {
       "original_title": "Nature Morte",
       "original_language": "fr",
       "overview": "AUGUSTINE and MARTIN. No need of more protagonists; like Adam and Eve …",
-      "genre": ["Array (1)"], // Ensure this is correctly formatted as an array
+      "genre": ["Romance"], // Ensure this is correctly formatted as an array
       "release_date": "2014-11-24",
       "poster_path": "default poster",
       "vote_average": 0,
@@ -23,7 +27,7 @@ async function seedDatabase() {
 
   try {
     for (const movie of movies) {
-      const existingMovie = await Movie.findOne({ _id: movie._id });
+      const existingMovie = await Movie.findOne({ id: movie.id });
       if (!existingMovie) {
         const newMovie = new Movie(movie);
         await newMovie.save();
