@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import '../styles/globals.css';
@@ -19,6 +19,23 @@ const Register: React.FC<RegisterProps> = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [register, setRegister] = React.useState(false);
   const [registerClicked, setRegisterClicked] = useState(false);
+
+  useEffect(() => {
+   // Function to clear the UUID cookie if user logs out or navigates to register route
+    const clearAllCookies = () => {
+      cookies.remove('UUID');
+      cookies.remove('TOKEN');
+      console.log("removed cookie")
+      console.log(cookies)
+    };
+
+    // Check if the current page is login or sign-up
+    if (location.pathname === '/') {
+      clearAllCookies();
+      
+    }
+  }, [location.pathname]);
+
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,8 +77,9 @@ const Register: React.FC<RegisterProps> = () => {
     try {
       const result = await axios(configuration);
       console.log(result);
+      //expires after 1 hour
       cookies.set('TOKEN', result.data.token, {
-        path: '/',
+        path: '/'
       });
       window.location.href = '/home';
       setRegister(true);

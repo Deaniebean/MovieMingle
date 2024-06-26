@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Navbar.css';
 import '../styles/globals.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 
 // Components
 import MenuIcon from '@mui/icons-material/Menu';
@@ -20,7 +19,6 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const navbarRef = useRef<HTMLDivElement>(null);
   const [navbarHeight, setNavbarHeight] = useState(window.innerWidth > 767 ? 60 : 0);
-  const cookies = new Cookies();
   useEffect(() => {
     console.log("navbar height:" + navbarHeight);
   }, [navbarHeight]);
