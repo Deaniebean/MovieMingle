@@ -1,3 +1,4 @@
+import { Timestamp } from "mongodb";
 import mongoose from "mongoose";
 
 const MovieSchema = new mongoose.Schema({
@@ -49,6 +50,7 @@ const MovieSchema = new mongoose.Schema({
     type: Number,
     default: null,
   },
+
 });
 const Movie = mongoose.model("Movie", MovieSchema);
 export default Movie;
