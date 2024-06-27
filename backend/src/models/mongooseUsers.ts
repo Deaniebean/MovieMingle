@@ -19,7 +19,6 @@ const UserSchema = new mongoose.Schema({
     unique: false,
   },
   watch_list: [{ type: Schema.Types.ObjectId, ref: "Movie" }], // Movies in the watch list
-  history: [{ type: Schema.Types.ObjectId, ref: "Movie" }], // Movies watched
 });
 
 const User = mongoose.model("User", UserSchema);

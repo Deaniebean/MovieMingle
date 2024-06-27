@@ -79,7 +79,7 @@ const Register: React.FC<RegisterProps> = () => {
       console.log(result);
       //expires after 1 hour
       cookies.set('TOKEN', result.data.token, {
-        path: '/'
+        path: '/',
       });
       window.location.href = '/home';
       setRegister(true);
