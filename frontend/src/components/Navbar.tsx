@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
   };
 
   return (
-    ['/login', '/'].includes(location.pathname) ? null :
+    ['/login', '/', '/reset-password'].includes(location.pathname) ? null :
     <>
       <div className="navbar">
         {isLaptopScreen ? (
