@@ -73,7 +73,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
           console.log('Error response data:', error.response.data);
           console.log('Error response status:', error.response.status);
           console.log('Error response headers:', error.response.headers);
-          setErrorMessage('This username already exists');
+          setErrorMessage('Username not found');
         } else if (error.request) {
           // The request was made but no response was received
           console.log('Error request:', error.request);

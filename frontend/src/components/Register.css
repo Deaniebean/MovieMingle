@@ -196,7 +196,7 @@ cursor: pointer;
 
     .text-container {
         z-index: 10;
-        margin-bottom: -2rem;
+        margin-bottom: -3rem;
     }
 
     .description {
@@ -232,7 +232,7 @@ cursor: pointer;
     }
 
     .titlebar {
-        margin-bottom: 24rem;
+        margin-bottom: 19rem;
       }
 
     .textcontainer {
