@@ -10,27 +10,24 @@ const router = express.Router();
 // Function to add a movie _id to a user's watchlist
 async function addToWatchlist(username: string, movieId: mongoose.Types.ObjectId) {
   try {
-    const user = await User.findOne({ username: username });
+    let user = await User.findOne({ username: username }); // Use let instead of const to allow reassignment
     if (!user) {
       console.log("User not found. Creating user...");
-      const newUser = new User({
+      user = new User({ // Reassign user to the new User instance
         _id: "667c6c85164819c51688fd04", // Assuming _id is handled by MongoDB, you might not need to set this manually
         uuid: "3f170a97-2b27-4569-b3fc-0a7a275a3cfd",
         username: "testuser",
         password: "$2a$10$S/Xu42Mm/qoA.xL3w661zO/MPSdOqaJ5HvmkWcmn3Ob53k6ytPcLe" // Password should be hashed as shown
       });
     
-      newUser.save()
-        .then(savedUser => {
-          console.log("User created successfully:", savedUser);
-        })
-        .catch(error => {
-          console.error("Error creating user:", error);
-        });
+      await user.save(); // Use await directly without then/catch for simplicity
+      console.log("User created successfully:", user);
     }
+    // Initialize watch_list if it doesn't exist
     if (!user.watch_list) {
       user.watch_list = [];
     }
+    // Add movieId to watch_list if not already present
     if (!user.watch_list.includes(movieId)) {
       user.watch_list.push(movieId);
       await user.save();
@@ -65,7 +62,7 @@ async function seedDatabase() {
       "date": "2024-06-26T00:00:00.000+00:00",
       "rating": 0,
       "__v": 0
-    }
+    }, 
   ];
 
   try {
