@@ -15,7 +15,7 @@ interface MovieProps {
     poster_path: string;
     release_date: string;
     trailer?: string;
-    rating?: number; // Optional rating
+    rating?: number;
   };
 }
 
@@ -51,7 +51,7 @@ const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
 
   const renderRating = () => {
     if (movie.rating === undefined || movie.rating === null || movie.rating === 0) {
-      return <p className="no-rating">You did not rate the film yet.</p>;
+      return <p className="no-rating">You did not rate the movie yet.</p>;
     }
 
     const stars = [];

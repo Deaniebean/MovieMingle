@@ -1,46 +1,3 @@
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000; 
-}
-
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  position: relative;
-  z-index: 10001; 
-}
-
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-
-.buttonTrailer.inactive {
-  background-color: gray;
-  cursor: not-allowed;
-}
-
-.buttonTrailer.inactive:hover {
-  background-color: gray; 
-  transform: none; 
-}
-
 .movie {
   display: flex;
   flex-direction: column;
@@ -49,7 +6,7 @@
   background-color: var(--primary);
   margin-top: 20px;
   width: 250px;
-  height: 600px;
+  height: auto;
   overflow: hidden;
 }
 
@@ -58,7 +15,7 @@
   font-size: 18px;
   margin-bottom: 10px;
   width: 200px;
-  height: 60px; 
+  height: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -67,8 +24,9 @@
 }
 
 .moviePoster {
-  width: 200px;
-  height: auto;
+  width: 100%; 
+  height: 300px;
+  object-fit: cover;
   margin-bottom: 10px;
 }
 
@@ -77,7 +35,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
+  width: 100%;
   height: 30px;
   padding: 10px;
   margin-bottom: 10px;
@@ -98,33 +56,33 @@
   transform: scale(1.05);
 }
 
-.movie .rating {
-  color: var(--text);
-  font-size: 14px;
-  text-align: center;
+.rating-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 10px;
 }
 
-.movie .rating-icon-container {
-  display: flex;
-  align-items: center;
+.rating-label {
+  color: var(--text);
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 
-.movie .rating-icons {
+.rating-icons {
   display: flex;
   gap: 5px;
   max-width: 200px;
-  flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
-.movie .rating-icon {
+.rating-icon {
   width: 30px;
   height: auto;
 }
 
 .movie .no-rating {
-  color: var(--text);
-  font-size: 12px; 
-  text-align: center;
-  margin-bottom: 10px;
+  font-size: 12px;
+  color: var(--text)
 }

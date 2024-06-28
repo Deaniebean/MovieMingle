@@ -10,6 +10,7 @@ interface Movie {
   poster_path: string;
   release_date: string;
   rating?: number;
+  date: string;
 }
 
 const cookies = new Cookies();
@@ -18,6 +19,7 @@ const Watchlist: React.FC = () => {
   const [watchlist, setWatchlist] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchError, setSearchError] = useState(false);
   const userUUID = cookies.get('UUID');
 
   useEffect(() => {
@@ -34,7 +36,9 @@ const Watchlist: React.FC = () => {
     axios
       .get(`http://localhost:8082/get/watchlist/${userUUID}`)
       .then((response) => {
-        setWatchlist(response.data);
+        console.log("Unsorted watchlist:", response.data);
+        const unsortedWatchlist = response.data;
+        setWatchlist(unsortedWatchlist.reverse());
         setLoading(false);
       })
       .catch((error) => {
@@ -48,10 +52,10 @@ const Watchlist: React.FC = () => {
     setSearchQuery(query);
 
     if (query.trim() === '') {
-      // If the search query is empty, fetch the original watchlist
       fetchWatchlist();
+      setSearchError(false); 
     } else {
-      // Otherwise, fetch the filtered watchlist
+      setLoading(true);
       axios
         .get(`http://localhost:8082/search/watchlist`, {
           params: {
@@ -60,8 +64,11 @@ const Watchlist: React.FC = () => {
           }
         })
         .then((response) => {
-          setWatchlist(response.data);
+          console.log("Unsorted watchlist:", response.data);
+          const unsortedWatchlist = response.data;
+          setWatchlist(unsortedWatchlist.reverse());
           setLoading(false);
+          setSearchError(unsortedWatchlist.length === 0);
         })
         .catch((error) => {
           console.error('Error searching watchlist:', error);
@@ -93,7 +100,11 @@ const Watchlist: React.FC = () => {
         {loading ? (
           <p>Loading...</p>
         ) : watchlist.length === 0 ? (
-          <p>No movies in your watchlist.</p>
+          searchError ? (
+            <p>No movies found matching your search.</p>
+          ) : (
+            <p>No movies in your watchlist.</p>
+          )
         ) : (
           watchlist.map((movie) => (
             movie && <MovieTemplate key={movie._id} movie={movie} />
