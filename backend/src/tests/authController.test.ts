@@ -1,3 +1,6 @@
+
+
+
 import { Request, Response } from "express";
 import { mock, MockProxy } from "jest-mock-extended";
 import jwt from "jsonwebtoken";
@@ -8,10 +11,10 @@ import UserModel from "../models/userModel";
 import { register } from "../controllers/authController";
 import { login } from "../controllers/authController";
 import {User} from "../models/mongooseUsers";
+import connectDB from "../config/db";
+import mongoose from 'mongoose';
 
-// SETUP
 
-jest.mock("../models/mongooseUsers");
 jest.mock("jsonwebtoken");
 jest.mock("bcryptjs", () => ({
   hash: jest.fn((password: string) => Promise.resolve(`hashed_${password}`)),
@@ -153,3 +156,4 @@ test("login successful", async () => {
   });
   return login(req, res, next);
 });
+
