@@ -12,14 +12,14 @@ describe('Moviemingle Test', () => {
       // Wait for the server to become available
       cy.visit('http://localhost:5173/', {
         retryOnStatusCodeFailure: true,
-        timeout: 30000, 
+        timeout: 5000, 
       });
 
       // Change to login 
       cy.get('a[href="/login"]').click(); 
 
       cy.url().should('eq', 'http://localhost:5173/login', {
-        timeout: 30000, 
+        timeout: 5000, 
       });
 
       // Fill out form
@@ -29,14 +29,14 @@ describe('Moviemingle Test', () => {
       cy.get('button[type="submit"]').click();
 
       cy.url().should('eq', 'http://localhost:5173/home', {
-        timeout: 30000, 
+        timeout: 5000, 
       });
       
       // Change to Filterpage
       cy.get('button.buttonStart').click();
 
       cy.url().should('eq', 'http://localhost:5173/select', {
-        timeout: 30000, 
+        timeout: 5000, 
     });
 
     // Click on the genre checkboxes
@@ -70,7 +70,7 @@ describe('Moviemingle Test', () => {
     cy.get('button:contains("Start")').click();
 
      cy.url().should('eq', 'http://localhost:5173/this-or-that', {
-       timeout: 30000, 
+       timeout: 5000, 
      });
 
    // Simulate clicking on This or That until a winner is determined
@@ -101,7 +101,7 @@ describe('Moviemingle Test', () => {
 clickThisOrThatUntilWinner();
 
   cy.url().should('eq', 'http://localhost:5173/winner', {
-    timeout: 30000, 
+    timeout: 5000, 
   });
 
     cy.contains('Add to watchlist').click();
@@ -111,9 +111,13 @@ clickThisOrThatUntilWinner();
     cy.get('li:contains("Watch List")').click();
 
     cy.url().should('eq', 'http://localhost:5173/watchlist', {
-      timeout: 30000, 
+      timeout: 5000, 
     });
   
-    });
+    // Logout
+    cy.get('.burger-menu').click();
+    cy.get('li:contains("Logout")').click();
+
+  });
   });
 });

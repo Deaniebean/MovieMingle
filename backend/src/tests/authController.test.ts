@@ -16,12 +16,14 @@ import mongoose from 'mongoose';
 
 
 jest.mock("jsonwebtoken");
-jest.mock("bcryptjs", () => ({
-  hash: jest.fn((password: string) => Promise.resolve(`hashed_${password}`)),
-  compare: jest.fn(() => Promise.resolve(false)),
-}));
+jest.mock("bcryptjs");
+    
+//() => ({
+  //hash: jest.fn((password: string, salt: string | number) => Promise.resolve(`hashed_${password}`)),
+  //compare: jest.fn(() => Promise.resolve(false)),
+//}));
 jest.mock("uuid");
-jest.mock("./saveUserInDb");
+jest.mock("../controllers/saveUserInDb");
 
 let req: MockProxy<Request>;
 let res: MockProxy<Response>;
@@ -33,6 +35,10 @@ beforeEach(() => {
   (res.status as jest.Mock).mockReturnThis();
   jest.clearAllMocks();
 });
+
+afterEach(() => {
+    jest.resetAllMocks();
+  });
 
 // REGISTER TEST
 
@@ -68,7 +74,14 @@ test("test register successful", async () => {
   const uuid = "666";
 
   (uuidv4 as jest.Mock).mockReturnValue(uuid);
+  (bcrypt.hash as jest.Mock).mockImplementation(
+    (password: string, salt: string | number) => Promise.resolve(`hashed_${password}`)
+    );
 
+  const expectedSignInput = {
+    uuid,
+    username: req.body.username,
+  };
   const expectedUserModel: UserModel = {
     uuid,
     username: req.body.username,
@@ -80,11 +93,11 @@ test("test register successful", async () => {
   await register(req, res, next);
 
   expect(jwt.sign as jest.Mock).toHaveBeenCalled();
-  expect((jwt.sign as jest.Mock).mock.calls).toHaveLength(2); // counts from index 0
-  expect((jwt.sign as jest.Mock).mock.calls[0][0]).toEqual(expectedUserModel);
-  expect((jwt.sign as jest.Mock).mock.calls[0][1]).toBe("RANDOM-TOKEN");
+  expect((jwt.sign as jest.Mock).mock.calls).toHaveLength(1); // counts from index 0
+  expect((jwt.sign as jest.Mock).mock.calls[0][0]).toEqual(expectedSignInput);
+  expect((jwt.sign as jest.Mock).mock.calls[0][1]).toBe("your-secret-key");
   expect(saveUserInDb as jest.Mock).toHaveBeenCalled();
-  expect((saveUserInDb as jest.Mock).mock.calls).toHaveLength(2);
+  expect((saveUserInDb as jest.Mock).mock.calls).toHaveLength(1);
   expect((saveUserInDb as jest.Mock).mock.calls[0][0]).toEqual(
     expectedUserModel
   );
@@ -95,6 +108,7 @@ test("test register successful", async () => {
 test("login user not found", async () => {
   req.body = {
     username: "test",
+    password: "blub"
   };
   await login(req, res,next);
 
@@ -144,7 +158,7 @@ test("login successful", async () => {
   expect(jwt.sign as jest.Mock).toHaveBeenCalled();
   expect((jwt.sign as jest.Mock).mock.calls).toHaveLength(1);
   expect((jwt.sign as jest.Mock).mock.calls[0][0]).toEqual({
-    userId: user.uuid,
+    uuid: user.uuid,
     username: user.username,
   });
   expect((jwt.sign as jest.Mock).mock.calls[0][1]).toBe("RANDOM-TOKEN");
@@ -152,7 +166,7 @@ test("login successful", async () => {
   expect(res.send).toHaveBeenCalledWith({
     message: "Login Successful",
     token: "token",
-    user: "666",
+    uuid: "666",
   });
   return login(req, res, next);
 });

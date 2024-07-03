@@ -1,6 +1,6 @@
 import express, { Express, urlencoded } from "express";
 import dotenv from "dotenv";
-import corsMiddleware from "./middleware/cors";
+import { corsMiddleware } from "./middleware/cors";
 import authRoutes from "./routes/authRoutes";
 import movieRoutes from "./routes/movieRoutes";
 import connectDB from "./config/db";
