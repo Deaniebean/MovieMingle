@@ -1,37 +1,22 @@
 import axios from "axios";
 import { createOptionsDiscover, createOptionsTrailer } from "../services/tmdb";
 import { MovieType } from "../types/Movie";
-
-// Log the search parameters
-function logSearchParams(
-  genre: string[],
-  years: string[],
-  rounds: number,
-  language: string,
-  totalPages: number,
-  vote_average: number
-) {
-  console.log("Total pages:", totalPages);
-  console.log("Genre:", genre);
-  console.log("Years:", years);
-  console.log("Rounds:", rounds);
-  console.log("Language:", language);
-  console.log("Vote average:", vote_average);
-}
+import express from "express";
+import Movie from "../models/mongooseMovies";
+import { User } from "../models/mongooseUsers";
 
 // Fetch movies based on the search parameters and include trailers
 // need to fetch movies witpage: number, genre: string[], years: string[], rounds: number, language: string, vote_average: number, vote_average: numbers to select random page
-export async function discoverMovies(
+export const discoverMovies = async(
   genre: string[],
   years: string[],
   rounds: number,
   language: string,
   vote_average: number
-) {
+) => {
   const options = createOptionsDiscover(1, genre, years, rounds, language, vote_average);
   try {
     const response = await axios.request(options);
-    logSearchParams(genre, years, rounds, language, vote_average, response.data.total_pages);
 
     const movies = await discoverRandomMovies(
       response.data.total_pages,
@@ -69,14 +54,14 @@ export async function discoverMovies(
 }
 
 // function for fetching a random page of result movies
-export async function discoverRandomMovies(
+export const discoverRandomMovies = async (
   totalPages: number,
   genre: string[],
   years: string[],
   rounds: number,
   language: string,
   vote_average: number
-) {
+) => {
   const maxPage = Math.min(totalPages > 1000 ? 1000 : totalPages, 500);
   const randomPage = Math.floor(Math.random() * maxPage) + 1;
   const options = createOptionsDiscover(
@@ -120,6 +105,186 @@ export async function discoverRandomMovies(
   }
 }
 
-export async function addToWatchList(movie: MovieType, userUUID: string) {
-  // Add movie to watchlist
+export const discoverMoviesHandler = async (
+  request: express.Request,
+  response: express.Response,
+  next: express.NextFunction
+): Promise<void> => {
+    let movies: MovieType[] = [];
+    const { genre, years, rounds, language, vote_average } = request.body;
+    movies = await discoverMovies(genre, years, rounds, language, vote_average);
+    response.json(movies);
 }
+
+
+
+export const saveWatchlistHandler = async (
+  request: express.Request,
+  response: express.Response,
+  next: express.NextFunction): Promise<void> => {
+    try {
+    let movies: MovieType[] = [];
+    const { movieData, userUUID } = request.body;
+    console.log("movieData:", movieData);
+  
+  
+    // Check if the movie already exists in the database
+    let movie = await Movie.findOne(movieData);
+  
+    // If the movie doesn't exist, create a new one
+    if (!movie) {
+      movie = new Movie(movieData);
+      await movie.save();
+    }
+  
+    
+      const user = await User.findOne({ uuid: userUUID });
+  
+      if (!user) {
+        response.status(404).json({ message: "User not found" });
+        return;
+      }
+  
+      // Convert the movie's _id to a string
+      const movieIdString = movie._id.toString();
+  
+      // Check if the movie is already in the user's watchlist
+      if (user.watch_list.map((id: { toString: () => any; }) => id.toString()).includes(movieIdString)) {
+        response.status(400).json({ message: "Movie already in watchlist" });
+        return;
+      }
+  
+      user.watch_list.push(movie._id);
+      await user.save();
+  
+      response.json({ movieData, userUUID });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  export const deleteMovieHandler = async (
+    request: express.Request,
+    response: express.Response,
+    next: express.NextFunction): Promise<void> => {
+      const { movieId } = request.body;
+
+      try {
+        const movie = await Movie.findOne({ id: movieId });
+    
+        if (!movie) {
+          response.status(404).json({ message: "Movie not found" });
+          return;
+        }
+        // remove movie from movie collection
+        await Movie.deleteOne({ id: movieId });
+    
+        // Remove the movie's ObjectId from the watch_list
+        await User.updateMany({}, { $pull: { watch_list: movie._id } });
+    
+        response.json({ message: "Movie deleted successfully" });
+      } catch (error) {
+        next(error)
+      }
+    }
+
+    export const getMovieByIdHandler = async (
+      request: express.Request,
+      response: express.Response,
+      next: express.NextFunction): Promise<void> => {
+
+      const { id } = request.params;
+    
+      try {
+        const movie = await Movie.findById(id);
+    
+        if (!movie) {
+          response.status(404).json({ message: "Movie not found" });
+          return;
+        }
+    
+        response.json(movie);
+      } catch (error) {
+        next(error)
+      }
+    };
+
+    export const updateMovieRatingHandler = async (
+      request: express.Request,
+      response: express.Response,
+      next: express.NextFunction): Promise<void> => {
+      const { movieId, rating } = request.body;
+    
+      try {
+        const movie = await Movie.findOne({ id: movieId });
+    
+        if (!movie) {
+          response.status(404).json({ message: "Movie not found" });
+          return;
+        }
+    
+        movie.rating = rating;
+        await movie.save();
+    
+        response.json({ message: "Rating updated successfully" });
+      } catch (error) {
+        next(error)
+      }
+    };
+    
+    export const getWatchlistHandler = async (request: express.Request,
+      response: express.Response,
+      next: express.NextFunction): Promise<void> => {
+        const { userUUID } = request.params;
+
+        try {
+          const user = await User.findOne({ uuid: userUUID });
+      
+          if (!user) {
+            response.status(404).json({ message: "User not found" });
+            return;
+          }
+      
+          const moviePromises = user.watch_list.map(async (movieId) => {
+            console.log(user.watch_list);
+            return await Movie.findById(movieId);
+          });
+      
+          const movies = await Promise.all(moviePromises);
+      
+          response.json(movies);
+      
+        } catch (error) {
+          next(error)
+        }
+      };
+
+      export const searchWatchlistHandler = async (request: express.Request,
+        response: express.Response,
+        next: express.NextFunction): Promise<void> => {
+          const { query, userUUID } = request.query;
+        
+          if (typeof userUUID !== 'string') {
+            response.status(400).json({ message: "Invalid userUUID" });
+            return;
+          }
+          
+          try {
+            const user = await User.findOne({ uuid: userUUID });
+        
+            if (!user) {
+              response.status(404).json({ message: "User not found" });
+              return;
+            }
+        
+            // Fetch the movies in the user's watchlist
+            const movies = await Movie.find({
+              _id: { $in: user.watch_list },
+              original_title: new RegExp(String(query), 'i') // case-insensitive search
+            });
+        
+            response.json(movies);
+          } catch (error) {
+            next(error)
+          }
+        };

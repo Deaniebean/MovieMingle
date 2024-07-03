@@ -24,17 +24,17 @@ export const register = async (
   next: express.NextFunction
 ): Promise<void> => {
   if (!request.body) {
-    response.status(400).send({ message: "Request body is missing" });
-    return;
+    const error = new Error("Request body is missing");
+    return next(error);
   }
 
   let data: UserData;
   try {
     data = parse(UserSchema, request.body);
   } catch (error) {
-    response.status(400).send({ message: "Invalid request body", error });
-    return;
+    return next(error);
   }
+
 
   try {
     const existingUser = await User.findOne({ username: data.username });
@@ -150,3 +150,4 @@ export const resetPassword = async (
     next(new Error("An error occurred with password reset"));
   }
 };
+ 

@@ -1,7 +1,6 @@
 import express from "express";
-const app = express();
 
-const corsMiddleware = (
+export const corsMiddleware = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
@@ -23,5 +22,3 @@ const corsMiddleware = (
 
   next();
 };
-
-export default corsMiddleware;
