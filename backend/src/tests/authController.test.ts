@@ -18,7 +18,7 @@ jest.mock("bcryptjs", () => ({
   compare: jest.fn(() => Promise.resolve(false)),
 }));
 jest.mock("uuid");
-jest.mock("./saveUserInDb");
+jest.mock("../controllers/saveUserInDb");
 
 let req: MockProxy<Request>;
 let res: MockProxy<Response>;

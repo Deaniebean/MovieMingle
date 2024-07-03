@@ -1,11 +1,18 @@
-import express, { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
-const port = process.env.PORT || 8082;
 
-export const errorHandler = (err: Error, req: Request, res: Response , next: NextFunction) => {
+export const errorHandler = ( err: Error, req: Request, res: Response ) => {
     console.error(err.stack);
     console.error(err.message);
-    res.status(500).send({message: err.message});
-
-  }
+    if (err.message.includes("Invalid request body")) {
+      // Handle validation errors 
+      res.status(400).send({ message: err.message, error: err });
+    } else if (err.message.includes("Request body is missing")) {
+      // Handle missing body errors
+      res.status(400).send({ message: err.message });
+    } else {
+      // Handle other errors
+      res.status(500).send({ message: "An unexpected error occurred", error: err.message });
+    }
+  };
 

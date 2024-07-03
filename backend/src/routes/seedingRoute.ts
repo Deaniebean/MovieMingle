@@ -1,13 +1,9 @@
-import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import Movie from "../models/mongooseMovies";
 import {User} from "../models/mongooseUsers";
 import connectDB from "../config/db";
 
-const router = express.Router();
-
-
-async function addToWatchlist(username: string, movieId: mongoose.Types.ObjectId) {
+const addToWatchlist = async (username: string, movieId: mongoose.Types.ObjectId) => {
   try {
     let user = await User.findOne({ username: username });
     if (!user) {
