@@ -22,10 +22,15 @@ export const register = async (
   request: express.Request,
   response: express.Response,
   next: express.NextFunction
-): Promise<void> => {
+): Promise<any> => {
   if (!request.body) {
     const error = new Error("Request body is missing");
-    return next(error);
+    return response.status(400).send({ message: "Request body is missing" });
+  }
+
+  // Check if username or password is missing or empty
+  if (!request.body.username || !request.body.password) {
+    return response.status(400).send({ message: "Username or password is missing" });
   }
 
   let data: UserData;
@@ -34,7 +39,6 @@ export const register = async (
   } catch (error) {
     return next(error);
   }
-
 
   try {
     const existingUser = await User.findOne({ username: data.username });
@@ -72,6 +76,7 @@ export const register = async (
   }
 };
 
+
 export const login = async (
   request: express.Request,
   response: express.Response,
@@ -81,6 +86,7 @@ export const login = async (
   try {
     data = parse(UserSchema, request.body);
   } catch (error) {
+    console.error(error);
     response.status(400).send({ message: "Invalid request body", error });
     return;
   }
@@ -105,8 +111,6 @@ export const login = async (
       { uuid: user.uuid, username: user.username },
       "RANDOM-TOKEN"
     );
-    console.log("user", user.username);
-    console.log("uuid", user.uuid);
     response.status(200).send({
       message: "Login Successful",
       token,
