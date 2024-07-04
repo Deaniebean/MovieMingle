@@ -23,21 +23,18 @@ const Login: React.FC<RegisterProps> = () => {
     const clearAllCookies = () => {
       cookies.remove('UUID');
       cookies.remove('TOKEN');
-      console.log("removed cookie")
-      console.log(cookies)
+      console.log('removed cookie');
+      console.log(cookies);
     };
 
     if (location.pathname === '/login') {
       clearAllCookies();
-      
     }
   }, [location.pathname]);
-
 
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
 
     setLoading(false);
@@ -71,14 +68,13 @@ const Login: React.FC<RegisterProps> = () => {
         cookies.set('TOKEN', result.data.token, {
           path: '/',
           secure: true,
-          
         });
         // Set another cookie with the user's MongoDB ID
         cookies.set('UUID', result.data.uuid, {
           path: '/',
           secure: true,
         });
-        navigate("/home")
+        navigate('/home');
         setLogin(true);
         cookies.get('UUID');
       })
@@ -130,21 +126,28 @@ const Login: React.FC<RegisterProps> = () => {
               <Link to="/reset-password">Forgot password?</Link>
             </p>
             {loading ? <div>Loading...</div> : null}
-            <div className="error-message-container" data-testid="error-message">
+            <div
+              className="error-message-container"
+              data-testid="error-message"
+            >
               {loginClicked && !login ? (
-                <p data-testid="loginClicked" className="error">{errorMessage}</p>
+                <p data-testid="loginClicked" className="error">
+                  {errorMessage}
+                </p>
               ) : null}
             </div>
           </div>
-          <button className="button" type="submit">
-            Log In
-          </button>
-          <p className="link-text">
-            Not registered yet?&nbsp;
-            <Link className="link-to" to="/">
-              Create an account
-            </Link>
-          </p>
+          <div className="form-button">
+            <button className="button" type="submit">
+              Log In
+            </button>
+            <p className="link-text">
+              Not registered yet?&nbsp;
+              <Link className="link-to" to="/">
+                Create an account
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </div>
