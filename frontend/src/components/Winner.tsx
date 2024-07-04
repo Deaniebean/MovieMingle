@@ -10,6 +10,7 @@ import axios from 'axios';
 
 import './Winner.css';
 import NoImage from '../assets/No-Image-Placeholder.svg';
+import Confetti from './innerComponents/Confetti';
 
 const cookies = new Cookies();
 
@@ -101,6 +102,7 @@ const Winner: React.FC = () => {
 
   return (
     <div>
+      <Confetti />
       <div className="px-14 mt-6 grid justify-items-center md:container mx-auto">
         <p className="mb-1 md:text-xl">The winner is...</p>
         <p className="text-3xl md:text-6xl font-bold mb-4 text-center">
