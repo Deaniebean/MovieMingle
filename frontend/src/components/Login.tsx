@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import '../styles/globals.css';
 import './Register.css';
+
 let cookies = new Cookies();
 
 interface RegisterProps {}
