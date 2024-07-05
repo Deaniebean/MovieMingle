@@ -38,31 +38,31 @@ const Register: React.FC<RegisterProps> = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     // Check username is empty
     if (!username) {
       setErrorMessage('Please enter a username');
       return;
     }
-
+  
     // Check password is empty
     if (!password) {
       setErrorMessage('Please enter a password');
       return;
     }
-
+  
     // Check verifyPassword is empty
     if (!verifyPassword) {
       setErrorMessage('Please verify your password');
       return;
     }
-
+  
     // Check whether passwords match
     if (password !== verifyPassword) {
       setErrorMessage('Passwords do not match');
       return;
     }
-
+  
     // Send form data
     const configuration = {
       method: 'post',
@@ -79,8 +79,22 @@ const Register: React.FC<RegisterProps> = () => {
       cookies.set('TOKEN', result.data.token, {
         path: '/',
       });
+      // Set another cookie with the user's MongoDB ID
+      cookies.set('UUID', result.data.uuid, {
+        path: '/',
+      });
+  
+      // Verify cookies are set
+      const token = cookies.get('TOKEN');
+      const uuid = cookies.get('UUID');
+      if (!token || !uuid) {
+        throw new Error('User UUID not found in cookies');
+      }
+  
+    // Redirect to home page
       window.location.href = '/home';
       setRegister(true);
+  
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setRegister(false);
