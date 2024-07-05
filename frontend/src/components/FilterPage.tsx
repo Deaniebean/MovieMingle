@@ -269,7 +269,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
         onSubmit={queryParams}
         className="flex h-screen mx-auto px-6 md:pt-16 "
       >
-        <div className="flex flex-col md:grid justify-between md:grid-cols-3 ">
+        <div className="flex flex-col md:grid justify-between md:grid-cols-3 mt-4">
           {/* Genre */}
           <div className="flex flex-col md:flex-none md:col-span-2 md:pe-16 min-h-20 overflow-auto md:h-56">
             <FilterSeparator text={'Genres'} />
