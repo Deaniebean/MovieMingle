@@ -31,15 +31,23 @@ const Watchlist: React.FC = () => {
     fetchWatchlist();
   }, [userUUID]);
 
-  const fetchWatchlist = (query = '') => {
+  const fetchWatchlist = (query: string = '') => {
     setLoading(true);
+    const endpoint = query.trim() !== '' ? `search/watchlist` : `get/watchlist/${userUUID}`;
+    
     axios
-      .get(`http://localhost:8082/get/watchlist/${userUUID}`)
+      .get(`http://localhost:8082/${endpoint}`, {
+        params: {
+          query,
+          userUUID
+        }
+      })
       .then((response) => {
-        console.log("Unsorted watchlist:", response.data);
+        console.log("Watchlist fetched:", response.data);
         const unsortedWatchlist = response.data;
         setWatchlist(unsortedWatchlist.reverse());
         setLoading(false);
+        setSearchError(unsortedWatchlist.length === 0 && query.trim() !== '');
       })
       .catch((error) => {
         console.error('Error fetching watchlist:', error);
@@ -50,31 +58,7 @@ const Watchlist: React.FC = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setSearchQuery(query);
-
-    if (query.trim() === '') {
-      fetchWatchlist();
-      setSearchError(false); 
-    } else {
-      setLoading(true);
-      axios
-        .get(`http://localhost:8082/search/watchlist`, {
-          params: {
-            query,
-            userUUID
-          }
-        })
-        .then((response) => {
-          console.log("Unsorted watchlist:", response.data);
-          const unsortedWatchlist = response.data;
-          setWatchlist(unsortedWatchlist.reverse());
-          setLoading(false);
-          setSearchError(unsortedWatchlist.length === 0);
-        })
-        .catch((error) => {
-          console.error('Error searching watchlist:', error);
-          setLoading(false);
-        });
-    }
+    fetchWatchlist(query);
   };
 
   return (
@@ -107,7 +91,7 @@ const Watchlist: React.FC = () => {
           )
         ) : (
           watchlist.map((movie) => (
-            movie && <MovieTemplate key={movie._id} movie={movie} />
+            <MovieTemplate key={movie._id} movie={movie} />
           ))
         )}
       </div>
@@ -116,3 +100,4 @@ const Watchlist: React.FC = () => {
 };
 
 export default Watchlist;
+

@@ -81,13 +81,15 @@ const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
         <p className="rating-label">Your rating:</p>
         {renderRating()}
       </div>
-      <button className={`buttonTrailer ${!movie.trailer ? 'inactive' : ''}`} onClick={openTrailer} disabled={!movie.trailer}>
-        <PlayArrowRoundedIcon />
-        Trailer
-      </button>
-      <Link to={`/movie/${movie._id}`} className="buttonDetails">
-        More details
-      </Link>
+      <div className="buttonContainer">
+        <button className={`buttonTrailer ${!movie.trailer ? 'inactive' : ''}`} onClick={openTrailer} disabled={!movie.trailer}>
+          <PlayArrowRoundedIcon />
+          Trailer
+        </button>
+        <Link to={`/movie/${movie._id}`} className="buttonDetails">
+          More details
+        </Link>
+      </div>
       {modalOpen && createPortal(
         <div className="modal">
           <div className="modal-content">
