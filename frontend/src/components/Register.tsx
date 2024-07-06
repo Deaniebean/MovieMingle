@@ -9,8 +9,7 @@ import './Register.css';
 
 const cookies = new Cookies();
 
-interface RegisterProps {
-}
+interface RegisterProps {}
 
 const Register: React.FC<RegisterProps> = () => {
   const [username, setUsername] = React.useState('');
@@ -20,51 +19,50 @@ const Register: React.FC<RegisterProps> = () => {
   const [register, setRegister] = React.useState(false);
   const [registerClicked, setRegisterClicked] = useState(false);
 
+  const location = useLocation();
+
   useEffect(() => {
-   // Function to clear the UUID cookie if user logs out or navigates to register route
+    // Function to clear the UUID cookie if user logs out or navigates to register route
     const clearAllCookies = () => {
       cookies.remove('UUID');
       cookies.remove('TOKEN');
-      console.log("removed cookie")
-      console.log(cookies)
+      console.log('removed cookie');
+      console.log(cookies);
     };
 
     // Check if the current page is login or sign-up
     if (location.pathname === '/') {
       clearAllCookies();
-      
     }
   }, [location.pathname]);
 
-
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     // Check username is empty
     if (!username) {
       setErrorMessage('Please enter a username');
       return;
     }
-
+  
     // Check password is empty
     if (!password) {
       setErrorMessage('Please enter a password');
       return;
     }
-
+  
     // Check verifyPassword is empty
     if (!verifyPassword) {
       setErrorMessage('Please verify your password');
       return;
     }
-
+  
     // Check whether passwords match
     if (password !== verifyPassword) {
       setErrorMessage('Passwords do not match');
       return;
     }
-
+  
     // Send form data
     const configuration = {
       method: 'post',
@@ -81,8 +79,22 @@ const Register: React.FC<RegisterProps> = () => {
       cookies.set('TOKEN', result.data.token, {
         path: '/',
       });
+      // Set another cookie with the user's MongoDB ID
+      cookies.set('UUID', result.data.uuid, {
+        path: '/',
+      });
+  
+      // Verify cookies are set
+      const token = cookies.get('TOKEN');
+      const uuid = cookies.get('UUID');
+      if (!token || !uuid) {
+        throw new Error('User UUID not found in cookies');
+      }
+  
+    // Redirect to home page
       window.location.href = '/home';
       setRegister(true);
+  
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setRegister(false);
@@ -159,15 +171,17 @@ const Register: React.FC<RegisterProps> = () => {
               ) : null}
             </div>
           </div>
-          <button className="button" type="submit">
-            Register
-          </button>
-          <p className="link-text">
-            Already have an account?&nbsp;
-            <Link className="link-to" to="/login">
-              Log In now
-            </Link>
-          </p>
+          <div className="form-button">
+            <button className="button" type="submit">
+              Register
+            </button>
+            <p className="link-text">
+              Already have an account?&nbsp;
+              <Link className="link-to" to="/login">
+                Log In now
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </div>

@@ -184,7 +184,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
 
   return (
     <div className="mx-auto px-4 pb-8 movie-detail-wrapper">
-      <div className="grid grid-cols-1 md:grid-cols-2 pt-20">
+      <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="flex justify-center items-start">
           <img
             src={

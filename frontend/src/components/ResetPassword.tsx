@@ -8,11 +8,9 @@ import '../styles/globals.css';
 import './Register.css';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
-
 const cookies = new Cookies();
 
-interface ResetPasswordProps {
-}
+interface ResetPasswordProps {}
 
 const ResetPassword: React.FC<ResetPasswordProps> = () => {
   const [username, setUsername] = React.useState('');
@@ -136,18 +134,22 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
               ) : null}
             </div>
           </div>
-          <button className="button" type="submit">
-            Reset Password
-          </button>
-          <p className="link-text">
-            Not registered yet?&nbsp;
-            <Link className="link-to" to="/">
-              Create an account
+          <div className="form-button">
+            <button className="button" type="submit">
+              Reset Password
+            </button>
+            <p className="link-text">
+              Not registered yet?&nbsp;
+              <Link className="link-to" to="/">
+                Create an account
+              </Link>
+            </p>
+            <Link to="/login">
+              <span className="go-back">
+                <ArrowBackRoundedIcon /> Back to Log IN
+              </span>
             </Link>
-          </p>
-          <Link to="/login">
-            <span className="go-back"><ArrowBackRoundedIcon /> Back to Log IN</span>
-          </Link>
+          </div>
         </form>
       </div>
     </div>
