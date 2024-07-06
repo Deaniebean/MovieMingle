@@ -1,6 +1,3 @@
-
-
-
 import { Request, Response } from "express";
 import { mock, MockProxy } from "jest-mock-extended";
 import jwt from "jsonwebtoken";
@@ -11,17 +8,11 @@ import UserModel from "../models/userModel";
 import { register } from "../controllers/authController";
 import { login } from "../controllers/authController";
 import {User} from "../models/mongooseUsers";
-import connectDB from "../config/db";
-import mongoose from 'mongoose';
+
 
 
 jest.mock("jsonwebtoken");
 jest.mock("bcryptjs");
-    
-//() => ({
-  //hash: jest.fn((password: string, salt: string | number) => Promise.resolve(`hashed_${password}`)),
-  //compare: jest.fn(() => Promise.resolve(false)),
-//}));
 jest.mock("uuid");
 jest.mock("../controllers/saveUserInDb");
 
@@ -70,6 +61,8 @@ test("test register successful", async () => {
     username: "test",
     password: "test",
   };
+  jest.spyOn(User, "findOne").mockResolvedValue(null);
+
   const hashedPassword = `hashed_${req.body.password}`;
   const uuid = "666";
 
@@ -110,11 +103,12 @@ test("login user not found", async () => {
     username: "test",
     password: "blub"
   };
+  jest.spyOn(User, "findOne").mockResolvedValue(null);
+
   await login(req, res,next);
 
   expect(res.status).toHaveBeenCalledWith(404);
   expect(res.send).toHaveBeenCalledWith({ message: "user not found" });
-  return login(req, res, next);
 });
 
 test("login wrong password", async () => {
@@ -170,4 +164,3 @@ test("login successful", async () => {
   });
   return login(req, res, next);
 });
-
