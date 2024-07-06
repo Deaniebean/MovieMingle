@@ -11,6 +11,9 @@ import axios from 'axios';
 import './Winner.css';
 import NoImage from '../assets/No-Image-Placeholder.svg';
 import Confetti from './innerComponents/Confetti';
+import WatchlistButton from './innerComponents/WatchlistButton';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import MovieImage from './innerComponents/MovieImage';
 
 const cookies = new Cookies();
 
@@ -109,62 +112,72 @@ const Winner: React.FC = () => {
           {movie.original_title}
         </p>
 
-        <div className="md:flex md:mt-10">
-          <img
-            src={imageSrc || defaultSrc}
-            className="object-cover w-80"
+        <div className="md:flex md:mt-10 md:w-128">
+          <MovieImage
+            size="lg"
+            src={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+                : undefined
+            }
+            className={'ms-auto md:ms-0'}
           />
-          <div className="pt-5 md:ps-10">
+          <div className="pt-4 md:ps-10">
             <p className="hidden md:block md:text-lg">{movie.overview}</p>
-            {movie.videos && movie.videos[0] && (
-              <>
-                <div className="">
-                  <button
-                    className="movie-detail-trailer-button mx-auto md:ms-0"
-                    type="submit"
-                    onClick={openTrailer}
-                  >
-                    {' '}
-                    Open Trailer
-                  </button>
-                </div>
-
-                {modalOpen && (
-                  <div className="modal">
-                    <div className="modal-content">
+            <div className="grid gap-3 md:gap-6 mt-3 justify-items-center md:justify-items-start">
+              <div className="flex gap-3 justify-items-center mb-8">
+                {movie.videos && movie.videos[0] && (
+                  <>
+                    <div className="">
                       <button
-                        className="close-button "
-                        onClick={() => setModalOpen(false)}
+                        className="bg-white text-primary flex items-center px-4 py-2 border rounded-md"
+                        type="submit"
+                        onClick={openTrailer}
                       >
-                        Close Trailer
+                        {' '}
+                        <PlayArrowIcon className="me-2" />
+                        Trailer
                       </button>
-                      <iframe
-                        width="560"
-                        height="315"
-                        src={getYouTubeEmbedUrl(movie.videos[0]?.key)}
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
                     </div>
-                  </div>
+                    {modalOpen && (
+                      <div className="modal">
+                        <div className="modal-content">
+                          <button
+                            className=""
+                            onClick={() => setModalOpen(false)}
+                          >
+                            Close Trailer
+                          </button>
+                          <iframe
+                            width="560"
+                            height="315"
+                            src={getYouTubeEmbedUrl(movie.videos[0]?.key)}
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
-              </>
-            )}
+                <WatchlistButton
+                  movie={movie}
+                  getGenreNames={getGenreNames}
+                  isPrimary={true}
+                  className="text-white"
+                />
+              </div>
 
-            <button
-              className="movie-detail-addtolist mx-auto md:ms-0"
-              type="submit"
-              onClick={addToWatchList}
-            >
-              Add to watchlist
-            </button>
-            <p
-              className="movie-detail-select mx-auto md:ms-0"
-              onClick={() => navigate('/select')}
-            >
-              Go to select filter
-            </p>
+              <div>
+                <button
+                  className="bg-primary text-white flex items-center px-4 py-2 border rounded-md"
+                  onClick={() => navigate('/select')}
+                >
+                  Start again!
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
