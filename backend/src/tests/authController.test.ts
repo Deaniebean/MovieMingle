@@ -21,7 +21,7 @@ let res: MockProxy<Response>;
 const next = jest.fn();
 
 beforeAll(() => {
-  process.env.YOUR_SECRET_KEY = 'your-secret-key';
+  process.env.JWT_SECRET = 'your-secret-key';
 });
 
 
