@@ -14,6 +14,8 @@ import Confetti from './innerComponents/Confetti';
 import WatchlistButton from './innerComponents/WatchlistButton';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import MovieImage from './innerComponents/MovieImage';
+import Genres from './innerComponents/GenreList';
+import Rating from './innerComponents/Rating';
 
 const cookies = new Cookies();
 
@@ -21,8 +23,6 @@ const Winner: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const movie: Movie = location.state?.movie;
-  // const [cookies] = useCookies(['UUID']);
-  // const userUUID = cookies.UUID;
   const userUUID = cookies.get('UUID');
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -48,64 +48,9 @@ const Winner: React.FC = () => {
     }
   };
 
-  async function addToWatchList() {
-    // const movie = movies[index];
-    const poster_path = movie.poster_path
-      ? 'https://image.tmdb.org/t/p/original' + movie.poster_path
-      : 'default poster';
-    const trailer =
-      movie.videos && movie.videos[0]
-        ? 'www.youtube.com/watch?v=' + movie.videos[0]?.key
-        : null;
-    const date = new Date(Date.now()).toISOString().slice(0, 10);
-    const rating = 0;
-
-    const movieData = {
-      id: movie.id,
-      original_title: movie.original_title,
-      original_language: movie.original_language,
-      overview: movie.overview,
-      genre: getGenreNames(movie.genre_ids),
-      release_date: movie.release_date,
-      poster_path,
-      vote_average: movie.vote_average,
-      vote_count: movie.vote_count,
-      trailer,
-      date,
-      rating,
-    };
-
-    const configuration = {
-      method: 'post',
-      url: 'http://localhost:8082/save/watchlist',
-      data: {
-        movieData,
-        userUUID,
-      },
-    };
-
-    try {
-      const response = await axios(configuration);
-      console.log(response);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          console.log('Error response data:', error.response.data);
-          console.log('Error response status:', error.response.status);
-          console.log('Error response headers:', error.response.headers);
-        } else if (error.request) {
-          console.log('Error request:', error.request);
-        } else {
-          console.log('Error message:', error.message);
-        }
-        console.log('Error config:', error.config);
-      }
-    }
-  }
-
   return (
     <div>
-      <Confetti />
+      {/* <Confetti /> */}
       <div className="px-14 mt-6 grid justify-items-center md:container mx-auto">
         <p className="mb-1 md:text-xl">The winner is...</p>
         <p className="text-3xl md:text-6xl font-bold mb-4 text-center">
@@ -122,15 +67,23 @@ const Winner: React.FC = () => {
             }
             className={'ms-auto md:ms-0'}
           />
-          <div className="pt-4 md:ps-10">
-            <p className="hidden md:block md:text-lg">{movie.overview}</p>
-            <div className="grid gap-3 md:gap-6 mt-3 justify-items-center md:justify-items-start">
-              <div className="flex gap-3 justify-items-center mb-8">
+          <div className="pt-4 md:ps-10 h-full">
+            <div className='mb-3'>
+              <div className="md:flex md:gap-5 mb-3 hidden md:inline">
+                <Genres genreIds={movie.genre_ids} isPrimary={true} />
+                <Rating movie={movie} isPrimary={true} />
+              </div>
+              <p className="hidden md:block md:text-lg">{movie.overview}</p>
+            </div>
+
+            {/* Buttons */}
+            <div className="grid gap-3 mt-3 justify-items-center md:justify-items-start">
+              <div className="flex flex-col md:flex-row gap-3 justify-items-center w-full">
                 {movie.videos && movie.videos[0] && (
                   <>
-                    <div className="">
+                    <div className="w-full ">
                       <button
-                        className="bg-white text-primary flex items-center px-4 py-2 border rounded-md"
+                        className="bg-white text-primary md:px-4 py-2 border rounded-md w-full"
                         type="submit"
                         onClick={openTrailer}
                       >
@@ -165,16 +118,17 @@ const Winner: React.FC = () => {
                   movie={movie}
                   getGenreNames={getGenreNames}
                   isPrimary={true}
-                  className="text-white"
+                  className="text-white w-full"
+                  fixedWidth={false}
                 />
               </div>
 
-              <div>
+              <div className="w-full">
                 <button
-                  className="bg-primary text-white flex items-center px-4 py-2 border rounded-md"
+                  className="bg-primary text-white items-center w-full py-2 border rounded-md"
                   onClick={() => navigate('/select')}
                 >
-                  Start again!
+                  <p className="">Start again!</p>
                 </button>
               </div>
             </div>
