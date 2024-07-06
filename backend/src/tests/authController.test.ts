@@ -93,7 +93,7 @@ test("test register successful", async () => {
   expect(jwt.sign as jest.Mock).toHaveBeenCalled();
   expect((jwt.sign as jest.Mock).mock.calls).toHaveLength(1); // counts from index 0
   expect((jwt.sign as jest.Mock).mock.calls[0][0]).toEqual(expectedSignInput);
-  expect((jwt.sign as jest.Mock).mock.calls[0][1]).toBe(process.env.YOUR_SECRET_KEY);
+  expect((jwt.sign as jest.Mock).mock.calls[0][1]).toBe("your-secret-key");
   expect(saveUserInDb as jest.Mock).toHaveBeenCalled();
   expect((saveUserInDb as jest.Mock).mock.calls).toHaveLength(1);
   expect((saveUserInDb as jest.Mock).mock.calls[0][0]).toEqual(
