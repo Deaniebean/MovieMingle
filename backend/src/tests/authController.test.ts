@@ -20,10 +20,6 @@ let req: MockProxy<Request>;
 let res: MockProxy<Response>;
 const next = jest.fn();
 
-beforeAll(() => {
-  process.env.JWT_SECRET = 'your-secret-key';
-});
-
 
 beforeEach(() => {
   req = mock<Request>();
