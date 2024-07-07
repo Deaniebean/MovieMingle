@@ -105,6 +105,14 @@
   max-width: 200px;
 }
 
+.error-message {
+  font-family: var(--font);
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
 .movie-detail-remove-button {
   display: flex;
   justify-content: center;
