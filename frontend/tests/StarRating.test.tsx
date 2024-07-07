@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import StarRating from '../src/components/StarRating'; 
+import StarRating from '../src/components/innerComponents/StarRating'; 
 import { vi, describe, beforeEach, test, expect } from 'vitest';
 import { waitForElementToBeRemoved } from '@testing-library/react';
 

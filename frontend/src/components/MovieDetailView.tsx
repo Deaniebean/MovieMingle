@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import StarRating from './StarRating';
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import StarRating from './innerComponents/StarRating';
+import axios, { AxiosResponse } from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
-// Assets
+// Icons
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -22,6 +22,8 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
   const [movie, setMovie] = useState<any>(null);
   const [loadingIcon, setLoadingIcon] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [ratingErrorMessage, setRatingErrorMessage] = useState<string | null>(null);
+  const [removeErrorMessage, setRemoveErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,8 +34,6 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
           `http://localhost:8082/movie/${id}?_=${Date.now()}`
         );
         setMovie(response.data);
-        console.log('Gesendete Anfrage:', `http://localhost:8082/movie/${id}`);
-        console.log('Empfangene Antwort:', response.data);
       } catch (error: any) {
         console.error('Error fetching movie data:', error);
       }
@@ -118,8 +118,6 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
   const openTrailer = () => {
     if (movie.trailer) {
       setModalOpen(true);
-    } else {
-      console.error('No trailer URL available');
     }
   };
 
@@ -146,11 +144,11 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
     };
 
     axios(configuration)
-      .then((result: AxiosResponse) => {
-        console.log('Bewertung erfolgreich gesendet:', result.data);
+      .then(() => {
+        setRatingErrorMessage(null);
       })
-      .catch((error: AxiosError) => {
-        console.error('Fehler beim Senden der Bewertung:', error);
+      .catch(() => {
+        setRatingErrorMessage('Error sending the rating. Please try again later.');
       });
   };
 
@@ -167,18 +165,12 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
     };
 
     axios(configuration)
-      .then((result: AxiosResponse) => {
-        console.log(
-          'Film erfolgreich von der Watchlist entfernt:',
-          result.data
-        );
+      .then(() => {
+        setRemoveErrorMessage(null);
         navigate('/watchlist');
       })
-      .catch((error: AxiosError) => {
-        console.error(
-          'Fehler beim Entfernen des Films von der Watchlist:',
-          error
-        );
+      .catch(() => {
+        setRemoveErrorMessage('Error removing the movie from the watchlist. Please try again later.');
       });
   };
 
@@ -262,6 +254,11 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
               />
             </div>
           </div>
+          {ratingErrorMessage && (
+            <div className="error-message">
+              {ratingErrorMessage}
+            </div>
+          )}
           <button
             className="movie-detail-remove-button"
             type="submit"
@@ -270,6 +267,11 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
             <CloseRoundedIcon />
             Remove from watchlist
           </button>
+          {removeErrorMessage && (
+            <div className="error-message">
+              {removeErrorMessage}
+            </div>
+          )}
           <br />
           <br />
           <Link to="/watchlist" className="movie-detail-back-button">
