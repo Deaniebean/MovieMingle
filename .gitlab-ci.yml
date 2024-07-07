@@ -42,10 +42,6 @@ frontend-build:
     - npm install
   script:
     - npm run dev
-  artifacts:
-    paths:
-      - build/
-    when: always
 
 backend-build:
   image: node:latest
@@ -55,7 +51,3 @@ backend-build:
     - npm install
   script:
     - npm run start
-  artifacts:
-    paths:
-      - build/
-    when: always
