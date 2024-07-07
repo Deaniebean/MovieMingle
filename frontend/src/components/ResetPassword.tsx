@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -58,7 +57,6 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
     };
     axios(configuration)
       .then((result) => {
-        console.log(result);
         cookies.set('TOKEN', result.data.token, {
           path: '/',
         });
@@ -68,20 +66,14 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
       .catch((error: AxiosError) => {
         setResetPassword(false);
         if (error.response) {
-          console.log('Error response data:', error.response.data);
-          console.log('Error response status:', error.response.status);
-          console.log('Error response headers:', error.response.headers);
           setErrorMessage('Username not found');
         } else if (error.request) {
           // The request was made but no response was received
-          console.log('Error request:', error.request);
           setErrorMessage('reset password failed');
         } else {
           // Something happened in setting up the request that triggered an Error
-          console.log('Error message:', error.message);
           setErrorMessage('reset password failed');
         }
-        console.log('Error config:', error.config);
       })
       .finally(() => {
         setResetPasswordClicked(true);
