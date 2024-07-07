@@ -1,9 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+
+// Styles
 import '../styles/globals.css';
 import './Register.css';
 
@@ -26,8 +27,6 @@ const Register: React.FC<RegisterProps> = () => {
     const clearAllCookies = () => {
       cookies.remove('UUID');
       cookies.remove('TOKEN');
-      console.log('removed cookie');
-      console.log(cookies);
     };
 
     // Check if the current page is login or sign-up
@@ -74,8 +73,6 @@ const Register: React.FC<RegisterProps> = () => {
     };
     try {
       const result = await axios(configuration);
-      console.log(result);
-      //expires after 1 hour
       cookies.set('TOKEN', result.data.token, {
         path: '/',
       });
@@ -99,9 +96,6 @@ const Register: React.FC<RegisterProps> = () => {
       if (axios.isAxiosError(error)) {
         setRegister(false);
         if (error.response) {
-          console.log('Error response data:', error.response.data);
-          console.log('Error response status:', error.response.status);
-          console.log('Error response headers:', error.response.headers);
           if (
             error.response.data.code === 11000 ||
             error.response.data.code === 11001
@@ -112,14 +106,11 @@ const Register: React.FC<RegisterProps> = () => {
           }
         } else if (error.request) {
           // The request was made but no response was received
-          console.log('Error request:', error.request);
           setErrorMessage('Registration failed');
         } else {
           // Something happened in setting up the request that triggered an Error
-          console.log('Error message:', error.message);
           setErrorMessage('Registration failed');
         }
-        console.log('Error config:', error.config);
       }
     } finally {
       setRegisterClicked(true);
@@ -136,7 +127,6 @@ const Register: React.FC<RegisterProps> = () => {
       </div>
       <div className="register-form">
         <h2 className="title-form">Register</h2>
-        {/* temp adding class of 'formElement' on form instead of styling element directly */}
         <form onSubmit={(e) => handleSubmit(e)} className="form-element">
           <div className="data-input-wrapper">
             <input
