@@ -10,10 +10,11 @@ import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 import ClearIcon from '@mui/icons-material/Clear';
 
 interface WatchlistButtonProps {
-  initialMode?: 'add' | 'remove'; // Optional prop to set the initial mode
+  initialMode?: 'add' | 'remove';
   movie: Movie;
   getGenreNames: (genreIds: number[]) => string[];
   isPrimary?: boolean;
+  fixedWidth?: boolean;
   className?: string;
 }
 
@@ -24,17 +25,11 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
   movie,
   getGenreNames,
   isPrimary = true,
+  fixedWidth = true,
   className,
 }) => {
   const [isAddMode, setIsAddMode] = useState<boolean>(initialMode === 'add');
   const userUUID = cookies.get('UUID');
-
-
-  // Debugging log to check if UUID is correctly retrieved
-  // useEffect(() => {
-  //   console.log('Cookies:', cookies); // Log all cookies
-  //   console.log('userUUID from cookies:', userUUID); // Log the UUID specifically
-  // }, [cookies, userUUID]);
 
   useEffect(() => {
     // Reset the button state when the movie changes
@@ -44,16 +39,13 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
   const handleButtonClick = (): void => {
     if (isAddMode) {
       addToWatchList();
-      console.log('movie added');
     } else {
       removeFromWatchlist();
-      console.log('movie added');
     }
     setIsAddMode(!isAddMode);
   };
 
   async function addToWatchList() {
-    // const movie = movies[index];
     const poster_path = movie.poster_path
       ? 'https://image.tmdb.org/t/p/original' + movie.poster_path
       : 'default poster';
@@ -62,7 +54,6 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
       : null;
     const date = new Date(Date.now()).toISOString().slice(0, 10);
     const rating = 0;
-    console.log(userUUID);
 
     const movieData = {
       id: movie.id,
@@ -90,24 +81,22 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
 
     try {
       const response = await axios(configuration);
-      console.log(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          console.log('Error response data:', error.response.data);
-          console.log('Error response status:', error.response.status);
-          console.log('Error response headers:', error.response.headers);
+          console.error('Error response data:', error.response.data);
+          console.error('Error response status:', error.response.status);
+          console.error('Error response headers:', error.response.headers);
         } else if (error.request) {
-          console.log('Error request:', error.request);
+          console.error('Error request:', error.request);
         } else {
-          console.log('Error message:', error.message);
+          console.error('Error message:', error.message);
         }
-        console.log('Error config:', error.config);
+        console.error('Error config:', error.config);
       }
     }
   }
 
-  // Remove movie from watchlist
   const removeFromWatchlist = () => {
     const requestData = {
       movieId: movie.id,
@@ -121,10 +110,10 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
 
     axios(configuration)
       .then((result: AxiosResponse) => {
-        console.log(
-          'Film erfolgreich von der Watchlist entfernt:',
-          result.data
-        );
+        // console.log(
+        //   'Film erfolgreich von der Watchlist entfernt:',
+        //   result.data
+        // );
       })
       .catch((error: AxiosError) => {
         console.error(
@@ -135,10 +124,10 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
   };
 
   return (
-    <div>
+    <div className={`${fixedWidth ? '' : 'w-full'}`}>
       <button
         onClick={handleButtonClick}
-        className={`group relative flex items-center px-4 py-2 border rounded-md transition-all duration-300 ${isPrimary ? 'hover:bg-white hover:text-primary' : 'border-primary hover:bg-primary hover:text-white'} ${className} `}
+        className={`group relative ${fixedWidth ? 'flex' : 'w-full'} items-center px-4 py-2 border rounded-md transition-all duration-300 ${isPrimary ? 'hover:bg-white hover:text-primary' : 'border-primary hover:bg-primary hover:text-white'} ${className} `}
       >
         {isAddMode ? (
           <div className="flex justify-center">
@@ -148,12 +137,12 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
         ) : (
           <>
             <div className="">
-              <div className="flex items-center justify-center w-24 md:group-hover:hidden">
+              <div className={`${fixedWidth ? 'flex' : 'w-full'} items-center justify-center w-24 md:group-hover:hidden `} >
                 <DownloadDoneIcon className="me-2" />
                 <span className="">Added</span>
               </div>
-              <div className="flex items-center justify-center w-24 hidden md:group-hover:inline-block">
-                <ClearIcon className="me-2" fontSize="small" />
+              <div className={`${fixedWidth ? 'flex' : 'w-full'} items-center justify-center w-24 hidden md:group-hover:inline-block h-auto`}>
+                <ClearIcon className="me-2 " fontSize="small" />
                 <span className="">Remove</span>
               </div>
             </div>

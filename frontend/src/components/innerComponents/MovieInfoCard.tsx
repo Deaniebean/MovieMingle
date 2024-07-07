@@ -5,6 +5,8 @@ import { useMediaQuery } from 'react-responsive';
 import FlippableCard from './FlippableCard';
 import MovieImage from './MovieImage';
 import WatchlistButton from './WatchlistButton';
+import Genres from './GenreList';
+import Rating from './Rating';
 
 // Assets
 import ThreeSixtyIcon from '@mui/icons-material/ThreeSixty';
@@ -80,11 +82,6 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
 
   const movie = movies[index];
 
-  const renderRating = (): string => {
-    const rating = movie?.vote_average;
-    return rating ? `${Math.round(rating * 10) / 10}/10` : '-';
-  };
-
   function openTrailer(key: string) {
     setVideoKey(key);
     setModalOpen(true);
@@ -122,35 +119,11 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
                 <div className="flex flex-col h-full justify-between">
                   <div className="flex flex-col gap-3">
                     <div className="md:flex md:gap-5">
-                      <div>
-                        <p
-                          className={`${isPrimary ? 'mb-1' : 'mb-1 text-primary'} md:hidden`}
-                        >
-                          Genre
-                        </p>
-                        {renderFilmGenres(movie.genre_ids)}
-                      </div>
-                      <div className="md:flex md:items-center md:gap-1">
-                        <p
-                          className={`${isPrimary ? 'text-sm' : 'text-sm text-primary'}`}
-                        >
-                          IMDb Rating
-                        </p>
-                        <div
-                          className={`${isPrimary ? 'flex items-center' : 'flex items-center justify-end md:justify-start'}`}
-                        >
-                          <p
-                            className={`${isPrimary ? '' : 'text-primary'} text-2xl md:text-sm font-bold`}
-                          >
-                            {renderRating()}
-                          </p>
-                          <p
-                            className={`${isPrimary ? '' : ' text-primary '} ms-1 text-xl md:text-sm`}
-                          >
-                            {'( ' + movie.vote_count + ' )'}
-                          </p>
-                        </div>
-                      </div>
+                      <Genres
+                        genreIds={movie.genre_ids}
+                        isPrimary={isPrimary}
+                      />
+                      <Rating movie={movie} isPrimary={isPrimary} />
                     </div>
                     <p
                       className={`${isPrimary ? 'text-white ' : 'text-primary'} text-sm max-h-40 overflow-auto hidden md:inline`}
@@ -177,7 +150,6 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
                         movie={movie}
                         getGenreNames={getGenreNames}
                         isPrimary={isPrimary}
-                        className=""
                       />
                     </div>
                   </div>
