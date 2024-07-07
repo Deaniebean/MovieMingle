@@ -3,7 +3,7 @@ import StarRating from './innerComponents/StarRating';
 import axios, { AxiosResponse } from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
-// Assets
+// Icons
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';

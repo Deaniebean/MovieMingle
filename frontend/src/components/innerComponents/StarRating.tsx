@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+
+// Icons
 import IconActive from '../../assets/DocumentaryActive.png';
 import IconNotActive from '../../assets/DocumentaryNotActive.png';
+
+// Styles
 import '../MovieDetailView.css';
 import '../../styles/globals.css';
 

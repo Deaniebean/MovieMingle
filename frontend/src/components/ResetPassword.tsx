@@ -3,9 +3,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosError } from 'axios';
+
+// Icons
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+
+// Styles
 import '../styles/globals.css';
 import './Register.css';
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
 const cookies = new Cookies();
 

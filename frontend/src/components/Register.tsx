@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+
+// Styles
 import '../styles/globals.css';
 import './Register.css';
 

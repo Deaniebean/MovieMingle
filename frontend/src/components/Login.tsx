@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+
+// Styles
 import '../styles/globals.css';
 import './Register.css';
 
