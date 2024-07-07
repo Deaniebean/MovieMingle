@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+
+// Styles
 import './Confetti.css';
 
 const Confetti: React.FC = () => {

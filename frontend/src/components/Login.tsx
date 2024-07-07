@@ -1,8 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+
+// Styles
 import '../styles/globals.css';
 import './Register.css';
 
@@ -24,8 +25,6 @@ const Login: React.FC<RegisterProps> = () => {
     const clearAllCookies = () => {
       cookies.remove('UUID');
       cookies.remove('TOKEN');
-      console.log('removed cookie');
-      console.log(cookies);
     };
 
     if (location.pathname === '/login') {
@@ -64,8 +63,6 @@ const Login: React.FC<RegisterProps> = () => {
     };
     axios(configuration)
       .then((result: AxiosResponse) => {
-        console.log(result.data);
-
         cookies.set('TOKEN', result.data.token, {
           path: '/',
           secure: true,
@@ -80,7 +77,6 @@ const Login: React.FC<RegisterProps> = () => {
         cookies.get('UUID');
       })
       .catch((error: AxiosError) => {
-        console.log(error);
         setLogin(false);
         if (error.response && error.response.status === 400) {
           setErrorMessage('Invalid username or password');
@@ -104,7 +100,6 @@ const Login: React.FC<RegisterProps> = () => {
       </div>
       <div className="register-form">
         <h2 className="title-form">Log In</h2>
-        {/* temp adding class of 'formElement' on form instead of styling element directly */}
         <form onSubmit={(e) => handleSubmit(e)} className="form-element">
           <div className="data-input-wrapper">
             <input

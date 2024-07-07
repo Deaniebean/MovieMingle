@@ -14,7 +14,7 @@ import Winner from './components/Winner';
 import MovieDetailView from './components/MovieDetailView';
 import Watchlist from './components/Watchlist';
 import Navbar from './components/Navbar';
-// <Route path="/" element={<InputFieldsMovie setMovies={setMovies} />} />
+import NotFoundPage from './components/NotFoundPage';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -27,13 +27,12 @@ function App() {
           isOpen={!showNavbar}
           toggleNavbar={() => setShowNavbar(!showNavbar)}
         />
-        {/* <div className=""> */}
-        {/* <div className="page-content"> */}
           <Routes>
             <Route path="/" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-
+            <Route path="*" element={<NotFoundPage/>} /> // Catch-all route for 404 page
+            <Route element={<ProtectedRoutes />}>
             <Route
               path="/select"
               element={<FilterPage setMovies={setMovies} />}
@@ -46,25 +45,13 @@ function App() {
             <Route
               path="/home"
               element={<LandingPage />}
-              // element={<LandingPage setShowNavbar={setShowNavbar} />}
             />
-
-      <Route path="/watchlist" element={<Watchlist />} />
-            <Route element={<ProtectedRoutes />}>
-              {/* <Route
-                path="/select"
-                element={<FilterPage setMovies={setMovies} />}
-              />
-              <Route
-                path="/this-or-that"
-                element={<ThisOrThat movies={movies} setMovies={setMovies} />}
-              /> */}
+            <Route path="/watchlist" element={<Watchlist />} />
               <Route path="/winner" element={<Winner />} />
               <Route path="/movie-detail-view" element={<MovieDetailView />} />
               <Route path="/movie/:id" element={<MovieDetailView key={location.pathname} />} />
             </Route>
           </Routes>
-        {/* </div> */}
       </Router>
     </>
   );
