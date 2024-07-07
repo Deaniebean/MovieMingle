@@ -72,30 +72,17 @@
   font-size: 14px;
 }
 
-.movie-detail-trailer-button {
+.movie-trailer-button {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 9rem;
-  height: 2.5rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: var(--text);
-  color: var(--primary);
+  justify-content: center;
   font-family: var(--font);
   font-size: 14px;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.5s ease;
+  width: 9rem;
   margin-top: 2rem;
   margin-left: 1rem;
-}
-
-.movie-detail-trailer-button:hover {
-  width: 9.5rem;
-  height: 2.75rem;
-  font-size: 15px;
-  font-weight: 600;
+  padding-left: 1rem;
 }
 
 .movie-detail-rating-icon {
@@ -113,30 +100,17 @@
   margin-left: 1rem;
 }
 
-.movie-detail-remove-button {
+.movie-remove-button {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 14rem;
-  height: 2.5rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: var(--text);
-  color: var(--primary);
+  justify-content: center;
+  width: 15rem;
   font-family: var(--font);
   font-size: 14px;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.5s ease;
   margin-top: 2rem;
   margin-left: 1rem;
-}
-
-.movie-detail-remove-button:hover {
-  width: 14.5rem;
-  height: 2.75rem;
-  font-size: 15px;
-  font-weight: 600;
+  padding-left: 1rem;
 }
 
 .movie-detail-back-button {
@@ -166,9 +140,7 @@
 
 .modal-content {
   position: relative;
-  background: var(--secondary);
   padding: 40px 10px 10px 10px;
-  border-radius: 10px;
   max-width: 80%;
   max-height: 80%;
   overflow: auto;

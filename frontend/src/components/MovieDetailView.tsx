@@ -22,8 +22,12 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
   const [movie, setMovie] = useState<any>(null);
   const [loadingIcon, setLoadingIcon] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [ratingErrorMessage, setRatingErrorMessage] = useState<string | null>(null);
-  const [removeErrorMessage, setRemoveErrorMessage] = useState<string | null>(null);
+  const [ratingErrorMessage, setRatingErrorMessage] = useState<string | null>(
+    null
+  );
+  const [removeErrorMessage, setRemoveErrorMessage] = useState<string | null>(
+    null
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -148,7 +152,9 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
         setRatingErrorMessage(null);
       })
       .catch(() => {
-        setRatingErrorMessage('Error sending the rating. Please try again later.');
+        setRatingErrorMessage(
+          'Error sending the rating. Please try again later.'
+        );
       });
   };
 
@@ -170,7 +176,9 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
         navigate('/watchlist');
       })
       .catch(() => {
-        setRemoveErrorMessage('Error removing the movie from the watchlist. Please try again later.');
+        setRemoveErrorMessage(
+          'Error removing the movie from the watchlist. Please try again later.'
+        );
       });
   };
 
@@ -215,11 +223,12 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
           </p>
           {movie.trailer && (
             <button
-              className="movie-detail-trailer-button"
+              className="bg-white text-primary hover:bg-primary hover:text-white md:px-4 py-2 border rounded-md transition-all duration-300 movie-trailer-button"
               type="submit"
               onClick={openTrailer}
             >
-              <PlayArrowRoundedIcon />
+              {' '}
+              <PlayArrowRoundedIcon className="me-2" />
               Trailer
             </button>
           )}
@@ -255,22 +264,19 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
             </div>
           </div>
           {ratingErrorMessage && (
-            <div className="error-message">
-              {ratingErrorMessage}
-            </div>
+            <div className="error-message">{ratingErrorMessage}</div>
           )}
           <button
-            className="movie-detail-remove-button"
+            className="bg-white text-primary hover:bg-primary hover:text-white md:px-4 py-2 border rounded-md transition-all duration-300 movie-remove-button"
             type="submit"
             onClick={removeFromWatchlist}
           >
-            <CloseRoundedIcon />
+            {' '}
+            <CloseRoundedIcon className="me-2" />
             Remove from watchlist
           </button>
           {removeErrorMessage && (
-            <div className="error-message">
-              {removeErrorMessage}
-            </div>
+            <div className="error-message">{removeErrorMessage}</div>
           )}
           <br />
           <br />
