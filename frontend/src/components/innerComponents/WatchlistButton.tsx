@@ -81,6 +81,7 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
 
     try {
       const response = await axios(configuration);
+      console.log(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
@@ -97,6 +98,7 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
     }
   }
 
+  // Switch to async function
   const removeFromWatchlist = () => {
     const requestData = {
       movieId: movie.id,
@@ -110,10 +112,10 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
 
     axios(configuration)
       .then((result: AxiosResponse) => {
-        // console.log(
-        //   'Film erfolgreich von der Watchlist entfernt:',
-        //   result.data
-        // );
+        console.log(
+          'Film erfolgreich von der Watchlist entfernt:',
+          result.data
+        );
       })
       .catch((error: AxiosError) => {
         console.error(
