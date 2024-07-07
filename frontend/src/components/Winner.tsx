@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Movie } from '../types/MovieType';
 import { Genre } from '../types/GenreType';
-import Cookies from 'universal-cookie';
 
 import { useNavigate } from 'react-router-dom';
 import genreData from '../genre.json';
-import axios from 'axios';
 
 import './Winner.css';
-import NoImage from '../assets/No-Image-Placeholder.svg';
 import Confetti from './innerComponents/Confetti';
 import WatchlistButton from './innerComponents/WatchlistButton';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -17,22 +14,17 @@ import MovieImage from './innerComponents/MovieImage';
 import Genres from './innerComponents/GenreList';
 import Rating from './innerComponents/Rating';
 
-const cookies = new Cookies();
 
 const Winner: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const movie: Movie = location.state?.movie;
-  const userUUID = cookies.get('UUID');
 
   const [modalOpen, setModalOpen] = useState(false);
-  const defaultSrc = NoImage;
-  const imageSrc = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
 
   function getGenreNames(genreIds: number[]): string[] {
     return genreIds.map((id) => {
       const genre = genreData.genres.find((genre: Genre) => genre.id === id);
-      console.log(genre ? genre.name : '');
       return genre ? genre.name : '';
     });
   }
@@ -50,7 +42,7 @@ const Winner: React.FC = () => {
 
   return (
     <div>
-      {/* <Confetti /> */}
+      <Confetti />
       <div className="px-14 mt-6 grid justify-items-center md:container mx-auto">
         <p className="mb-1 md:text-xl">The winner is...</p>
         <p className="text-3xl md:text-6xl font-bold mb-4 text-center">
@@ -83,7 +75,7 @@ const Winner: React.FC = () => {
                   <>
                     <div className="w-full ">
                       <button
-                        className="bg-white text-primary md:px-4 py-2 border rounded-md w-full"
+                        className="bg-white text-primary hover:bg-primary hover:text-white md:px-4 py-2 border rounded-md w-full transition-all duration-300"
                         type="submit"
                         onClick={openTrailer}
                       >
@@ -125,10 +117,10 @@ const Winner: React.FC = () => {
 
               <div className="w-full">
                 <button
-                  className="bg-primary text-white items-center w-full py-2 border rounded-md"
+                  className="bg-primary text-white hover:bg-white  items-center w-full py-2 border rounded-md transition-all duration-300"
                   onClick={() => navigate('/select')}
                 >
-                  <p className="">Start again!</p>
+                  <p className="hover:text-primary transition-all duration-300">Start again!</p>
                 </button>
               </div>
             </div>

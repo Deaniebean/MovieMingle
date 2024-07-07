@@ -54,7 +54,6 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
       : null;
     const date = new Date(Date.now()).toISOString().slice(0, 10);
     const rating = 0;
-    console.log(userUUID);
 
     const movieData = {
       id: movie.id,
@@ -82,24 +81,22 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
 
     try {
       const response = await axios(configuration);
-      console.log(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          console.log('Error response data:', error.response.data);
-          console.log('Error response status:', error.response.status);
-          console.log('Error response headers:', error.response.headers);
+          console.error('Error response data:', error.response.data);
+          console.error('Error response status:', error.response.status);
+          console.error('Error response headers:', error.response.headers);
         } else if (error.request) {
-          console.log('Error request:', error.request);
+          console.error('Error request:', error.request);
         } else {
-          console.log('Error message:', error.message);
+          console.error('Error message:', error.message);
         }
-        console.log('Error config:', error.config);
+        console.error('Error config:', error.config);
       }
     }
   }
 
-  // Switch to async function
   const removeFromWatchlist = () => {
     const requestData = {
       movieId: movie.id,
@@ -113,10 +110,10 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
 
     axios(configuration)
       .then((result: AxiosResponse) => {
-        console.log(
-          'Film erfolgreich von der Watchlist entfernt:',
-          result.data
-        );
+        // console.log(
+        //   'Film erfolgreich von der Watchlist entfernt:',
+        //   result.data
+        // );
       })
       .catch((error: AxiosError) => {
         console.error(
@@ -140,12 +137,12 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
         ) : (
           <>
             <div className="">
-              <div className={`${fixedWidth ? 'flex' : 'w-full'} items-center justify-center w-24 md:group-hover:hidden`} >
+              <div className={`${fixedWidth ? 'flex' : 'w-full'} items-center justify-center w-24 md:group-hover:hidden `} >
                 <DownloadDoneIcon className="me-2" />
                 <span className="">Added</span>
               </div>
-              <div className={`${fixedWidth ? 'flex' : 'w-full'} items-center justify-center w-24 hidden md:group-hover:inline-block`}>
-                <ClearIcon className="me-2" fontSize="small" />
+              <div className={`${fixedWidth ? 'flex' : 'w-full'} items-center justify-center w-24 hidden md:group-hover:inline-block h-auto`}>
+                <ClearIcon className="me-2 " fontSize="small" />
                 <span className="">Remove</span>
               </div>
             </div>
