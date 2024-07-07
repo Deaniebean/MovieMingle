@@ -37,7 +37,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     const roundsParams = parseInt(rounds); 
     const languageParams = language;
     const vote_averageParams = vote_average;
-    console.log(vote_averageParams);
 
     try {
       const response = await axios.post(
