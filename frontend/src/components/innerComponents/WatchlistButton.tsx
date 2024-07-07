@@ -138,7 +138,7 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
     <div>
       <button
         onClick={handleButtonClick}
-        className={`group relative flex items-center px-4 py-2 border rounded-md transition-all duration-300 ${isPrimary ? '' : 'border-primary'} ${className} `}
+        className={`group relative flex items-center px-4 py-2 border rounded-md transition-all duration-300 ${isPrimary ? 'hover:bg-white hover:text-primary' : 'border-primary hover:bg-primary hover:text-white'} ${className} `}
       >
         {isAddMode ? (
           <div className="flex justify-center">

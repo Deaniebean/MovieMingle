@@ -39,7 +39,7 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
 
   useEffect(() => {
     setIsCardFlipped(false);
-  }, [movies.length]); // Ensure initialMode is also considered in the dependency array
+  }, [movies.length]); 
 
   // Function to handle card flip directly in the parent component
   const handleCardFlip = () => {
@@ -55,7 +55,7 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
 
   const renderFilmGenres = (genreIds: number[]): JSX.Element => {
     const genres = getGenreNames(genreIds);
-    const isMobile = useMediaQuery({ maxWidth: 768 }); // Defines mobile breakpoint
+    const isMobile = useMediaQuery({ maxWidth: 768 }); 
 
     return (
       <div
@@ -74,14 +74,12 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
           ))
           // Display only 2 if mobile, 4 on above breakpoints
           .slice(0, isMobile ? 2 : 4)}
-        {/* .slice(0, isMobile ? 2 : genres.length)} */}
       </div>
     );
   };
 
   const movie = movies[index];
 
-  // Don't need index perameter anymore
   const renderRating = (): string => {
     const rating = movie?.vote_average;
     return rating ? `${Math.round(rating * 10) / 10}/10` : '-';
@@ -164,7 +162,7 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
                   <div className="flex justify-between hidden md:inline">
                     <div className="flex gap-3">
                       <button
-                        className={`${hasTrailer ? '' : 'hidden'} ${isPrimary ? 'bg-white text-primary' : 'bg-primary text-white'} flex items-center px-4 py-2 border rounded-md`}
+                        className={`${hasTrailer ? '' : 'hidden'} ${isPrimary ? 'bg-white text-primary hover:bg-primary hover:text-white' : 'bg-primary text-white hover:bg-white hover:text-primary hover:border hover:border-primary'} flex items-center px-4 py-2 border rounded-md transition-all duration-300`}
                         onClick={() =>
                           hasTrailer
                             ? openTrailer(movie.videos[0].key)
@@ -208,7 +206,7 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
               <div className="flex justify-between">
                 <div className="flex gap-3">
                   <button
-                    className={`${hasTrailer ? '' : 'hidden'} ${isPrimary ? 'bg-white text-primary' : 'bg-primary text-white'} flex items-center px-4 py-2 border rounded-md`}
+                    className={`${hasTrailer ? '' : 'hidden'} ${isPrimary ? 'bg-white text-primary' : 'bg-primary text-white'} flex items-center px-4 py-2 border rounded-md `}
                     onClick={() =>
                       hasTrailer
                         ? openTrailer(movie.videos[0].key)
