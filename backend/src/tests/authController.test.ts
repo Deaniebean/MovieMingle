@@ -9,22 +9,17 @@ import { register } from "../controllers/authController";
 import { login } from "../controllers/authController";
 import {User} from "../models/mongooseUsers";
 
-// SETUP
 
-jest.mock("../models/mongooseUsers");
+
 jest.mock("jsonwebtoken");
 jest.mock("bcryptjs");
-    
-//() => ({
-  //hash: jest.fn((password: string, salt: string | number) => Promise.resolve(`hashed_${password}`)),
-  //compare: jest.fn(() => Promise.resolve(false)),
-//}));
 jest.mock("uuid");
 jest.mock("../controllers/saveUserInDb");
 
 let req: MockProxy<Request>;
 let res: MockProxy<Response>;
 const next = jest.fn();
+
 
 beforeEach(() => {
   req = mock<Request>();
@@ -67,6 +62,8 @@ test("test register successful", async () => {
     username: "test",
     password: "test",
   };
+  jest.spyOn(User, "findOne").mockResolvedValue(null);
+
   const hashedPassword = `hashed_${req.body.password}`;
   const uuid = "666";
 
@@ -107,11 +104,12 @@ test("login user not found", async () => {
     username: "test",
     password: "blub"
   };
+  jest.spyOn(User, "findOne").mockResolvedValue(null);
+
   await login(req, res,next);
 
   expect(res.status).toHaveBeenCalledWith(404);
   expect(res.send).toHaveBeenCalledWith({ message: "user not found" });
-  return login(req, res, next);
 });
 
 test("login wrong password", async () => {

@@ -10,7 +10,7 @@ dotenv.config();
 const port = process.env.PORT || 8082;
 
 connectDB();
-const app: Express = express();
+export const app: Express = express();
 
 //need a root for docker container
 app.get('/', (req, res) => {
@@ -32,6 +32,8 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`[server]: Server is running at http://localhost:${port}`);
+  });
+}

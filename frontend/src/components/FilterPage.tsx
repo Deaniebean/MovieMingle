@@ -69,7 +69,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
       : setGenre((genre) => genre.filter((genre) => genre !== e.target.value));
   };
 
-  const onYearChange = (event: Event, newValue: number | number[]) => {
+  const onYearChange = (newValue: number | number[]) => {
     setYearSlider(newValue as number[]);
   };
 
@@ -258,7 +258,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     },
   ]
 
-  const onVoteAverageChange = (e: Event, newValue: number | number[]) => {
+  const onVoteAverageChange = (newValue: number | number[]) => {
     setVote_average(newValue as number);
     // setVote_average(parseInt(e.target.value));
   };

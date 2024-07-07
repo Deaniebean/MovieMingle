@@ -91,6 +91,7 @@ const Watchlist: React.FC = () => {
           )
         ) : (
           watchlist.map((movie) => (
+            console.log(movie),
             <MovieTemplate key={movie._id} movie={movie} />
           ))
         )}
