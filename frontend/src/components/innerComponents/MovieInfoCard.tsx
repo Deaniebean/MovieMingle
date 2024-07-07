@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useMediaQuery } from 'react-responsive';
 
 // Components
 import FlippableCard from './FlippableCard';
@@ -54,31 +53,6 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
       return genre ? genre.name : '';
     });
   }
-
-  const renderFilmGenres = (genreIds: number[]): JSX.Element => {
-    const genres = getGenreNames(genreIds);
-    const isMobile = useMediaQuery({ maxWidth: 768 }); 
-
-    return (
-      <div
-        className={`flex flex-wrap gap-1  ${isPrimary ? '' : 'justify-end md:justify-start'}`}
-      >
-        {genres
-          .map((genre, i) => (
-            <span
-              className={`border rounded-md px-3 py-1 text-xs ${
-                isPrimary ? 'border-white' : 'border-primary'
-              }`}
-              key={i}
-            >
-              {genre}
-            </span>
-          ))
-          // Display only 2 if mobile, 4 on above breakpoints
-          .slice(0, isMobile ? 2 : 4)}
-      </div>
-    );
-  };
 
   const movie = movies[index];
 

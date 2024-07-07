@@ -37,11 +37,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     const roundsParams = parseInt(rounds); 
     const languageParams = language;
     const vote_averageParams = vote_average;
-    console.log('genre:', genreParams);
-    console.log('years:', yearsParams);
-    console.log('rounds:', roundsParams);
-    console.log('language:', languageParams);
-    console.log('vote_average:', vote_averageParams);
+    console.log(vote_averageParams);
 
     try {
       const response = await axios.post(
@@ -54,8 +50,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
           vote_average: vote_averageParams,
         }
       );
-
-      console.log('Success:', response.data);
       setMovies(response.data);
       navigate('/this-or-that');
     } catch (error) {
@@ -367,7 +361,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
             </div>
           </div>
           {/* Button */}
-          <div className="flex mx-auto pb-6 items-center content-end md:col-span-3">
+          <div className="flex md:mx-auto pb-6 items-center content-end md:col-span-3">
             <Button text={'Start'}></Button>
           </div>
         </div>

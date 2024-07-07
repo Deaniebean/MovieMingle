@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Movie } from '../types/MovieType';
 import './ThisOrThat.css';
-// import tempMovies from './tempMovies.json';
 import { useNavigate } from 'react-router-dom';
 
 // Components
@@ -12,7 +11,6 @@ interface Props {
   setMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
 }
 
-// const ThisOrThat: React.FC<Props> = ({ setMovies }): React.ReactNode => {
 const ThisOrThat: React.FC<Props> = ({
   movies,
   setMovies,
@@ -22,11 +20,9 @@ const ThisOrThat: React.FC<Props> = ({
   const [index2, setIndex2] = useState(1);
   const [totalChoices, setTotalChoices] = useState(0);
 
-  // console.log(userUUID);
   const getRoundInfo = () => {
     // Access the totalRounds from the first movie object
     const totalRounds = movies[0].totalRounds;
-
     return `Round ${totalChoices + 1}/${totalRounds}`;
   };
 
@@ -41,12 +37,10 @@ const ThisOrThat: React.FC<Props> = ({
     );
 
     // Remove the unchosen movie from the array
-    console.log('Unchosen index:', unchosenIndex);
     newMovies.splice(unchosenIndex, 1);
 
     // If there's only one movie left, we have a winner
     if (newMovies.length === 1) {
-      console.log('Winner:', newMovies[0]);
       navigate('/winner', { state: { movie: newMovies[0] } });
       return;
     }
@@ -76,11 +70,6 @@ const ThisOrThat: React.FC<Props> = ({
     setTotalChoices(totalChoices + 1);
   };
 
-  useEffect(() => {
-    console.log('Movies:', movies);
-  }, [movies]);
-
-  // console.log('Movies:', movies);
 
   return (
     <div className="flex flex-col container mx-auto h-screen -mt-10 pt-8 md:-mt-28 md:pt-24">
@@ -90,7 +79,6 @@ const ThisOrThat: React.FC<Props> = ({
         <MovieInfoCard index={index1} movies={movies} isPrimary={true} hasTrailer={movies[index1].videos && movies[index1].videos[0] ? true : false}/>
 
         <div className="centerBar flex justify-center -mb-1 md:-mb-0">
-          {/* make button full available space */}
           <button
             className="flex-1 rounded-full text-lg md:text-2xl text-white font-semibold bg-primary px-2 py-1 md:px-3 md:py-2.5"
             onClick={() => chooseMovie(index1)}
