@@ -68,7 +68,7 @@ const Winner: React.FC = () => {
             className={'ms-auto md:ms-0'}
           />
           <div className="pt-4 md:ps-10 h-full">
-            <div className='mb-3'>
+            <div className='mb-3 md:min-h-60'>
               <div className="md:flex md:gap-5 mb-3 hidden md:inline">
                 <Genres genreIds={movie.genre_ids} isPrimary={true} />
                 <Rating movie={movie} isPrimary={true} />
