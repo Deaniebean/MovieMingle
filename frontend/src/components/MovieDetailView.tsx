@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import StarRating from './StarRating';
+import StarRating from './innerComponents/StarRating';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
