@@ -26,7 +26,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   const [yearSlider, setYearSlider] = useState<number[]>([1990, 2024]);
   const [rounds, setRounds] = useState('6');
   const [language, setLanguage] = useState('en');
-  const [vote_average, setVote_average] = useState<number>(7);
   const navigate = useNavigate();
 
   const queryParams = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,7 +35,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     const yearsParams = [`${yearSlider[0]}-01-01`, `${yearSlider[1]}-12-31`]; 
     const roundsParams = parseInt(rounds); 
     const languageParams = language;
-    const vote_averageParams = vote_average;
 
     try {
       const response = await axios.post(
@@ -46,7 +44,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
           years: yearsParams,
           rounds: roundsParams,
           language: languageParams,
-          vote_average: vote_averageParams,
         }
       );
       setMovies(response.data);
@@ -206,53 +203,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     },
   ];
 
-  const voteMarks = [
-    {
-      value: 1,
-      label: '1',
-    },
-    {
-      value: 2,
-      label: '2',
-    },
-    {
-      value: 3,
-      label: '3',
-    },
-    {
-      value: 4,
-      label: '4',
-    },
-    {
-      value: 5,
-      label: '5',
-    },
-    {
-      value: 6,
-      label: '6',
-    },
-    {
-      value: 7,
-      label: '7',
-    },
-    {
-      value: 8,
-      label: '8',
-    },
-    {
-      value: 9,
-      label: '9',
-    },
-    {
-      value: 10,
-      label: '10',
-    },
-  ]
-
-  const onVoteAverageChange = (_: Event, newValue: number | number[]) => {
-    setVote_average(newValue as number);
-  };
-
   return (
     <div className="text-secondary flex flex-col container mx-auto h-screen -mt-10 pt-8 md:-mt-28 md:pt-24">
       <form
@@ -304,36 +254,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
                   marks={yearMarks}
                   min={1970}
                   max={2024}
-                  sx={{
-                    '& .MuiSlider-markLabel': {
-                      color: '#F6F1FF',
-                    },
-                    '& .MuiSlider-thumb': {
-                      color: '#8091be',
-                    },
-                    '& .MuiSlider-track': {
-                      color: '#8091be',
-                    },
-                    '& .MuiSlider-rail': {
-                      color: '#acc4e4',
-                    },
-                  }}
-                />
-              </div>
-            </label>
-            <FilterSeparator text={'Min Rating'} />
-            <label>
-              <div className="ms-4 me-1 mx-auto">
-                <Slider
-                  getAriaLabel={() => 'Min Rating'}
-                  value={vote_average}
-                  onChange={onVoteAverageChange}
-                  valueLabelDisplay="auto"
-                  shiftStep={1}
-                  step={1}
-                  marks={voteMarks}
-                  min={1}
-                  max={10}
                   sx={{
                     '& .MuiSlider-markLabel': {
                       color: '#F6F1FF',
