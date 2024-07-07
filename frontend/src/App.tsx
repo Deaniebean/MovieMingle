@@ -14,6 +14,7 @@ import Winner from './components/Winner';
 import MovieDetailView from './components/MovieDetailView';
 import Watchlist from './components/Watchlist';
 import Navbar from './components/Navbar';
+import NotFoundPage from './components/NotFoundPage';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -30,6 +31,7 @@ function App() {
             <Route path="/" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="*" element={<NotFoundPage/>} /> // Catch-all route for 404 page
             <Route element={<ProtectedRoutes />}>
             <Route
               path="/select"
