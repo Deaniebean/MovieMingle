@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import IconActive from '../assets/DocumentaryActive.png';
-import IconNotActive from '../assets/DocumentaryNotActive.png';
-import './MovieDetailView.css';
-import '../styles/globals.css';
+import IconActive from '../../assets/DocumentaryActive.png';
+import IconNotActive from '../../assets/DocumentaryNotActive.png';
+import '../MovieDetailView.css';
+import '../../styles/globals.css';
 
 interface StarRatingProps {
   maxStars: number;
