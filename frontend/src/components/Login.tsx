@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -24,8 +23,6 @@ const Login: React.FC<RegisterProps> = () => {
     const clearAllCookies = () => {
       cookies.remove('UUID');
       cookies.remove('TOKEN');
-      console.log('removed cookie');
-      console.log(cookies);
     };
 
     if (location.pathname === '/login') {
@@ -64,8 +61,6 @@ const Login: React.FC<RegisterProps> = () => {
     };
     axios(configuration)
       .then((result: AxiosResponse) => {
-        console.log(result.data);
-
         cookies.set('TOKEN', result.data.token, {
           path: '/',
           secure: true,
@@ -80,7 +75,6 @@ const Login: React.FC<RegisterProps> = () => {
         cookies.get('UUID');
       })
       .catch((error: AxiosError) => {
-        console.log(error);
         setLogin(false);
         if (error.response && error.response.status === 400) {
           setErrorMessage('Invalid username or password');
