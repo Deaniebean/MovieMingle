@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/filterSlider.css';
 import '../styles/globals.css';
-import { Movie } from '../types/MovieType'; // Replace './path/to/MovieType' with the actual path to the MovieType interface
+import { Movie } from '../types/MovieType'; 
 
 // Components
 import {
@@ -14,7 +14,7 @@ import {
   // Button,
 } from '@material-tailwind/react';
 import FilterSeparator from './innerComponents/FilterSeparator';
-import Slider from '@mui/material/Slider'; // Working despite 'cannot find module' error
+import Slider from '@mui/material/Slider'; 
 import Button from './innerComponents/Button';
 
 interface Props {
@@ -32,9 +32,9 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
   const queryParams = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const genreParams = genre; //Array with genres
-    const yearsParams = [`${yearSlider[0]}-01-01`, `${yearSlider[1]}-12-31`]; // Array[start_year, end_year]
-    const roundsParams = parseInt(rounds); //Number of rounds
+    const genreParams = genre; 
+    const yearsParams = [`${yearSlider[0]}-01-01`, `${yearSlider[1]}-12-31`]; 
+    const roundsParams = parseInt(rounds); 
     const languageParams = language;
     const vote_averageParams = vote_average;
     console.log('genre:', genreParams);
@@ -73,7 +73,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     setYearSlider(newValue as number[]);
   };
 
-  //  Defining genres
   const genreList = [
     { id: 28, label: 'Action' },
     { id: 12, label: 'Adventure' },
@@ -144,7 +143,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
               className="peer hidden"
               onChange={(e) => setRounds(e.target.value)}
             />
-            {/* Checked or uncheck svg shown depending on status of input, peer class */}
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -260,7 +258,6 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
 
   const onVoteAverageChange = (_: Event, newValue: number | number[]) => {
     setVote_average(newValue as number);
-    // setVote_average(parseInt(e.target.value));
   };
 
   return (
@@ -287,7 +284,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
                 <select
                   name="lanuage"
                   value={language}
-                  onChange={(e) => setLanguage(e.target.value)} // Unknown?
+                  onChange={(e) => setLanguage(e.target.value)} 
                   className="bg-secondaryDark border-0 rounded-xl text-light px-10 py-4 border-r-8 border-transparent"
                 >
                   <option value="en">English</option>
@@ -298,7 +295,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
               </div>
             </div>
           </div>
-          {/* Year - negative margin b/c unknown bottom spacing in 'Generes' */}
+          {/* Year */}
           <div className="md:col-end-4 md:-mt-36 h-fit">
             <FilterSeparator text={'Release year'} />
             <label>
