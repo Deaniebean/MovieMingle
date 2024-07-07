@@ -98,7 +98,6 @@ const Login: React.FC<RegisterProps> = () => {
       </div>
       <div className="register-form">
         <h2 className="title-form">Log In</h2>
-        {/* temp adding class of 'formElement' on form instead of styling element directly */}
         <form onSubmit={(e) => handleSubmit(e)} className="form-element">
           <div className="data-input-wrapper">
             <input
