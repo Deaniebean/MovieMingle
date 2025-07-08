@@ -3,11 +3,11 @@ import Cookies from 'universal-cookie';
 
 const ProtectedRoutes = () => {
     const cookies = new Cookies();
-    console.log(cookies)
+    //console.log(cookies)
     const token = cookies.get("TOKEN");
-    console.log(token);
+    //console.log(token);
     const isAuthenticated = Boolean(token);
-    console.log(isAuthenticated)
+    //console.log(isAuthenticated)
     return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
   
 };

@@ -37,12 +37,13 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     const roundsParams = parseInt(rounds); 
     const languageParams = language;
     const vote_averageParams = vote_average;
+    /*
     console.log('genre:', genreParams);
     console.log('years:', yearsParams);
     console.log('rounds:', roundsParams);
     console.log('language:', languageParams);
     console.log('vote_average:', vote_averageParams);
-
+    */
     try {
       const response = await axios.post(
         'http://localhost:8082/discover/movies',
@@ -55,11 +56,11 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
         }
       );
 
-      console.log('Success:', response.data);
+      //console.log('Success:', response.data);
       setMovies(response.data);
       navigate('/this-or-that');
     } catch (error) {
-      console.error('Error:', error);
+      //console.error('Error:', error);
     }
   };
 

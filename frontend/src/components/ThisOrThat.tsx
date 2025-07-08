@@ -41,12 +41,12 @@ const ThisOrThat: React.FC<Props> = ({
     );
 
     // Remove the unchosen movie from the array
-    console.log('Unchosen index:', unchosenIndex);
+    //console.log('Unchosen index:', unchosenIndex);
     newMovies.splice(unchosenIndex, 1);
 
     // If there's only one movie left, we have a winner
     if (newMovies.length === 1) {
-      console.log('Winner:', newMovies[0]);
+      //console.log('Winner:', newMovies[0]);
       navigate('/winner', { state: { movie: newMovies[0] } });
       return;
     }
@@ -77,7 +77,7 @@ const ThisOrThat: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    console.log('Movies:', movies);
+    //console.log('Movies:', movies);
   }, [movies]);
 
   // console.log('Movies:', movies);

@@ -2,3 +2,4 @@
 .env
 junit.xml
 backend/.env
+node_modules

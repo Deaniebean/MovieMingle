@@ -20,13 +20,13 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, toggleNavbar }) => {
   const navbarRef = useRef<HTMLDivElement>(null);
   const [navbarHeight, setNavbarHeight] = useState(window.innerWidth > 767 ? 60 : 0);
   useEffect(() => {
-    console.log("navbar height:" + navbarHeight);
+    //console.log("navbar height:" + navbarHeight);
   }, [navbarHeight]);
   const navigate = useNavigate();
   const location = useLocation();
   
   useEffect(() => {
-    console.log(`Navbar height: ${navbarHeight}`);
+    //console.log(`Navbar height: ${navbarHeight}`);
   }, [navbarHeight]);
   
   useEffect(() => {

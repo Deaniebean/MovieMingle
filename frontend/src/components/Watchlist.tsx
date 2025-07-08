@@ -43,7 +43,7 @@ const Watchlist: React.FC = () => {
         }
       })
       .then((response) => {
-        console.log("Watchlist fetched:", response.data);
+        //console.log("Watchlist fetched:", response.data);
         const unsortedWatchlist = response.data;
         setWatchlist(unsortedWatchlist.reverse());
         setLoading(false);
@@ -91,7 +91,7 @@ const Watchlist: React.FC = () => {
           )
         ) : (
           watchlist.map((movie) => (
-            console.log(movie),
+            //console.log(movie),
             <MovieTemplate key={String(movie._id)} movie={movie} />
           ))
         )}
