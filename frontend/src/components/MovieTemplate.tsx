@@ -58,7 +58,7 @@ const MovieTemplate: React.FC<MovieProps> = ({ movie }) => {
     for (let i = 1; i <= 5; i++) {
       stars.push(
         <img
-          key={i}
+          key={String(i)}
           src={i <= movie.rating ? IconActive : IconNotActive}
           alt={`Star ${i}`}
           className="rating-icon"

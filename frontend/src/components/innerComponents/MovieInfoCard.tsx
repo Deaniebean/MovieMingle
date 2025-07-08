@@ -69,7 +69,7 @@ const MovieInfoCard: React.FC<MovieInfoCardProps> = ({
               className={`border rounded-md px-3 py-1 text-xs ${
                 isPrimary ? 'border-white' : 'border-primary'
               }`}
-              key={i}
+              key={String(i)}
             >
               {genre}
             </span>

@@ -96,7 +96,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     return (
       <ListItem
         className=" max-w-fit rounded-full border border-secondaryLight py-1 px-2.5 hover:bg-primary active:bg-primary md:active:bg-secondary focus:bg-blue md:focus:bg-primary md:hover:bg-violet-950"
-        key={index}
+        key={String(index)}
       >
         <label className="flex cursor-pointer items-center">
           <ListItemPrefix className=" mr-1 md:mr-2">
@@ -129,7 +129,7 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     { value: '18', text: 'Epic Battle' },
   ].map((round, i) => {
     return (
-      <div key={i}>
+      <div key={String(i)}>
         <label
           htmlFor={round.value}
           className="block cursor-pointer select-none rounded-xl p-2 text-center md:text-left has-[:checked]:bg-secondaryDark has-[:checked]:md:bg-primary has-[:checked]:font-bold has-[:checked]:text-white md:flex md:items-center md:justify-center"

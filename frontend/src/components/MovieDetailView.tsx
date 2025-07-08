@@ -98,7 +98,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
         {genres.map((genre: string, i: number) => (
           <span
             className={`border rounded-md px-3 py-1 text-xs ${index === 0 ? 'border-white' : 'border-primary'}`}
-            key={i}
+            key={String(i)}
           >
             {genre}
           </span>

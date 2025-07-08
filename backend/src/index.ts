@@ -6,6 +6,7 @@ import movieRoutes from "./routes/movieRoutes";
 import connectDB from "./config/db";
 import { errorHandler } from "./middleware/errors";
 import seedDatabase from "./routes/seedingRoute";
+import logger from './config/logger';
 dotenv.config();
 const port = process.env.PORT || 8082;
 
@@ -34,6 +35,6 @@ app.use(errorHandler);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
+    logger.info(`[server]: Server is running at http://localhost:${port}`);
   });
 }

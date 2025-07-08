@@ -71,7 +71,7 @@ export const register = async (
       uuid: userTokenValues.uuid,
     });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     next(new Error("Error creating user"));
   }
 };
@@ -117,7 +117,7 @@ export const login = async (
       uuid: user.uuid,
     });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     next(new Error("Error during login"));
   }
 };

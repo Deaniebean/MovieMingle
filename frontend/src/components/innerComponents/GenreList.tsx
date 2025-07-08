@@ -26,7 +26,7 @@ const GenreList: React.FC<GenreListProps> = ({ genreIds, isPrimary }) => {
           .map((genre, i) => (
             <span
               className={`border rounded-md px-3 py-1 text-xs ${isPrimary ? 'border-white' : 'border-primary'}`}
-              key={i}
+              key={String(i)}
             >
               {genre}
             </span>

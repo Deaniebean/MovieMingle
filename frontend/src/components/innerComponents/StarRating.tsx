@@ -37,7 +37,7 @@ const StarRating: React.FC<StarRatingProps> = ({
         const isActive = hoverRating ? index < hoverRating : index < rating;
         return (
           <span
-            key={index}
+            key={String(index)}
             className="cursor-pointer text-2xl"
             onMouseEnter={() => setHoverRating(index + 1)}
             onMouseLeave={() => setHoverRating(null)}

@@ -37,17 +37,17 @@ export const discoverMovies = async(
 
     const moviesWithVideos = await Promise.all(movieTrailers);
 
-    console.log("Movies:", moviesWithVideos);
+    //console.log("Movies:", moviesWithVideos);
     return moviesWithVideos;
   } catch (error) {
     if (error.response) {
-      console.error(
+      /*console.error(
         `Server responded with status code ${error.response.status}`
-      );
+      );*/
     } else if (error.request) {
-      console.error("No response received from server");
+      //console.error("No response received from server");
     } else {
-      console.error("Error setting up request:", error.message);
+      //console.error("Error setting up request:", error.message);
     }
     return [];
   }
@@ -125,7 +125,7 @@ export const saveWatchlistHandler = async (
     try {
     let movies: MovieType[] = [];
     const { movieData, userUUID } = request.body;
-    console.log("movieData:", movieData);
+    //console.log("movieData:", movieData);
   
   
     // Check if the movie already exists in the database
@@ -246,7 +246,7 @@ export const saveWatchlistHandler = async (
           }
       
           const moviePromises = user.watch_list.map(async (movieId) => {
-            console.log(user.watch_list);
+            //console.log(user.watch_list);
             return await Movie.findById(movieId);
           });
       

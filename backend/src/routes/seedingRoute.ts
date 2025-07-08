@@ -7,7 +7,7 @@ const addToWatchlist = async (username: string, movieId: mongoose.Types.ObjectId
   try {
     let user = await User.findOne({ username: username });
     if (!user) {
-      console.log("User not found. Creating user...");
+      //console.log("User not found. Creating user...");
       user = new User({
         _id: "667c6c85164819c51688fd04", 
         uuid: "3f170a97-2b27-4569-b3fc-0a7a275a3cfd",
@@ -16,7 +16,7 @@ const addToWatchlist = async (username: string, movieId: mongoose.Types.ObjectId
       });
     
       await user.save(); 
-      console.log("User created successfully:", user);
+      //console.log("User created successfully:", user);
     }
     // Initialize watch_list if it doesn't exist
     if (!user.watch_list) {
@@ -26,12 +26,12 @@ const addToWatchlist = async (username: string, movieId: mongoose.Types.ObjectId
     if (!user.watch_list.includes(movieId)) {
       user.watch_list.push(movieId);
       await user.save();
-      console.log(`Movie _id: ${movieId} added to ${username}'s watchlist.`);
+      //console.log(`Movie _id: ${movieId} added to ${username}'s watchlist.`);
     } else {
-      console.log(`Movie _id: ${movieId} is already in ${username}'s watchlist.`);
+      //console.log(`Movie _id: ${movieId} is already in ${username}'s watchlist.`);
     }
   } catch (error) {
-    console.error('Error adding movie to watchlist:', error);
+    //console.error('Error adding movie to watchlist:', error);
   }
 }
 
@@ -39,7 +39,7 @@ async function seedDatabase() {
   try {
     await connectDB();
   } catch (error) {
-    console.error("Failed to connect to the database", error);
+    //console.error("Failed to connect to the database", error);
   }
   const movies = [
     {
@@ -146,21 +146,21 @@ async function seedDatabase() {
       if (!existingMovie) {
         const newMovie = new Movie(movie);
         await newMovie.save();
-        console.log(`Movie with _id: ${movie.id} added to the database.`);
+        //console.log(`Movie with _id: ${movie.id} added to the database.`);
         // Assuming addToWatchlist expects an ObjectId for the movie ID
         const movieObjectId = new mongoose.Types.ObjectId(movie._id);
         await addToWatchlist("testuser", movieObjectId);
-        console.log(`Movie with _id: ${movie.id} added to testuser's watchlist.`);
+        //console.log(`Movie with _id: ${movie.id} added to testuser's watchlist.`);
       } else {
         // If the movie exists, convert ID to ObjectId before adding to the watchlist
         const movieObjectId = new mongoose.Types.ObjectId(movie._id);
         await addToWatchlist("testuser", movieObjectId);
-        console.log(`Movie with _id: ${movie.id} already exists. Skipping.`);
+        //console.log(`Movie with _id: ${movie.id} already exists. Skipping.`);
       }
     }
-    console.log('Database seeding completed.');
+    //console.log('Database seeding completed.');
   } catch (error) {
-    console.error('Error seeding database:', error);
+    //console.error('Error seeding database:', error);
   }
 }
 
