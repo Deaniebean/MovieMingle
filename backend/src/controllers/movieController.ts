@@ -4,6 +4,7 @@ import { MovieType } from "../types/Movie";
 import express from "express";
 import Movie from "../models/mongooseMovies";
 import { User } from "../models/mongooseUsers";
+import logger from "../config/logger";
 
 // Fetch movies based on the search parameters and include trailers
 // need to fetch movies witpage: number, genre: string[], years: string[], rounds: number, language: string, vote_average: number, vote_average: numbers to select random page
@@ -37,7 +38,7 @@ export const discoverMovies = async(
 
     const moviesWithVideos = await Promise.all(movieTrailers);
 
-    //console.log("Movies:", moviesWithVideos);
+    logger.info("Movies:", moviesWithVideos);
     return moviesWithVideos;
   } catch (error) {
     if (error.response) {
@@ -75,7 +76,7 @@ export const discoverRandomMovies = async (
 
   try {
     const response = await axios.request(options);
-    console.log("Random page:", randomPage);
+    logger.debug("Random page:", randomPage);
 
     // Add totalRounds to each movie object
     const totalRounds = rounds - 1;
@@ -125,7 +126,7 @@ export const saveWatchlistHandler = async (
     try {
     let movies: MovieType[] = [];
     const { movieData, userUUID } = request.body;
-    //console.log("movieData:", movieData);
+    logger.debug("movieData:", movieData);
   
   
     // Check if the movie already exists in the database
@@ -246,7 +247,7 @@ export const saveWatchlistHandler = async (
           }
       
           const moviePromises = user.watch_list.map(async (movieId) => {
-            //console.log(user.watch_list);
+            logger.debug(user.watch_list);
             return await Movie.findById(movieId);
           });
       

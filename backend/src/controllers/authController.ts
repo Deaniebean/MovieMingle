@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { saveUserInDb } from "./saveUserInDb";
 import dotenv from "dotenv";
 import { Output, object, parse, string } from "valibot";
+import logger from "../config/logger";
 
 dotenv.config();
 const secretKey = process.env.JWT_SECRET;
@@ -71,7 +72,7 @@ export const register = async (
       uuid: userTokenValues.uuid,
     });
   } catch (error) {
-    //console.log(error);
+    logger.error(error);
     next(new Error("Error creating user"));
   }
 };
@@ -117,7 +118,7 @@ export const login = async (
       uuid: user.uuid,
     });
   } catch (error) {
-    //console.log(error);
+    logger.error(error);
     next(new Error("Error during login"));
   }
 };

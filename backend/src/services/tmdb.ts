@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import dotenv from 'dotenv';
+import logger from '../config/logger';
 dotenv.config();
 
 
@@ -41,7 +42,7 @@ function createOptionsDiscover(page: number, genre: string[], years: string[], r
       accept: 'application/json',
     }
   }
-  //console.log('Options:', options);
+  logger.debug('Options:', options);
   return options;
 }
 
@@ -57,7 +58,7 @@ function createOptionsTrailer(movieId: number) {
       accept: 'application/json',
     }
   }
-  //console.log('Options:', options);
+  logger.debug('Options:', options);
   return options;
 }
 
