@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios, { AxiosError } from 'axios';
 
+
 // Icons
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
@@ -53,7 +54,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
     // Send form data
     const configuration = {
       method: 'put',
-      url: 'http://localhost:8082/authenticate/reset-password',
+      url: `${import.meta.env.VITE_API_URL}/authenticate/reset-password`,
       data: {
         username,
         password,

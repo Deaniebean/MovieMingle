@@ -12,5 +12,12 @@
       "*": ["node_modules/*"]
     }
   },
-  "include": ["src/**/*", "src/models/user.ts"]
+  "include": ["src/**/*", "src/models/user.ts"],
+   "exclude": [
+    "node_modules",
+    "dist",
+    "src/tests/**/*",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
 }

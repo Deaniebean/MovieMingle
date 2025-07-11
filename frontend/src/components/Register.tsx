@@ -37,7 +37,7 @@ const Register: React.FC<RegisterProps> = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+    
     // Check username is empty
     if (!username) {
       setErrorMessage('Please enter a username');
@@ -65,14 +65,17 @@ const Register: React.FC<RegisterProps> = () => {
     // Send form data
     const configuration = {
       method: 'post',
-      url: 'http://localhost:8082/authenticate/register',
+      url: `${import.meta.env.VITE_API_URL}/authenticate/register`,
       data: {
         username,
         password,
       },
     };
     try {
+      console.log('📡 Sending request...');
       const result = await axios(configuration);
+      console.log('✅ Registration successful:', result.data);
+      
       cookies.set('TOKEN', result.data.token, {
         path: '/',
       });
@@ -93,7 +96,16 @@ const Register: React.FC<RegisterProps> = () => {
       setRegister(true);
   
     } catch (error) {
+      console.error('❌ Registration failed:', error);
+      
       if (axios.isAxiosError(error)) {
+        console.error('📡 Axios error details:', {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status,
+          headers: error.response?.headers
+        });
+        
         setRegister(false);
         if (error.response) {
           if (

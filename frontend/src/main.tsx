@@ -6,7 +6,7 @@ import { ThemeProvider } from "@material-tailwind/react"; // Required for Materi
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider key="theme-provider">
+    <ThemeProvider>
       <App />
     </ThemeProvider>
   </React.StrictMode>

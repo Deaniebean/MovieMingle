@@ -17,7 +17,11 @@ import './MovieDetailView.css';
 
 interface MovieDetailViewProps {}
 
-const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
+const MovieDetailView: React.FC<MovieDetailViewProps> = () => {
+  // Temporary log to verify environment variables
+  console.log('API URL:', import.meta.env.VITE_API_URL);
+  console.log('Environment:', import.meta.env.VITE_ENVIRONMENT);
+
   const { id } = useParams<{ id: string }>(); // Extracting movieID from route params
   const [movie, setMovie] = useState<any>(null);
   const [loadingIcon, setLoadingIcon] = useState<boolean>(true);
@@ -31,7 +35,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
     const fetchMovie = async () => {
       try {
         const response: AxiosResponse = await axios.get(
-          `http://localhost:8082/movie/${id}?_=${Date.now()}`
+          `${import.meta.env.VITE_API_URL}/api/movie/${id}?_=${Date.now()}`
         );
         setMovie(response.data);
       } catch (error: any) {
@@ -139,7 +143,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
 
     const configuration = {
       method: 'put',
-      url: 'http://localhost:8082/update/movie-rating',
+      url: `${import.meta.env.VITE_API_URL}/api/update/movie-rating`,
       data: requestData,
     };
 
@@ -160,7 +164,7 @@ const MovieDetailView: React.FC<MovieDetailViewProps> = ({}) => {
 
     const configuration = {
       method: 'delete',
-      url: 'http://localhost:8082/delete/movie',
+      url: `${import.meta.env.VITE_API_URL}/api/delete/movie`,
       data: requestData,
     };
 

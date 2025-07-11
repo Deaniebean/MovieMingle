@@ -33,21 +33,29 @@ const Watchlist: React.FC = () => {
 
   const fetchWatchlist = (query: string = '') => {
     setLoading(true);
-    const endpoint = query.trim() !== '' ? `search/watchlist` : `get/watchlist/${userUUID}`;
+    const endpoint = query.trim() !== '' ? `api/search/watchlist` : `api/get/watchlist/${userUUID}`;
     
     axios
-      .get(`http://localhost:8082/${endpoint}`, {
+      .get(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
         params: {
           query,
           userUUID
         }
       })
       .then((response) => {
-        //console.log("Watchlist fetched:", response.data);
+        console.log("Watchlist API response:", response.data);
         const unsortedWatchlist = response.data;
-        setWatchlist(unsortedWatchlist.reverse());
+        
+        // Check if the response is an array before calling reverse
+        if (Array.isArray(unsortedWatchlist)) {
+          setWatchlist(unsortedWatchlist.reverse());
+        } else {
+          console.error("Expected array but got:", typeof unsortedWatchlist, unsortedWatchlist);
+          setWatchlist([]); // Set empty array as fallback
+        }
+        
         setLoading(false);
-        setSearchError(unsortedWatchlist.length === 0 && query.trim() !== '');
+        setSearchError(Array.isArray(unsortedWatchlist) && unsortedWatchlist.length === 0 && query.trim() !== '');
       })
       .catch((error) => {
         console.error('Error fetching watchlist:', error);

@@ -72,7 +72,7 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
 
     const configuration = {
       method: 'post',
-      url: 'http://localhost:8082/save/watchlist',
+      url: `${import.meta.env.VITE_API_URL}/api/save/watchlist`,
       data: {
         movieData,
         userUUID,
@@ -80,7 +80,7 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
     };
 
     try {
-      const response = await axios(configuration);
+      await axios(configuration);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
@@ -104,16 +104,16 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({
 
     const configuration = {
       method: 'delete',
-      url: 'http://localhost:8082/delete/movie',
+      url: `${import.meta.env.VITE_API_URL}/api/delete/movie`,
       data: requestData,
     };
 
     axios(configuration)
       .then((result: AxiosResponse) => {
-        // console.log(
-        //   'Film erfolgreich von der Watchlist entfernt:',
-        //   result.data
-        // );
+         console.log(
+           'Film erfolgreich von der Watchlist entfernt:',
+           result.data
+         );
       })
       .catch((error: AxiosError) => {
         console.error(

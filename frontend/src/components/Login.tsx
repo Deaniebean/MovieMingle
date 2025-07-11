@@ -55,7 +55,7 @@ const Login: React.FC<RegisterProps> = () => {
     // Send form data
     const configuration = {
       method: 'post',
-      url: 'http://localhost:8082/authenticate/login',
+      url: `${import.meta.env.VITE_API_URL}/authenticate/login`,
       data: {
         username,
         password,

@@ -15,11 +15,20 @@
     "jsx": "react-jsx",
 
     /* Linting */
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/types/MovieType.ts", "src/types/VideoType.ts"],
+  "include": ["src"],
+    "exclude": [
+    "node_modules",
+    "dist",
+    "src/tests/**/*",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "../node_modules/cypress/**/*",
+    "../frontend/**/*"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

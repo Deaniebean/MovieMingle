@@ -45,8 +45,8 @@ const InputFieldsMovie: React.FC<Props> = ({ setMovies }) => {
     console.log('vote_average:', vote_averageParams);
     */
     try {
-      const response = await axios.post(
-        'http://localhost:8082/discover/movies',
+      const response =  await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/discover/movies`,
         {
           genre: genreParams,
           years: yearsParams,
